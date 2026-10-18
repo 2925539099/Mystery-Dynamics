@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "mystery_dynamics:block/golem_power_frame"
+    },
+    "facing=east": {
+      "model": "mystery_dynamics:block/golem_power_frame",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "mystery_dynamics:block/golem_power_frame",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "mystery_dynamics:block/golem_power_frame",
+      "y": 270
+    }
+  }
+}

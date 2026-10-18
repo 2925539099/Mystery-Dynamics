@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "mystery_dynamics:block/iron_golem_power"
+    },
+    "facing=east": {
+      "model": "mystery_dynamics:block/iron_golem_power",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "mystery_dynamics:block/iron_golem_power",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "mystery_dynamics:block/iron_golem_power",
+      "y": 270
+    }
+  }
+}

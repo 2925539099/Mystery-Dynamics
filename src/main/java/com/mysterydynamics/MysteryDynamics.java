@@ -1,7 +1,8 @@
 package com.mysterydynamics;
 
-import com.mysterydynamics.block.GolemDynamoBlock;
-import com.mysterydynamics.block.GolemDynamoBlockEntity;
+import com.mysterydynamics.block.GolemPowerBlock;
+import com.mysterydynamics.block.GolemPowerBlockEntity;
+import com.mysterydynamics.block.GolemPowerFrameBlock;
 import com.simibubi.create.api.stress.BlockStressValues;
 
 import net.minecraft.core.registries.Registries;
@@ -9,6 +10,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -21,6 +23,13 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+import java.util.List;
+
+/**
+ * 神秘动力学（Mystery Dynamics）。
+ *
+ * <p>8 台傀儡动力系统（应力源）+ 1 个空框架。转速 / 应力来自「傀儡动力设计.txt」。</p>
+ */
 @Mod(MysteryDynamics.MODID)
 public class MysteryDynamics {
 
@@ -33,35 +42,58 @@ public class MysteryDynamics {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
-    public static final DeferredBlock<GolemDynamoBlock> GOLEM_DYNAMO = BLOCKS.registerBlock(
-            "golem_dynamo",
-            GolemDynamoBlock::new,
-            BlockBehaviour.Properties.of()
-                    .mapColor(MapColor.STONE)
-                    .strength(3.5F, 6.0F)
-                    .requiresCorrectToolForDrops()
-                    .sound(SoundType.STONE));
+    // ---- 8 台傀儡动力系统：id, 转速 RPM, 总应力 SU ----
+    public static final DeferredBlock<GolemPowerBlock> STRAW_GOLEM_POWER =
+            registerGolem("straw_golem_power", 160.0F, 128.0F);
+    public static final DeferredBlock<GolemPowerBlock> WOOD_GOLEM_POWER =
+            registerGolem("wood_golem_power", 128.0F, 256.0F);
+    public static final DeferredBlock<GolemPowerBlock> FLESH_GOLEM_POWER =
+            registerGolem("flesh_golem_power", 160.0F, 384.0F);
+    public static final DeferredBlock<GolemPowerBlock> CLAY_GOLEM_POWER =
+            registerGolem("clay_golem_power", 128.0F, 512.0F);
+    public static final DeferredBlock<GolemPowerBlock> TALLOW_GOLEM_POWER =
+            registerGolem("tallow_golem_power", 256.0F, 128.0F);
+    public static final DeferredBlock<GolemPowerBlock> STONE_GOLEM_POWER =
+            registerGolem("stone_golem_power", 64.0F, 1024.0F);
+    public static final DeferredBlock<GolemPowerBlock> IRON_GOLEM_POWER =
+            registerGolem("iron_golem_power", 32.0F, 2048.0F);
+    public static final DeferredBlock<GolemPowerBlock> MYSTERY_GOLEM_POWER =
+            registerGolem("mystery_golem_power", 128.0F, 4096.0F);
 
-    public static final DeferredItem<BlockItem> GOLEM_DYNAMO_ITEM =
-            ITEMS.registerSimpleBlockItem(GOLEM_DYNAMO);
+    public static final List<DeferredBlock<GolemPowerBlock>> GENERATORS = List.of(
+            STRAW_GOLEM_POWER, WOOD_GOLEM_POWER, FLESH_GOLEM_POWER, CLAY_GOLEM_POWER,
+            TALLOW_GOLEM_POWER, STONE_GOLEM_POWER, IRON_GOLEM_POWER, MYSTERY_GOLEM_POWER);
 
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<GolemDynamoBlockEntity>> GOLEM_DYNAMO_BE =
-            BLOCK_ENTITY_TYPES.register("golem_dynamo",
-                    () -> BlockEntityType.Builder.of(
-                            // 用方法间接取类型，避免静态初始化器的自引用
-                            (pos, state) -> new GolemDynamoBlockEntity(blockEntityType(), pos, state),
-                            GOLEM_DYNAMO.get()).build(null));
+    /** 空框架：纯装饰。 */
+    public static final DeferredBlock<GolemPowerFrameBlock> GOLEM_POWER_FRAME = BLOCKS.register(
+            "golem_power_frame", () -> new GolemPowerFrameBlock(deviceProperties()));
 
-    private static BlockEntityType<?> blockEntityType() {
-        return GOLEM_DYNAMO_BE.get();
-    }
+    // ---- 物品 ----
+    public static final DeferredItem<BlockItem> STRAW_ITEM = ITEMS.registerSimpleBlockItem(STRAW_GOLEM_POWER);
+    public static final DeferredItem<BlockItem> WOOD_ITEM = ITEMS.registerSimpleBlockItem(WOOD_GOLEM_POWER);
+    public static final DeferredItem<BlockItem> FLESH_ITEM = ITEMS.registerSimpleBlockItem(FLESH_GOLEM_POWER);
+    public static final DeferredItem<BlockItem> CLAY_ITEM = ITEMS.registerSimpleBlockItem(CLAY_GOLEM_POWER);
+    public static final DeferredItem<BlockItem> TALLOW_ITEM = ITEMS.registerSimpleBlockItem(TALLOW_GOLEM_POWER);
+    public static final DeferredItem<BlockItem> STONE_ITEM = ITEMS.registerSimpleBlockItem(STONE_GOLEM_POWER);
+    public static final DeferredItem<BlockItem> IRON_ITEM = ITEMS.registerSimpleBlockItem(IRON_GOLEM_POWER);
+    public static final DeferredItem<BlockItem> MYSTERY_ITEM = ITEMS.registerSimpleBlockItem(MYSTERY_GOLEM_POWER);
+    public static final DeferredItem<BlockItem> FRAME_ITEM = ITEMS.registerSimpleBlockItem(GOLEM_POWER_FRAME);
 
-    /** 独立创造模式标签页，图标就是这台傀儡动力核心。 */
+    // ---- 方块实体（8 台设备共用） ----
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<GolemPowerBlockEntity>> GOLEM_POWER_BE =
+            BLOCK_ENTITY_TYPES.register("golem_power", () -> BlockEntityType.Builder.of(
+                    (pos, state) -> new GolemPowerBlockEntity(blockEntityType(), pos, state),
+                    GENERATORS.stream().map(DeferredBlock::get).toArray(Block[]::new)).build(null));
+
+    /** 独立创造模式标签页。 */
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> TAB = CREATIVE_TABS.register("main",
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.mystery_dynamics"))
-                    .icon(() -> new ItemStack(GOLEM_DYNAMO_ITEM.get()))
-                    .displayItems((params, output) -> output.accept(GOLEM_DYNAMO_ITEM.get()))
+                    .icon(() -> new ItemStack(MYSTERY_ITEM.get()))
+                    .displayItems((params, output) -> {
+                        GENERATORS.forEach(block -> output.accept(block.get()));
+                        output.accept(GOLEM_POWER_FRAME.get());
+                    })
                     .build());
 
     public MysteryDynamics(IEventBus modEventBus) {
@@ -72,15 +104,30 @@ public class MysteryDynamics {
         modEventBus.addListener(MysteryDynamics::commonSetup);
     }
 
+    private static DeferredBlock<GolemPowerBlock> registerGolem(String name, float rpm, float stressUnits) {
+        return BLOCKS.register(name, () -> new GolemPowerBlock(deviceProperties(), rpm, stressUnits));
+    }
+
+    private static BlockBehaviour.Properties deviceProperties() {
+        return BlockBehaviour.Properties.of()
+                .mapColor(MapColor.STONE)
+                .strength(3.5F, 6.0F)
+                .requiresCorrectToolForDrops()
+                .sound(SoundType.STONE);
+    }
+
+    private static BlockEntityType<?> blockEntityType() {
+        return GOLEM_POWER_BE.get();
+    }
+
     private static void commonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
-            // 每 RPM 的容量：16 * 32 RPM = 512 SU
-            BlockStressValues.CAPACITIES.register(GOLEM_DYNAMO.get(),
-                    () -> (double) GolemDynamoBlockEntity.CAPACITY_PER_RPM);
-            // 仅用于护目镜提示；真实转速由 BlockEntity#getGeneratedSpeed 决定
-            BlockStressValues.RPM.register(GOLEM_DYNAMO.get(),
-                    new BlockStressValues.GeneratedRpm((int) GolemDynamoBlockEntity.GENERATED_RPM, false));
+            for (DeferredBlock<GolemPowerBlock> holder : GENERATORS) {
+                GolemPowerBlock block = holder.get();
+                BlockStressValues.CAPACITIES.register(block, () -> (double) block.capacityPerRpm());
+                BlockStressValues.RPM.register(block,
+                        new BlockStressValues.GeneratedRpm(Math.round(block.rpm()), false));
+            }
         });
     }
 }
-

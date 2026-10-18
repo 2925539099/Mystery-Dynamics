@@ -9,7 +9,7 @@ from PIL import Image
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MODEL = os.path.join(ROOT, "src", "main", "resources", "assets", "mystery_dynamics",
-                     "models", "block", "golem_dynamo.json")
+                     "models", "block", "iron_golem_power.json")
 TEX_DIR = os.path.join(ROOT, "src", "main", "resources", "assets", "mystery_dynamics", "textures", "block")
 OUT = os.path.join(ROOT, "preview_block.png")
 

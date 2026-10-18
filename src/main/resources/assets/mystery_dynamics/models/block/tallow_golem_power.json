@@ -1,9 +1,9 @@
 {
- "credit": "Converted from Blockbench project (神秘动力学)",
+ "credit": "Converted from Blockbench project（傀儡动力系统）",
  "ambientocclusion": true,
  "textures": {
-  "particle": "mystery_dynamics:block/golem_iron",
-  "golem": "mystery_dynamics:block/golem_iron",
+  "particle": "mystery_dynamics:block/golem_tallow",
+  "golem": "mystery_dynamics:block/golem_tallow",
   "casing": "mystery_dynamics:block/andesite_belt_casing"
  },
  "elements": [

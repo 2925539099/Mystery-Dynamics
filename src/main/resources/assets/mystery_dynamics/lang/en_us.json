@@ -1,6 +1,14 @@
 {
-  "block.mystery_dynamics.golem_dynamo": "Golem Dynamo",
   "itemGroup.mystery_dynamics": "Mystery Dynamics",
+  "block.mystery_dynamics.straw_golem_power": "Straw Golem Dynamo",
+  "block.mystery_dynamics.wood_golem_power": "Wooden Golem Dynamo",
+  "block.mystery_dynamics.flesh_golem_power": "Flesh Golem Dynamo",
+  "block.mystery_dynamics.clay_golem_power": "Clay Golem Dynamo",
+  "block.mystery_dynamics.tallow_golem_power": "Tallow Golem Dynamo",
+  "block.mystery_dynamics.stone_golem_power": "Stone Golem Dynamo",
+  "block.mystery_dynamics.iron_golem_power": "Iron Guard Golem Dynamo",
+  "block.mystery_dynamics.mystery_golem_power": "Mystery Golem Dynamo",
+  "block.mystery_dynamics.golem_power_frame": "Golem Power Frame",
   "mystery_dynamics.direction.cw": "Rotation: Clockwise",
   "mystery_dynamics.direction.ccw": "Rotation: Counter-clockwise"
 }
