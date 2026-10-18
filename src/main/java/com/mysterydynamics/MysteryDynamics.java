@@ -111,7 +111,8 @@ public class MysteryDynamics {
     private static BlockBehaviour.Properties deviceProperties() {
         return BlockBehaviour.Properties.of()
                 .mapColor(MapColor.STONE)
-                .strength(3.5F, 6.0F)
+                // 与石头一致：硬度 1.5，爆炸抗性 6.0
+                .strength(1.5F, 6.0F)
                 .requiresCorrectToolForDrops()
                 .sound(SoundType.STONE);
     }

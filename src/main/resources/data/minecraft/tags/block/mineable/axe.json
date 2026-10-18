@@ -1,0 +1,14 @@
+{
+    "replace":  false,
+    "values":  [
+                   "mystery_dynamics:straw_golem_power",
+                   "mystery_dynamics:wood_golem_power",
+                   "mystery_dynamics:flesh_golem_power",
+                   "mystery_dynamics:clay_golem_power",
+                   "mystery_dynamics:tallow_golem_power",
+                   "mystery_dynamics:stone_golem_power",
+                   "mystery_dynamics:iron_golem_power",
+                   "mystery_dynamics:mystery_golem_power",
+                   "mystery_dynamics:golem_power_frame"
+               ]
+}
