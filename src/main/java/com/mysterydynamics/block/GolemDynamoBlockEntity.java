@@ -1,12 +1,17 @@
 package com.mysterydynamics.block;
 
+import com.mysterydynamics.MysteryDynamics;
+import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.content.kinetics.KineticNetwork;
 import com.simibubi.create.content.kinetics.base.GeneratingKineticBlockEntity;
+import com.simibubi.create.content.kinetics.base.IRotate;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -29,6 +34,8 @@ public class GolemDynamoBlockEntity extends GeneratingKineticBlockEntity {
     public static final float CAPACITY_PER_RPM = 16.0F;
 
     private boolean reversed;
+    /** 由 Block#setPlacedBy 标记：下一次 initialize 时按相邻传动对齐方向。 */
+    private boolean pendingPlacementAlign;
 
     public GolemDynamoBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -38,31 +45,58 @@ public class GolemDynamoBlockEntity extends GeneratingKineticBlockEntity {
         return reversed;
     }
 
+    /** 方块被玩家放下时调用，等 initialize 时再对齐（此时邻居的转速已经确定）。 */
+    public void markPlaced() {
+        pendingPlacementAlign = true;
+    }
+
+    /**
+     * 放置对齐：检查输出轴两端的相邻传动部件。
+     *
+     * <p>如果相邻网络的转向是逆时针（负转速），就把自己改成同样的转向；
+     * 已经是顺时针则保持不变。</p>
+     */
+    public void alignToConnection() {
+        if (level == null || level.isClientSide) {
+            return;
+        }
+        Direction.Axis axis = ((IRotate) getBlockState().getBlock()).getRotationAxis(getBlockState());
+        for (Direction dir : Direction.values()) {
+            if (dir.getAxis() != axis) {
+                continue;
+            }
+            BlockEntity neighbour = level.getBlockEntity(worldPosition.relative(dir));
+            if (!(neighbour instanceof KineticBlockEntity kinetic)) {
+                continue;
+            }
+            float speed = kinetic.getTheoreticalSpeed();
+            if (speed < 0) {
+                reversed = true;
+                setChanged();
+                sendData();
+                return;
+            }
+            if (speed > 0) {
+                // 初始就是顺时针，无需修改
+                return;
+            }
+        }
+    }
+
     /**
      * 翻转输出方向。
      *
      * <p>同一传动网络里的所有傀儡动力核心会一起翻转，避免同一根轴上出现
-     * 一正一反的应力源（Create 会把方向冲突的动力部件判定为损坏）。
-     * 只让网络中“没有上级来源”的那台重算转速，其余核心由网络传播更新。</p>
-     *
-     * @return 是否成功；网络里存在其它动力源（如水车、风车）时返回 false，不做任何修改
+     * 一正一反的应力源。只让网络中“没有上级来源”的那台重算转速，
+     * 其余核心由网络传播更新。</p>
      */
-    public boolean toggleDirection() {
+    public void toggleDirection() {
         boolean target = !reversed;
 
         // 客户端只做本地预测，真正的同步由服务端的 sendData 完成
         if (level == null || level.isClientSide) {
             reversed = target;
-            return true;
-        }
-
-        if (hasNetwork()) {
-            for (KineticBlockEntity member : getOrCreateNetwork().members.keySet()) {
-                if (!(member instanceof GolemDynamoBlockEntity) && member.isSource()) {
-                    // 网络里还有别的动力源，强行反转会触发 Create 的方向冲突损坏
-                    return false;
-                }
-            }
+            return;
         }
 
         List<GolemDynamoBlockEntity> group = collectConnectedDynamos();
@@ -82,7 +116,6 @@ public class GolemDynamoBlockEntity extends GeneratingKineticBlockEntity {
             }
         }
         driver.updateGeneratedRotation();
-        return true;
     }
 
     /** 收集同一动力学网络里的所有傀儡动力核心（包含自己）。 */
@@ -105,6 +138,10 @@ public class GolemDynamoBlockEntity extends GeneratingKineticBlockEntity {
     public void initialize() {
         super.initialize();
         if (level != null && !level.isClientSide) {
+            if (pendingPlacementAlign) {
+                pendingPlacementAlign = false;
+                alignToConnection();
+            }
             updateGeneratedRotation();
         }
     }

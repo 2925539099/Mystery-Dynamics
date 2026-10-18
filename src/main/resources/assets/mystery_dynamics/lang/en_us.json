@@ -2,6 +2,5 @@
   "block.mystery_dynamics.golem_dynamo": "Golem Dynamo",
   "itemGroup.mystery_dynamics": "Mystery Dynamics",
   "mystery_dynamics.direction.cw": "Rotation: Clockwise",
-  "mystery_dynamics.direction.ccw": "Rotation: Counter-clockwise",
-  "mystery_dynamics.direction.conflict": "Other power sources in the network prevent reversing"
+  "mystery_dynamics.direction.ccw": "Rotation: Counter-clockwise"
 }

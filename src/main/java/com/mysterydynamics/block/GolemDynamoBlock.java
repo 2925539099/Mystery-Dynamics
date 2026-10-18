@@ -9,6 +9,8 @@ import com.simibubi.create.foundation.block.IBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
@@ -22,8 +24,8 @@ import net.minecraft.world.level.block.state.BlockState;
  * <p>朝向：放置时正面朝向玩家（水平四向）。传动轴与正面垂直，
  * 所以 facing=north 时东西两面是输出端，facing=east/west 时南北两面是输出端。</p>
  *
- * <p>转向：用机械动力扳手右键顶面或底面，可以翻转输出方向（顺时针/逆时针），
- * 参考蒸汽引擎的 movementDirection 机制。</p>
+ * <p>转向：只有手持机械动力扳手时才能调整——扳手右键顶/底面旋转整机朝向，
+ * 扳手右键侧面翻转顺时针/逆时针。空手不再能改转向。</p>
  */
 public class GolemDynamoBlock extends HorizontalKineticBlock implements IBE<GolemDynamoBlockEntity> {
 
@@ -43,13 +45,21 @@ public class GolemDynamoBlock extends HorizontalKineticBlock implements IBE<Gole
     }
 
     @Override
+    public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+        super.setPlacedBy(level, pos, state, placer, stack);
+        if (!level.isClientSide && level.getBlockEntity(pos) instanceof GolemDynamoBlockEntity dynamo) {
+            // 放置时标记，等 initialize 时按相邻传动方向对齐
+            dynamo.markPlaced();
+        }
+    }
+
+    @Override
     public InteractionResult onWrenched(BlockState state, UseOnContext context) {
         Direction face = context.getClickedFace();
         Level level = context.getLevel();
         BlockPos pos = context.getClickedPos();
 
         // 顶面 / 底面：旋转整机朝向（应力输出端跟着转到另外两面）
-        // 与 Create 的水平动能方块一致，也是“左右转向”的调节位置。
         if (face.getAxis() == Direction.Axis.Y) {
             BlockState rotated = getRotatedBlockState(state, face);
             if (!rotated.canSurvive(level, pos)) {
@@ -64,32 +74,11 @@ public class GolemDynamoBlock extends HorizontalKineticBlock implements IBE<Gole
 
         // 其余面：切换顺时针 / 逆时针（参考蒸汽引擎的 movementDirection）
         if (!level.isClientSide && level.getBlockEntity(pos) instanceof GolemDynamoBlockEntity dynamo) {
-            if (dynamo.toggleDirection()) {
-                notifyDirection(context.getPlayer(), dynamo);
-                IWrenchable.playRotateSound(level, pos);
-            } else {
-                notifyConflict(context.getPlayer());
-            }
+            dynamo.toggleDirection();
+            notifyDirection(context.getPlayer(), dynamo);
+            IWrenchable.playRotateSound(level, pos);
         }
         return InteractionResult.SUCCESS;
-    }
-
-    /** 空手右键顶面/底面：也可以切换顺时针/逆时针（不用扳手时的备用操作）。 */
-    @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
-                                               net.minecraft.world.entity.player.Player player,
-                                               net.minecraft.world.phys.BlockHitResult hit) {
-        if (hit.getDirection().getAxis() == Direction.Axis.Y) {
-            if (!level.isClientSide && level.getBlockEntity(pos) instanceof GolemDynamoBlockEntity dynamo) {
-                if (dynamo.toggleDirection()) {
-                    notifyDirection(player, dynamo);
-                } else {
-                    notifyConflict(player);
-                }
-            }
-            return InteractionResult.SUCCESS;
-        }
-        return InteractionResult.PASS;
     }
 
     /** 用动作栏提示当前转向，方便确认“设置”确实生效。 */
@@ -99,15 +88,6 @@ public class GolemDynamoBlock extends HorizontalKineticBlock implements IBE<Gole
             player.displayClientMessage(
                     net.minecraft.network.chat.Component.translatable(
                             dynamo.isReversed() ? "mystery_dynamics.direction.ccw" : "mystery_dynamics.direction.cw"),
-                    true);
-        }
-    }
-
-    /** 网络里有别的动力源时不能统一反转。 */
-    private static void notifyConflict(net.minecraft.world.entity.player.Player player) {
-        if (player != null) {
-            player.displayClientMessage(
-                    net.minecraft.network.chat.Component.translatable("mystery_dynamics.direction.conflict"),
                     true);
         }
     }
