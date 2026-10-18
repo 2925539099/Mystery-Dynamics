@@ -1,8 +1,0 @@
-{
-  "variants": {
-    "facing=north": { "model": "golem_power:block/golem_dynamo" },
-    "facing=east":  { "model": "golem_power:block/golem_dynamo", "y": 90 },
-    "facing=south": { "model": "golem_power:block/golem_dynamo", "y": 180 },
-    "facing=west":  { "model": "golem_power:block/golem_dynamo", "y": 270 }
-  }
-}

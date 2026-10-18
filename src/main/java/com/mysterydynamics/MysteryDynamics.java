@@ -1,7 +1,7 @@
-package com.golempower;
+package com.mysterydynamics;
 
-import com.golempower.block.GolemDynamoBlock;
-import com.golempower.block.GolemDynamoBlockEntity;
+import com.mysterydynamics.block.GolemDynamoBlock;
+import com.mysterydynamics.block.GolemDynamoBlockEntity;
 import com.simibubi.create.api.stress.BlockStressValues;
 
 import net.minecraft.core.registries.Registries;
@@ -21,10 +21,10 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-@Mod(GolemPower.MODID)
-public class GolemPower {
+@Mod(MysteryDynamics.MODID)
+public class MysteryDynamics {
 
-    public static final String MODID = "golem_power";
+    public static final String MODID = "mystery_dynamics";
 
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(MODID);
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MODID);
@@ -59,17 +59,17 @@ public class GolemPower {
     /** 独立创造模式标签页，图标就是这台傀儡动力核心。 */
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> TAB = CREATIVE_TABS.register("main",
             () -> CreativeModeTab.builder()
-                    .title(Component.translatable("itemGroup.golem_power"))
+                    .title(Component.translatable("itemGroup.mystery_dynamics"))
                     .icon(() -> new ItemStack(GOLEM_DYNAMO_ITEM.get()))
                     .displayItems((params, output) -> output.accept(GOLEM_DYNAMO_ITEM.get()))
                     .build());
 
-    public GolemPower(IEventBus modEventBus) {
+    public MysteryDynamics(IEventBus modEventBus) {
         BLOCKS.register(modEventBus);
         ITEMS.register(modEventBus);
         BLOCK_ENTITY_TYPES.register(modEventBus);
         CREATIVE_TABS.register(modEventBus);
-        modEventBus.addListener(GolemPower::commonSetup);
+        modEventBus.addListener(MysteryDynamics::commonSetup);
     }
 
     private static void commonSetup(FMLCommonSetupEvent event) {

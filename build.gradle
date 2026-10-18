@@ -7,7 +7,7 @@ version = project.mod_version
 group = project.maven_group
 
 base {
-    archivesName = '傀儡动力系统'
+    archivesName = '神秘动力学'
 }
 
 // 下载源镜像（Mojang / NeoForge 官方源在本机不可达）
@@ -53,7 +53,7 @@ neoForge {
     }
 
     mods {
-        "golem_power" {
+        "mystery_dynamics" {
             sourceSet sourceSets.main
         }
     }

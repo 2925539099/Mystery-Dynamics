@@ -14,12 +14,12 @@ import json
 import os
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SRC_BBMODEL = r"C:\Users\LENOVO\Desktop\傀儡动力系统\（傀儡动力系统）golem_body - Converted.bbmodel"
-SRC_TEX_DIR = r"C:\Users\LENOVO\Desktop\傀儡动力系统"
+SRC_BBMODEL = r"C:\Users\LENOVO\Desktop\神秘动力学\（神秘动力学）golem_body - Converted.bbmodel"
+SRC_TEX_DIR = r"C:\Users\LENOVO\Desktop\神秘动力学"
 
 RES = os.path.join(ROOT, "src", "main", "resources")
-MODEL_OUT = os.path.join(RES, "assets", "golem_power", "models", "block", "golem_dynamo.json")
-TEX_OUT_DIR = os.path.join(RES, "assets", "golem_power", "textures", "block")
+MODEL_OUT = os.path.join(RES, "assets", "mystery_dynamics", "models", "block", "golem_dynamo.json")
+TEX_OUT_DIR = os.path.join(RES, "assets", "mystery_dynamics", "textures", "block")
 
 # 模型里的贴图索引 -> 方块模型材质
 TEXTURE_MATERIALS = {
@@ -72,12 +72,12 @@ def main():
         })
 
     model = {
-        "credit": "Converted from Blockbench project (傀儡动力系统)",
+        "credit": "Converted from Blockbench project (神秘动力学)",
         "ambientocclusion": bool(data.get("ambientocclusion", True)),
         "textures": {
-            "particle": "golem_power:block/golem_iron",
-            "golem": "golem_power:block/golem_iron",
-            "casing": "golem_power:block/andesite_belt_casing",
+            "particle": "mystery_dynamics:block/golem_iron",
+            "golem": "mystery_dynamics:block/golem_iron",
+            "casing": "mystery_dynamics:block/andesite_belt_casing",
         },
         "elements": elements,
     }

@@ -47,7 +47,7 @@ def main():
         "gamerule sendCommandFeedback true",
         "forceload add 0 0 16 16",
         "setblock 0 100 0 minecraft:air",
-        "setblock 0 100 0 golem_power:golem_dynamo[facing=north]",
+        "setblock 0 100 0 mystery_dynamics:golem_dynamo[facing=north]",
     ]
     for c in cmds:
         print(">", c)
@@ -62,8 +62,8 @@ def main():
         print(" ", r.cmd(q).strip()[:600])
 
     # 顺便确认方块实体类型注册正确
-    print(">", "execute if block 0 100 0 golem_power:golem_dynamo run say block-ok")
-    print(" ", r.cmd("execute if block 0 100 0 golem_power:golem_dynamo run say block-ok").strip())
+    print(">", "execute if block 0 100 0 mystery_dynamics:golem_dynamo run say block-ok")
+    print(" ", r.cmd("execute if block 0 100 0 mystery_dynamics:golem_dynamo run say block-ok").strip())
 
 
 if __name__ == "__main__":

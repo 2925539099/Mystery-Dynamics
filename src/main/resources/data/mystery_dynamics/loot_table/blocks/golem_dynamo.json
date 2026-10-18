@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "golem_power:golem_dynamo"
+          "name": "mystery_dynamics:golem_dynamo"
         }
       ],
       "conditions": [

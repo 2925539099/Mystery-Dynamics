@@ -1,4 +1,4 @@
-package com.golempower.block;
+package com.mysterydynamics.block;
 
 import com.simibubi.create.content.kinetics.base.GeneratingKineticBlockEntity;
 

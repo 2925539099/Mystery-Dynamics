@@ -9,4 +9,5 @@ pluginManagement {
     }
 }
 
-rootProject.name = 'golem-power-neoforge'
+rootProject.name = 'mystery-dynamics'
+

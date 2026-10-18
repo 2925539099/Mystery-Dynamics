@@ -1,6 +1,6 @@
-package com.golempower.block;
+package com.mysterydynamics.block;
 
-import com.golempower.GolemPower;
+import com.mysterydynamics.MysteryDynamics;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.content.kinetics.base.HorizontalKineticBlock;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
@@ -92,7 +92,7 @@ public class GolemDynamoBlock extends HorizontalKineticBlock implements IBE<Gole
         if (player != null) {
             player.displayClientMessage(
                     net.minecraft.network.chat.Component.translatable(
-                            dynamo.isReversed() ? "golem_power.direction.ccw" : "golem_power.direction.cw"),
+                            dynamo.isReversed() ? "mystery_dynamics.direction.ccw" : "mystery_dynamics.direction.cw"),
                     true);
         }
     }
@@ -104,6 +104,6 @@ public class GolemDynamoBlock extends HorizontalKineticBlock implements IBE<Gole
 
     @Override
     public BlockEntityType<? extends GolemDynamoBlockEntity> getBlockEntityType() {
-        return GolemPower.GOLEM_DYNAMO_BE.get();
+        return MysteryDynamics.GOLEM_DYNAMO_BE.get();
     }
 }

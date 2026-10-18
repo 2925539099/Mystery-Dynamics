@@ -8,9 +8,9 @@ import numpy as np
 from PIL import Image
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-MODEL = os.path.join(ROOT, "src", "main", "resources", "assets", "golem_power",
+MODEL = os.path.join(ROOT, "src", "main", "resources", "assets", "mystery_dynamics",
                      "models", "block", "golem_dynamo.json")
-TEX_DIR = os.path.join(ROOT, "src", "main", "resources", "assets", "golem_power", "textures", "block")
+TEX_DIR = os.path.join(ROOT, "src", "main", "resources", "assets", "mystery_dynamics", "textures", "block")
 OUT = os.path.join(ROOT, "preview_block.png")
 
 FACES = ["north", "east", "south", "west", "up", "down"]

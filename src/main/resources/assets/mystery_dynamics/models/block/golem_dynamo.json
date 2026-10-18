@@ -1,10 +1,10 @@
 {
- "credit": "Converted from Blockbench project (傀儡动力系统)",
+ "credit": "Converted from Blockbench project (神秘动力学)",
  "ambientocclusion": true,
  "textures": {
-  "particle": "golem_power:block/golem_iron",
-  "golem": "golem_power:block/golem_iron",
-  "casing": "golem_power:block/andesite_belt_casing"
+  "particle": "mystery_dynamics:block/golem_iron",
+  "golem": "mystery_dynamics:block/golem_iron",
+  "casing": "mystery_dynamics:block/andesite_belt_casing"
  },
  "elements": [
   {

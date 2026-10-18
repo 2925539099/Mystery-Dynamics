@@ -1,6 +1,6 @@
 # 神秘动力学（Mystery Dynamics）
 
-为「神秘时代」移植版添加联动 **机械动力（Create）** 的设备。
+为「神秘时代」移植版添加联动 **机械动力（Create）** 的设备。NeoForge 1.21.1 / Create 6.0.x。
 
 ## 当前内容
 
@@ -22,6 +22,10 @@
 | **空手**右键顶面/底面 | 同样翻转输出转向，动作栏提示当前方向 |
 | 潜行 + 扳手 | 拆除 |
 
+## 下载
+
+见仓库的 [Releases](../../releases) 页面。
+
 ## 构建
 
 需要 JDK 21，以及 Create 6.0.10 的 4 个编译依赖（放在 `libs/`，见 [libs/README.md](libs/README.md)）。
@@ -30,28 +34,28 @@
 .\gradlew.bat build
 ```
 
-产物：`build/libs/傀儡动力系统-<version>.jar`。
+产物：`build/libs/神秘动力学-<version>.jar`。
 
 > 如果访问不了 Mojang / NeoForge 官方源，`gradle/mojang-mirror.gradle` 会把仓库切到镜像；网络正常时可以删掉 `build.gradle` 里的 `apply from` 一行。
 
 ## 项目结构
 
 ```
-src/main/java/com/golempower/
-  GolemPower.java                    模组入口、方块/物品/方块实体/创造标签注册、应力值注册
-  block/GolemDynamoBlock.java        朝向、旋转轴、输出面、扳手交互
-  block/GolemDynamoBlockEntity.java  32 RPM / 16 SU per RPM 的应力源与转向翻转
+src/main/java/com/mysterydynamics/
+  MysteryDynamics.java              模组入口、方块/物品/方块实体/创造标签注册、应力值注册
+  block/GolemDynamoBlock.java       朝向、旋转轴、输出面、扳手交互
+  block/GolemDynamoBlockEntity.java 32 RPM / 16 SU per RPM 的应力源与转向翻转
 src/main/resources/
-  assets/golem_power/...             blockstate、方块模型、物品模型、lang、贴图
-  data/golem_power/...               掉落表
+  assets/mystery_dynamics/...       blockstate、方块模型、物品模型、lang、贴图
+  data/mystery_dynamics/...         掉落表
   data/minecraft/tags/block/mineable/pickaxe.json
 model/
-  golem_body.bbmodel                 Blockbench 源文件
-  textures/                          8 种傀儡材质 + 安山机壳贴图
+  golem_body.bbmodel                Blockbench 源文件
+  textures/                         8 种傀儡材质 + 安山机壳贴图
 tools/
-  convert_model.py                   .bbmodel -> 方块模型 JSON（inflate、UV/8、display）
-  preview_block.py                   软件渲染预览
-  rcon_test.py                       开发服务器 RCON 冒烟测试
+  convert_model.py                  .bbmodel -> 方块模型 JSON（inflate、UV/8、display）
+  preview_block.py                  软件渲染预览
+  rcon_test.py                      开发服务器 RCON 冒烟测试
 ```
 
 ## 已做的验证
