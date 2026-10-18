@@ -1,0 +1,6 @@
+{
+  "block.golem_power.golem_dynamo": "Golem Dynamo",
+  "itemGroup.golem_power": "Golem Power",
+  "golem_power.direction.cw": "Rotation: Clockwise",
+  "golem_power.direction.ccw": "Rotation: Counter-clockwise"
+}

@@ -1,0 +1,12 @@
+pluginManagement {
+    repositories {
+        maven {
+            name = 'NeoForgedCDN'
+            url = 'https://neoforged.forgecdn.net/releases/'
+        }
+        gradlePluginPortal()
+        mavenCentral()
+    }
+}
+
+rootProject.name = 'golem-power-neoforge'

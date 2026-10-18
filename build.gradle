@@ -1,0 +1,69 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '2.0.143'
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+    archivesName = '傀儡动力系统'
+}
+
+// 下载源镜像（Mojang / NeoForge 官方源在本机不可达）
+apply from: 'gradle/mojang-mirror.gradle'
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(21)
+    withSourcesJar()
+}
+
+// Create 只作为编译期依赖：运行时由玩家的整合包提供
+dependencies {
+    compileOnly files(
+            'libs/create-6.0.10.jar',
+            'libs/ponder-neoforge-1.0.82+mc1.21.1.jar',
+            'libs/flywheel-neoforge-1.21.1-1.0.6.jar',
+            'libs/Registrate-MC1.21-1.3.0+67.jar'
+    )
+}
+
+// 源码包不是模组，剔除元数据并单独输出（同盔甲附加的处理）
+tasks.named('sourcesJar', Jar) {
+    exclude 'META-INF/neoforge.mods.toml'
+    destinationDirectory.set(layout.buildDirectory.dir('libs/sources'))
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = 21
+}
+
+neoForge {
+    version = project.neo_version
+
+    runs {
+        client {
+            client()
+        }
+        server {
+            server()
+            programArgument '--nogui'
+        }
+    }
+
+    mods {
+        "golem_power" {
+            sourceSet sourceSets.main
+        }
+    }
+}
+
+processResources {
+    filteringCharset = 'UTF-8'
+    inputs.property 'version', project.version
+
+    filesMatching('META-INF/neoforge.mods.toml') {
+        expand version: project.version
+    }
+}
