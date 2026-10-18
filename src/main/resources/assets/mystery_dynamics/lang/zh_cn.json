@@ -2,5 +2,6 @@
   "block.mystery_dynamics.golem_dynamo": "傀儡动力核心",
   "itemGroup.mystery_dynamics": "神秘动力学",
   "mystery_dynamics.direction.cw": "转向：顺时针",
-  "mystery_dynamics.direction.ccw": "转向：逆时针"
+  "mystery_dynamics.direction.ccw": "转向：逆时针",
+  "mystery_dynamics.direction.conflict": "网络中有其它动力源，无法统一转向"
 }

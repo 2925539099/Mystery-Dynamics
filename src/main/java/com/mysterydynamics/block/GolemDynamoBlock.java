@@ -64,9 +64,12 @@ public class GolemDynamoBlock extends HorizontalKineticBlock implements IBE<Gole
 
         // 其余面：切换顺时针 / 逆时针（参考蒸汽引擎的 movementDirection）
         if (!level.isClientSide && level.getBlockEntity(pos) instanceof GolemDynamoBlockEntity dynamo) {
-            dynamo.toggleDirection();
-            notifyDirection(context.getPlayer(), dynamo);
-            IWrenchable.playRotateSound(level, pos);
+            if (dynamo.toggleDirection()) {
+                notifyDirection(context.getPlayer(), dynamo);
+                IWrenchable.playRotateSound(level, pos);
+            } else {
+                notifyConflict(context.getPlayer());
+            }
         }
         return InteractionResult.SUCCESS;
     }
@@ -78,8 +81,11 @@ public class GolemDynamoBlock extends HorizontalKineticBlock implements IBE<Gole
                                                net.minecraft.world.phys.BlockHitResult hit) {
         if (hit.getDirection().getAxis() == Direction.Axis.Y) {
             if (!level.isClientSide && level.getBlockEntity(pos) instanceof GolemDynamoBlockEntity dynamo) {
-                dynamo.toggleDirection();
-                notifyDirection(player, dynamo);
+                if (dynamo.toggleDirection()) {
+                    notifyDirection(player, dynamo);
+                } else {
+                    notifyConflict(player);
+                }
             }
             return InteractionResult.SUCCESS;
         }
@@ -93,6 +99,15 @@ public class GolemDynamoBlock extends HorizontalKineticBlock implements IBE<Gole
             player.displayClientMessage(
                     net.minecraft.network.chat.Component.translatable(
                             dynamo.isReversed() ? "mystery_dynamics.direction.ccw" : "mystery_dynamics.direction.cw"),
+                    true);
+        }
+    }
+
+    /** 网络里有别的动力源时不能统一反转。 */
+    private static void notifyConflict(net.minecraft.world.entity.player.Player player) {
+        if (player != null) {
+            player.displayClientMessage(
+                    net.minecraft.network.chat.Component.translatable("mystery_dynamics.direction.conflict"),
                     true);
         }
     }
