@@ -114,7 +114,10 @@ public class MysteryDynamics {
                 // 与石头一致：硬度 1.5，爆炸抗性 6.0
                 .strength(1.5F, 6.0F)
                 .requiresCorrectToolForDrops()
-                .sound(SoundType.STONE);
+                .sound(SoundType.STONE)
+                // 模型不是满方块（前后开口），不能按满方块遮挡邻居，
+                // 否则贴着设备的方块面会被剔除，出现“透视”破洞
+                .noOcclusion();
     }
 
     private static BlockEntityType<?> blockEntityType() {
