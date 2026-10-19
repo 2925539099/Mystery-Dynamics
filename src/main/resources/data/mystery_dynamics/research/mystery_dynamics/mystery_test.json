@@ -1,0 +1,27 @@
+{
+  "key": "MYSTERY_TEST",
+  "order": 0,
+  "category": "MYSTERY_DYNAMICS",
+  "col": 0,
+  "row": 0,
+  "complexity": 0,
+  "warp": 0,
+  "parents": [],
+  "parents_hidden": [],
+  "siblings": [],
+  "flags": [
+    "autoUnlock",
+    "round"
+  ],
+  "text_pages": [
+    "mystery_dynamics.research.test.text"
+  ],
+  "item": "mystery_dynamics:golem_power_frame",
+  "pages": [
+    {
+      "type": "TEXT",
+      "text": "mystery_dynamics.research.test.text",
+      "source": "mystery_dynamics.research.test.text"
+    }
+  ]
+}

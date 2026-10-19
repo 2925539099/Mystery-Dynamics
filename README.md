@@ -41,6 +41,21 @@
 - 同时登记在 `mineable/axe` 和 `mineable/pickaxe` 里，**斧头或镐**都能正常挖掘并掉落方块本身；
 - 潜行 + 机械动力扳手仍然可以直接拆卸（保留原有行为）。
 
+## 神秘时代研究书
+
+同时安装神秘时代 4 移植版（port.265+）时，研究书会多出一个「神秘动力学」分类：
+
+- 分类图标：`textures/research/tab_icon.png`（32×32）
+- 分类背景：`textures/research/background.png`（512×512）
+- 分类顺序 6，排在「神秘」之后
+- 分类中央（col 0 / row 0）有一条测试研究 **MYSTERY_TEST**，图标为「空傀儡动力系统框架」，名称与文字均为测试占位
+
+研究内容全部是数据包 JSON，不需要编译期依赖神秘时代：
+
+- `data/mystery_dynamics/research_category/mystery_dynamics.json`
+- `data/mystery_dynamics/research/mystery_dynamics/mystery_test.json`
+
+本地化键：`tc.research_category.MYSTERY_DYNAMICS`、`tc.research_name.MYSTERY_TEST`、`tc.research_text.MYSTERY_TEST`、`mystery_dynamics.research.test.text`。
 ## 构建
 
 需要 JDK 21，以及 Create 6.0.10 的 4 个编译依赖（放在 `libs/`，见 [libs/README.md](libs/README.md)）。

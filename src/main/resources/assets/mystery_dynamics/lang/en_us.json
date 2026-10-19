@@ -10,5 +10,9 @@
   "block.mystery_dynamics.mystery_golem_power": "Mystery Golem Dynamo",
   "block.mystery_dynamics.golem_power_frame": "Golem Power Frame",
   "mystery_dynamics.direction.cw": "Rotation: Clockwise",
-  "mystery_dynamics.direction.ccw": "Rotation: Counter-clockwise"
+  "mystery_dynamics.direction.ccw": "Rotation: Counter-clockwise",
+  "tc.research_category.MYSTERY_DYNAMICS": "Mystery Dynamics",
+  "tc.research_name.MYSTERY_TEST": "Test Research",
+  "tc.research_text.MYSTERY_TEST": "A test research entry.",
+  "mystery_dynamics.research.test.text": "This is test research page text."
 }

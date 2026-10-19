@@ -10,5 +10,9 @@
   "block.mystery_dynamics.mystery_golem_power": "神秘傀儡动力系统",
   "block.mystery_dynamics.golem_power_frame": "空傀儡动力系统框架",
   "mystery_dynamics.direction.cw": "转向：顺时针",
-  "mystery_dynamics.direction.ccw": "转向：逆时针"
+  "mystery_dynamics.direction.ccw": "转向：逆时针",
+  "tc.research_category.MYSTERY_DYNAMICS": "神秘动力学",
+  "tc.research_name.MYSTERY_TEST": "测试研究",
+  "tc.research_text.MYSTERY_TEST": "测试用研究条目。",
+  "mystery_dynamics.research.test.text": "这是用于测试的研究页面文字。"
 }
