@@ -84,7 +84,7 @@
 
 ## 构建
 
-需要 JDK 21，以及 Create 6.0.10 的 4 个编译依赖（放在 `libs/`，见 [libs/README.md](libs/README.md)）。
+需要 JDK 21，以及 5 个编译期前置 jar（Create 6.0.10 与神秘时代 port.265）。前置**只用于编译，不随本模组发布**；默认从 `libs/` 读取，也可用 `-PdepsDir=<路径>` 指到项目外（本机放在 `../.tools/deps`）。详见 [libs/README.md](libs/README.md)。
 
 ```powershell
 .\gradlew.bat build
