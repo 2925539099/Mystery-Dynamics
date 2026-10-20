@@ -17,5 +17,20 @@
   "mystery_dynamics.research.test.text": "这是用于测试的研究页面文字。",
   "tc.research_name.STRAW_GOLEM_POWER": "稻草傀儡动力系统",
   "tc.research_text.STRAW_GOLEM_POWER": "占位",
-  "mystery_dynamics.research.straw_golem_power.text": "占位"
+  "mystery_dynamics.research.straw_golem_power.text": "占位",
+  "tc.research_name.WOOD_GOLEM_POWER": "木头傀儡动力系统",
+  "tc.research_name.CLAY_GOLEM_POWER": "粘土傀儡动力系统",
+  "tc.research_name.STONE_GOLEM_POWER": "石头傀儡动力系统",
+  "tc.research_name.IRON_GOLEM_POWER": "铁卫傀儡动力系统",
+  "tc.research_name.MYSTERY_GOLEM_POWER": "神秘傀儡动力系统",
+  "tc.research_text.WOOD_GOLEM_POWER": "占位",
+  "tc.research_text.CLAY_GOLEM_POWER": "占位",
+  "tc.research_text.STONE_GOLEM_POWER": "占位",
+  "tc.research_text.IRON_GOLEM_POWER": "占位",
+  "tc.research_text.MYSTERY_GOLEM_POWER": "占位",
+  "mystery_dynamics.research.wood_golem_power.text": "占位",
+  "mystery_dynamics.research.clay_golem_power.text": "占位",
+  "mystery_dynamics.research.stone_golem_power.text": "占位",
+  "mystery_dynamics.research.iron_golem_power.text": "占位",
+  "mystery_dynamics.research.mystery_golem_power.text": "占位"
 }

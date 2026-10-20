@@ -1,0 +1,43 @@
+{
+  "key": "MYSTERY_GOLEM_POWER",
+  "order": 6,
+  "category": "MYSTERY_DYNAMICS",
+  "col": 0,
+  "row": 12,
+  "complexity": 1,
+  "warp": 0,
+  "parents": [
+    "GOLEMTHAUMIUM",
+    "IRON_GOLEM_POWER"
+  ],
+  "parents_hidden": [],
+  "siblings": [],
+  "flags": [
+    "secondary"
+  ],
+  "text_pages": [
+    "mystery_dynamics.research.mystery_golem_power.text"
+  ],
+  "item": "mystery_dynamics:mystery_golem_power",
+  "aspects": [
+    {
+      "aspect": "motus",
+      "amount": 6
+    },
+    {
+      "aspect": "instrumentum",
+      "amount": 3
+    },
+    {
+      "aspect": "machina",
+      "amount": 3
+    }
+  ],
+  "pages": [
+    {
+      "type": "TEXT",
+      "text": "mystery_dynamics.research.mystery_golem_power.text",
+      "source": "mystery_dynamics.research.mystery_golem_power.text"
+    }
+  ]
+}

@@ -17,5 +17,20 @@
   "mystery_dynamics.research.test.text": "This is test research page text.",
   "tc.research_name.STRAW_GOLEM_POWER": "Straw Golem Power System",
   "tc.research_text.STRAW_GOLEM_POWER": "Placeholder",
-  "mystery_dynamics.research.straw_golem_power.text": "Placeholder"
+  "mystery_dynamics.research.straw_golem_power.text": "Placeholder",
+  "tc.research_name.WOOD_GOLEM_POWER": "Wooden Golem Power System",
+  "tc.research_name.CLAY_GOLEM_POWER": "Clay Golem Power System",
+  "tc.research_name.STONE_GOLEM_POWER": "Stone Golem Power System",
+  "tc.research_name.IRON_GOLEM_POWER": "Iron Guard Golem Power System",
+  "tc.research_name.MYSTERY_GOLEM_POWER": "Mystery Golem Power System",
+  "tc.research_text.WOOD_GOLEM_POWER": "Placeholder",
+  "tc.research_text.CLAY_GOLEM_POWER": "Placeholder",
+  "tc.research_text.STONE_GOLEM_POWER": "Placeholder",
+  "tc.research_text.IRON_GOLEM_POWER": "Placeholder",
+  "tc.research_text.MYSTERY_GOLEM_POWER": "Placeholder",
+  "mystery_dynamics.research.wood_golem_power.text": "Placeholder",
+  "mystery_dynamics.research.clay_golem_power.text": "Placeholder",
+  "mystery_dynamics.research.stone_golem_power.text": "Placeholder",
+  "mystery_dynamics.research.iron_golem_power.text": "Placeholder",
+  "mystery_dynamics.research.mystery_golem_power.text": "Placeholder"
 }

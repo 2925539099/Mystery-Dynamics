@@ -1,0 +1,43 @@
+{
+  "key": "WOOD_GOLEM_POWER",
+  "order": 2,
+  "category": "MYSTERY_DYNAMICS",
+  "col": 0,
+  "row": 4,
+  "complexity": 1,
+  "warp": 0,
+  "parents": [
+    "GOLEMWOOD",
+    "STRAW_GOLEM_POWER"
+  ],
+  "parents_hidden": [],
+  "siblings": [],
+  "flags": [
+    "secondary"
+  ],
+  "text_pages": [
+    "mystery_dynamics.research.wood_golem_power.text"
+  ],
+  "item": "mystery_dynamics:wood_golem_power",
+  "aspects": [
+    {
+      "aspect": "motus",
+      "amount": 6
+    },
+    {
+      "aspect": "instrumentum",
+      "amount": 3
+    },
+    {
+      "aspect": "machina",
+      "amount": 3
+    }
+  ],
+  "pages": [
+    {
+      "type": "TEXT",
+      "text": "mystery_dynamics.research.wood_golem_power.text",
+      "source": "mystery_dynamics.research.wood_golem_power.text"
+    }
+  ]
+}
