@@ -14,5 +14,8 @@
   "tc.research_category.MYSTERY_DYNAMICS": "Mystery Dynamics",
   "tc.research_name.MYSTERY_TEST": "Test Research",
   "tc.research_text.MYSTERY_TEST": "A test research entry.",
-  "mystery_dynamics.research.test.text": "This is test research page text."
+  "mystery_dynamics.research.test.text": "This is test research page text.",
+  "tc.research_name.STRAW_GOLEM_POWER": "Straw Golem Power System",
+  "tc.research_text.STRAW_GOLEM_POWER": "Placeholder",
+  "mystery_dynamics.research.straw_golem_power.text": "Placeholder"
 }

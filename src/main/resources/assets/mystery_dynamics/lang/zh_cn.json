@@ -14,5 +14,8 @@
   "tc.research_category.MYSTERY_DYNAMICS": "神秘动力学",
   "tc.research_name.MYSTERY_TEST": "测试研究",
   "tc.research_text.MYSTERY_TEST": "测试用研究条目。",
-  "mystery_dynamics.research.test.text": "这是用于测试的研究页面文字。"
+  "mystery_dynamics.research.test.text": "这是用于测试的研究页面文字。",
+  "tc.research_name.STRAW_GOLEM_POWER": "稻草傀儡动力系统",
+  "tc.research_text.STRAW_GOLEM_POWER": "占位",
+  "mystery_dynamics.research.straw_golem_power.text": "占位"
 }

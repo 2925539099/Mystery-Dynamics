@@ -55,6 +55,16 @@ def dashed_rect(draw, box, color, dash=8, gap=6, width=2):
         draw.line([(x1, y), (x1, min(y + dash, y1))], fill=color, width=width)
 
 
+def ellipsize(draw, text, f, max_width):
+    if draw.textlength(text, font=f) <= max_width:
+        return text
+    while len(text) > 3:
+        text = text[:-1]
+        candidate = text + "…"
+        if draw.textlength(candidate, font=f) <= max_width:
+            return candidate
+    return text
+
 def load_entries():
     pattern = os.path.join(ROOT, "src", "main", "resources", "data", "*", "research", "**", "*.json")
     entries = []
@@ -122,7 +132,8 @@ def main():
         draw.rounded_rectangle([x + 4, y + 4, x + CELL - 4, y + CELL - 4],
                                radius=12, fill=ACCENT_FILL, outline=ACCENT, width=3)
         f = fit_font(draw, e["key"], CELL - 18, 19, True)
-        draw.text((x + CELL / 2, y + CELL / 2 - 12), e["key"], font=f,
+        label = ellipsize(draw, e["key"], f, CELL - 18)
+        draw.text((x + CELL / 2, y + CELL / 2 - 12), label, font=f,
                   fill=TEXT, anchor="mm")
         draw.text((x + CELL / 2, y + CELL / 2 + 22), f"({col}, {row})",
                   font=font(16), fill=MUTED, anchor="mm")
@@ -175,17 +186,17 @@ def main():
         draw.text((tx + 340, ty), str(e["row"]), font=font(19), fill=TEXT)
         ty += 32
 
-    ty = GY + 420
+    ty = max(GY + 420, ty + 24)
     draw.text((tx, ty), "推荐空位（8 个，间隔 2 格）", font=font(26, True), fill=GREEN)
     ty += 46
     col_w = (pw - 68) // 2
     for i, (col, row) in enumerate(RING):
         cx2 = tx + (i % 2) * col_w
-        cy2 = ty + (i // 2) * 34
+        cy2 = ty + (i // 2) * 30
         draw.text((cx2, cy2), f"{i + 1}.  ({col}, {row})", font=font(20), fill=TEXT)
 
     # 图例
-    ly = GY + 620
+    ly = GY + 750
     draw.rounded_rectangle([tx, ly, tx + 26, ly + 26], radius=6,
                            fill=ACCENT_FILL, outline=ACCENT, width=2)
     draw.text((tx + 38, ly + 2), "已有研究", font=font(19), fill=TEXT)
@@ -193,7 +204,7 @@ def main():
     draw.text((tx + 208, ly + 2), "推荐空位", font=font(19), fill=TEXT)
 
     # 新增研究说明
-    ty = GY + 680
+    ty = GY + 620
     draw.text((tx, ty), "新增研究", font=font(24, True), fill=TEXT)
     ty += 38
     for line in (
