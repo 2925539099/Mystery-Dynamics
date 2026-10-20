@@ -48,11 +48,12 @@
 - 分类图标：`textures/research/tab_icon.png`（32×32）
 - 分类背景：`textures/research/background.png`（512×512）
 - 分类顺序 6，排在「神秘」之后
-- 分类中央（col 0 / row 0）：测试研究 **MYSTERY_TEST**，图标「空傀儡动力系统框架」，占位文本
+- 分类中央（col 0 / row 0）：测试研究 **MYSTERY_TEST**，图标为 `textures/research/test_icon.png`（图标.png），占位文本
 - **STRAW_GOLEM_POWER**「稻草傀儡动力系统」，坐标 **(0, 2)**，图标为稻草傀儡动力系统方块
   - 前置研究：傀儡学 `GOLEMSTRAW`
   - 研究点消耗：`motus` 6、`instrumentum` 3、`machina` 3
   - 页面与介绍文本：占位
+  - 标记 `secondary`：默认研究难度（`research_difficulty = 0`）下，在书中点击该研究即可直接扣除研究点解锁；难度设为 1 时仍需研究笔记
 
 研究内容全部是数据包 JSON，不需要编译期依赖神秘时代：
 

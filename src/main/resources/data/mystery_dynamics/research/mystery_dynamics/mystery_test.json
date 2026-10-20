@@ -16,12 +16,12 @@
   "text_pages": [
     "mystery_dynamics.research.test.text"
   ],
-  "item": "mystery_dynamics:golem_power_frame",
   "pages": [
     {
       "type": "TEXT",
       "text": "mystery_dynamics.research.test.text",
       "source": "mystery_dynamics.research.test.text"
     }
-  ]
+  ],
+  "icon": "mystery_dynamics:textures/research/test_icon.png"
 }
