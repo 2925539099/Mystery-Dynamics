@@ -53,9 +53,9 @@
 | 研究 | 坐标 | 前置 | 解锁方式 |
 |---|---|---|---|
 | STRAW_GOLEM_POWER 稻草傀儡动力系统 | (0, 2) | GOLEMSTRAW | `secondary`，点击直接扣 motus 6 / instrumentum 3 / machina 3 |
-| FLESH_GOLEM_POWER 血肉傀儡动力系统 | (-2, 4) | GOLEMFLESH + STRAW_GOLEM_POWER | 研究笔记（血肉笔记 + fabrico 3），warp 3 |
+| FLESH_GOLEM_POWER 血肉傀儡动力系统 | (-2, 4) | GOLEMFLESH + WOOD_GOLEM_POWER | 研究笔记（血肉笔记 + fabrico 3），warp 3 |
 | WOOD_GOLEM_POWER 木头傀儡动力系统 | (0, 4) | GOLEMWOOD + STRAW_GOLEM_POWER | 研究笔记（木头笔记 + fabrico 3） |
-| TALLOW_GOLEM_POWER 油脂傀儡动力系统 | (-2, 6) | GOLEMTALLOW + WOOD_GOLEM_POWER | 研究笔记（油脂笔记 + fabrico 3） |
+| TALLOW_GOLEM_POWER 油脂傀儡动力系统 | (-2, 6) | GOLEMTALLOW + CLAY_GOLEM_POWER | 研究笔记（油脂笔记 + fabrico 3） |
 | CLAY_GOLEM_POWER 粘土傀儡动力系统 | (0, 6) | GOLEMCLAY + WOOD_GOLEM_POWER | 研究笔记（粘土笔记 + fabrico 3） |
 | STONE_GOLEM_POWER 石头傀儡动力系统 | (0, 8) | GOLEMSTONE + CLAY_GOLEM_POWER | 研究笔记（石头笔记 + fabrico 3） |
 | IRON_GOLEM_POWER 铁卫傀儡动力系统 | (0, 10) | GOLEMIRON + STONE_GOLEM_POWER | 研究笔记（铁卫笔记 + fabrico 3） |
