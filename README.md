@@ -1,6 +1,6 @@
 # 神秘动力学（Mystery Dynamics）
 
-为「神秘时代」移植版添加联动 **机械动力（Create）** 的设备。NeoForge 1.21.1 / Create 6.0.x。
+基于神秘时代，为机械动力额外增添一些设备。NeoForge 1.21.1 / Create 6.0.x。
 
 ## 傀儡动力系统
 
