@@ -70,6 +70,18 @@
 - `data/mystery_dynamics/research/mystery_dynamics/mystery_test.json`
 
 本地化键：`tc.research_category.MYSTERY_DYNAMICS`、`tc.research_name.MYSTERY_TEST`、`tc.research_text.MYSTERY_TEST`、`mystery_dynamics.research.test.text`。
+## 奥术工作台配方
+
+安装神秘时代后，以下 3 个配方会注册到奥术工作台（其余设备暂未添加）：
+
+| 产物 | 配方 | Vis 消耗 | 研究页 |
+|---|---|---|---|
+| 空傀儡动力系统框架 | 神秘锭 ×3 / 齿轮 · 安山机壳 · 齿轮 | 六种元要素各 5 | STRAW_GOLEM_POWER |
+| 稻草傀儡动力系统 | 空框架 / 稻草傀儡 / 木棍 | 水 3 + 地 6 | STRAW_GOLEM_POWER |
+| 木头傀儡动力系统 | 空框架 / 木头傀儡 | 水 3 + 地 6 + 风 3 | WOOD_GOLEM_POWER |
+
+只安装机械动力、不安装神秘时代时，这些配方不会注册，模组也不会加载与神秘时代相关的类。
+
 ## 构建
 
 需要 JDK 21，以及 Create 6.0.10 的 4 个编译依赖（放在 `libs/`，见 [libs/README.md](libs/README.md)）。

@@ -132,6 +132,10 @@ public class MysteryDynamics {
                 BlockStressValues.RPM.register(block,
                         new BlockStressValues.GeneratedRpm(Math.round(block.rpm()), false));
             }
+            // 安装了神秘时代时才注册奥术工作台配方（未安装时不加载 compat 类）
+            if (net.neoforged.fml.ModList.get().isLoaded("thaumcraft")) {
+                com.mysterydynamics.compat.ThaumcraftRecipes.register();
+            }
         });
     }
 }

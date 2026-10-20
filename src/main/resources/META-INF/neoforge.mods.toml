@@ -28,3 +28,10 @@ type = "required"
 versionRange = "[6.0.0,)"
 ordering = "NONE"
 side = "BOTH"
+
+[[dependencies.mystery_dynamics]]
+modId = "thaumcraft"
+type = "optional"
+versionRange = "[0.2.2.95,)"
+ordering = "NONE"
+side = "BOTH"
