@@ -88,6 +88,7 @@ tools/
   preview_block.py                   方块模型预览渲染
   rcon_test.py                       开发服务器 RCON 冒烟测试
   research_layout.py                 扫描研究 JSON，列出坐标并画研究书网格
+  render_research_grid.py            把研究坐标渲染成 PNG（research_grid.png）
 ```
 
 ## 已做的验证
