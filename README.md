@@ -87,6 +87,7 @@ model/
 tools/
   preview_block.py                   方块模型预览渲染
   rcon_test.py                       开发服务器 RCON 冒烟测试
+  research_layout.py                 扫描研究 JSON，列出坐标并画研究书网格
 ```
 
 ## 已做的验证
