@@ -32,5 +32,11 @@
   "mystery_dynamics.research.clay_golem_power.text": "Placeholder",
   "mystery_dynamics.research.stone_golem_power.text": "Placeholder",
   "mystery_dynamics.research.iron_golem_power.text": "Placeholder",
-  "mystery_dynamics.research.mystery_golem_power.text": "Placeholder"
+  "mystery_dynamics.research.mystery_golem_power.text": "Placeholder",
+  "tc.research_name.FLESH_GOLEM_POWER": "Flesh Golem Power System",
+  "tc.research_name.TALLOW_GOLEM_POWER": "Tallow Golem Power System",
+  "tc.research_text.FLESH_GOLEM_POWER": "Placeholder",
+  "tc.research_text.TALLOW_GOLEM_POWER": "Placeholder",
+  "mystery_dynamics.research.flesh_golem_power.text": "Placeholder",
+  "mystery_dynamics.research.tallow_golem_power.text": "Placeholder"
 }

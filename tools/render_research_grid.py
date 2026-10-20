@@ -153,7 +153,7 @@ def main():
     # 右侧信息面板
     px = GX + gw + 80
     pw = W - px - 70
-    panel_h = 1060
+    panel_h = 1200
     draw.rounded_rectangle([px, GY - 14, px + pw, GY - 14 + panel_h], radius=18,
                            fill=(26, 19, 38), outline=GRID_LINE, width=2)
     tx = px + 34

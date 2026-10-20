@@ -48,21 +48,22 @@
 - 分类图标：`textures/research/tab_icon.png`（32×32）
 - 分类背景：`textures/research/background.png`（512×512）
 - 分类顺序 6，排在「神秘」之后
-- 分类中央（col 0 / row 0）：测试研究 **MYSTERY_TEST**，图标为 `textures/research/test_icon.png`（图标.png），占位文本
-- 设备研究链（col 0，自上而下）：
+- 设备研究链：
 
-| 研究 | 坐标 | 前置 | 研究点消耗 |
+| 研究 | 坐标 | 前置 | 解锁方式 |
 |---|---|---|---|
-| STRAW_GOLEM_POWER 稻草傀儡动力系统 | (0, 2) | GOLEMSTRAW | motus 6 / instrumentum 3 / machina 3 |
-| WOOD_GOLEM_POWER 木头傀儡动力系统 | (0, 4) | GOLEMWOOD + STRAW_GOLEM_POWER | 同上 |
-| CLAY_GOLEM_POWER 粘土傀儡动力系统 | (0, 6) | GOLEMCLAY + WOOD_GOLEM_POWER | 同上 |
-| STONE_GOLEM_POWER 石头傀儡动力系统 | (0, 8) | GOLEMSTONE + CLAY_GOLEM_POWER | 同上 |
-| IRON_GOLEM_POWER 铁卫傀儡动力系统 | (0, 10) | GOLEMIRON + STONE_GOLEM_POWER | 同上 |
-| MYSTERY_GOLEM_POWER 神秘傀儡动力系统 | (0, 12) | GOLEMTHAUMIUM + IRON_GOLEM_POWER | 同上 |
+| STRAW_GOLEM_POWER 稻草傀儡动力系统 | (0, 2) | GOLEMSTRAW | `secondary`，点击直接扣 motus 6 / instrumentum 3 / machina 3 |
+| FLESH_GOLEM_POWER 血肉傀儡动力系统 | (-2, 4) | GOLEMFLESH + STRAW_GOLEM_POWER | 研究笔记（血肉笔记 + fabrico 3），warp 3 |
+| WOOD_GOLEM_POWER 木头傀儡动力系统 | (0, 4) | GOLEMWOOD + STRAW_GOLEM_POWER | 研究笔记（木头笔记 + fabrico 3） |
+| TALLOW_GOLEM_POWER 油脂傀儡动力系统 | (-2, 6) | GOLEMTALLOW + WOOD_GOLEM_POWER | 研究笔记（油脂笔记 + fabrico 3） |
+| CLAY_GOLEM_POWER 粘土傀儡动力系统 | (0, 6) | GOLEMCLAY + WOOD_GOLEM_POWER | 研究笔记（粘土笔记 + fabrico 3） |
+| STONE_GOLEM_POWER 石头傀儡动力系统 | (0, 8) | GOLEMSTONE + CLAY_GOLEM_POWER | 研究笔记（石头笔记 + fabrico 3） |
+| IRON_GOLEM_POWER 铁卫傀儡动力系统 | (0, 10) | GOLEMIRON + STONE_GOLEM_POWER | 研究笔记（铁卫笔记 + fabrico 3） |
+| MYSTERY_GOLEM_POWER 神秘傀儡动力系统 | (0, 12) | GOLEMTHAUMIUM + IRON_GOLEM_POWER | 研究笔记（神秘笔记 + fabrico 3） |
 
-- 所有设备研究都带 `secondary`：默认研究难度（`research_difficulty = 0`）下，在书中点击即可直接扣除研究点解锁；难度设为 1 时仍需研究笔记
-- (0, 14) 与 (0, 16) 仍为空位，可继续补血肉、油脂傀儡动力系统
-
+- 只有稻草带 `secondary`（默认难度 `research_difficulty = 0` 时点击直接扣点）；其余研究不带 `secondary`，点击会生成研究笔记，要素 = 对应傀儡研究要素 + `fabrico` 3
+- 血肉研究的 `warp` 与傀儡学血肉研究一致，为 3
+- (0, 14) 与 (0, 16) 仍为空位
 研究内容全部是数据包 JSON，不需要编译期依赖神秘时代：
 
 - `data/mystery_dynamics/research_category/mystery_dynamics.json`

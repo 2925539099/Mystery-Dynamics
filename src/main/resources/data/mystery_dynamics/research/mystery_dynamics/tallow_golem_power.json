@@ -1,0 +1,53 @@
+{
+  "key": "TALLOW_GOLEM_POWER",
+  "order": 8,
+  "category": "MYSTERY_DYNAMICS",
+  "col": -2,
+  "row": 6,
+  "complexity": 1,
+  "warp": 0,
+  "parents": [
+    "GOLEMTALLOW",
+    "WOOD_GOLEM_POWER"
+  ],
+  "parents_hidden": [],
+  "siblings": [],
+  "flags": [],
+  "text_pages": [
+    "mystery_dynamics.research.tallow_golem_power.text"
+  ],
+  "item": "mystery_dynamics:tallow_golem_power",
+  "aspects": [
+    {
+      "aspect": "spiritus",
+      "amount": 3
+    },
+    {
+      "aspect": "motus",
+      "amount": 3
+    },
+    {
+      "aspect": "corpus",
+      "amount": 3
+    },
+    {
+      "aspect": "praecantatio",
+      "amount": 3
+    },
+    {
+      "aspect": "permutatio",
+      "amount": 3
+    },
+    {
+      "aspect": "fabrico",
+      "amount": 3
+    }
+  ],
+  "pages": [
+    {
+      "type": "TEXT",
+      "text": "mystery_dynamics.research.tallow_golem_power.text",
+      "source": "mystery_dynamics.research.tallow_golem_power.text"
+    }
+  ]
+}

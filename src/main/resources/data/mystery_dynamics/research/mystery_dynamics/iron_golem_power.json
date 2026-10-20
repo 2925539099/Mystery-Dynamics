@@ -12,24 +12,30 @@
   ],
   "parents_hidden": [],
   "siblings": [],
-  "flags": [
-    "secondary"
-  ],
+  "flags": [],
   "text_pages": [
     "mystery_dynamics.research.iron_golem_power.text"
   ],
   "item": "mystery_dynamics:iron_golem_power",
   "aspects": [
     {
-      "aspect": "motus",
-      "amount": 6
+      "aspect": "spiritus",
+      "amount": 9
     },
     {
-      "aspect": "instrumentum",
+      "aspect": "motus",
+      "amount": 9
+    },
+    {
+      "aspect": "metallum",
       "amount": 3
     },
     {
-      "aspect": "machina",
+      "aspect": "permutatio",
+      "amount": 3
+    },
+    {
+      "aspect": "fabrico",
       "amount": 3
     }
   ],

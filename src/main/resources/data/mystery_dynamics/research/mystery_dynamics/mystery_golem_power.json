@@ -12,24 +12,34 @@
   ],
   "parents_hidden": [],
   "siblings": [],
-  "flags": [
-    "secondary"
-  ],
+  "flags": [],
   "text_pages": [
     "mystery_dynamics.research.mystery_golem_power.text"
   ],
   "item": "mystery_dynamics:mystery_golem_power",
   "aspects": [
     {
-      "aspect": "motus",
-      "amount": 6
+      "aspect": "spiritus",
+      "amount": 10
     },
     {
-      "aspect": "instrumentum",
+      "aspect": "motus",
+      "amount": 10
+    },
+    {
+      "aspect": "metallum",
       "amount": 3
     },
     {
-      "aspect": "machina",
+      "aspect": "praecantatio",
+      "amount": 3
+    },
+    {
+      "aspect": "permutatio",
+      "amount": 3
+    },
+    {
+      "aspect": "fabrico",
       "amount": 3
     }
   ],

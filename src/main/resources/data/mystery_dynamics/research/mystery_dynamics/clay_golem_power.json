@@ -12,24 +12,30 @@
   ],
   "parents_hidden": [],
   "siblings": [],
-  "flags": [
-    "secondary"
-  ],
+  "flags": [],
   "text_pages": [
     "mystery_dynamics.research.clay_golem_power.text"
   ],
   "item": "mystery_dynamics:clay_golem_power",
   "aspects": [
     {
+      "aspect": "spiritus",
+      "amount": 6
+    },
+    {
       "aspect": "motus",
       "amount": 6
     },
     {
-      "aspect": "instrumentum",
+      "aspect": "terra",
       "amount": 3
     },
     {
-      "aspect": "machina",
+      "aspect": "permutatio",
+      "amount": 3
+    },
+    {
+      "aspect": "fabrico",
       "amount": 3
     }
   ],

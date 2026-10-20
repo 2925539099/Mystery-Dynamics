@@ -12,24 +12,30 @@
   ],
   "parents_hidden": [],
   "siblings": [],
-  "flags": [
-    "secondary"
-  ],
+  "flags": [],
   "text_pages": [
     "mystery_dynamics.research.wood_golem_power.text"
   ],
   "item": "mystery_dynamics:wood_golem_power",
   "aspects": [
     {
-      "aspect": "motus",
-      "amount": 6
+      "aspect": "spiritus",
+      "amount": 4
     },
     {
-      "aspect": "instrumentum",
+      "aspect": "motus",
+      "amount": 4
+    },
+    {
+      "aspect": "arbor",
       "amount": 3
     },
     {
-      "aspect": "machina",
+      "aspect": "permutatio",
+      "amount": 3
+    },
+    {
+      "aspect": "fabrico",
       "amount": 3
     }
   ],
