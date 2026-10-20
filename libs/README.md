@@ -8,7 +8,7 @@
 | `ponder-neoforge-1.0.82+mc1.21.1.jar` | Create 的 `META-INF/jarjar/` 内 |
 | `flywheel-neoforge-1.21.1-1.0.6.jar` | 同上 |
 | `Registrate-MC1.21-1.3.0+67.jar` | 同上 |
-| `thaumcraft-0.2.2.95-port.265.jar` | 神秘时代移植版（仅用于奥术工作台配方编译，可选） |
+| `thaumcraft-0.2.2.95-port.265.jar` | 神秘时代移植版（必需前置，用于奥术工作台配方） |
 
 ## 放置位置
 

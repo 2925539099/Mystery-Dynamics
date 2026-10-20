@@ -31,7 +31,7 @@ side = "BOTH"
 
 [[dependencies.mystery_dynamics]]
 modId = "thaumcraft"
-type = "optional"
+type = "required"
 versionRange = "[0.2.2.95,)"
 ordering = "NONE"
 side = "BOTH"

@@ -1,6 +1,6 @@
 # 神秘动力学（Mystery Dynamics）
 
-基于神秘时代，为机械动力额外增添一些设备。NeoForge 1.21.1 / Create 6.0.x。
+基于神秘时代，为机械动力额外增添一些设备。NeoForge 1.21.1 / Create 6.0.x / 神秘时代 port.265+（必需前置）。
 
 ## 傀儡动力系统
 
@@ -72,7 +72,7 @@
 本地化键：`tc.research_category.MYSTERY_DYNAMICS`、`tc.research_name.MYSTERY_TEST`、`tc.research_text.MYSTERY_TEST`、`mystery_dynamics.research.test.text`。
 ## 奥术工作台配方
 
-安装神秘时代后，以下 3 个配方会注册到奥术工作台（其余设备暂未添加）：
+以下 3 个配方会注册到奥术工作台，并作为 ARCANE 配方页显示在对应研究里（其余设备暂未添加）：
 
 | 产物 | 配方 | Vis 消耗 | 研究页 |
 |---|---|---|---|
@@ -80,7 +80,7 @@
 | 稻草傀儡动力系统 | 空框架 / 稻草傀儡 / 木棍 | 水 3 + 地 6 | STRAW_GOLEM_POWER |
 | 木头傀儡动力系统 | 空框架 / 木头傀儡 | 水 3 + 地 6 + 风 3 | WOOD_GOLEM_POWER |
 
-只安装机械动力、不安装神秘时代时，这些配方不会注册，模组也不会加载与神秘时代相关的类。
+神秘时代与机械动力都是必需前置。稻草研究共 3 页（文字 + 框架配方 + 稻草配方），木头研究共 2 页（文字 + 木头配方）。
 
 ## 构建
 

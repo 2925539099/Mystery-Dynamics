@@ -37,6 +37,14 @@
       "type": "TEXT",
       "text": "mystery_dynamics.research.straw_golem_power.text",
       "source": "mystery_dynamics.research.straw_golem_power.text"
+    },
+    {
+      "type": "ARCANE",
+      "source": "GolemPowerFrame"
+    },
+    {
+      "type": "ARCANE",
+      "source": "StrawGolemPower"
     }
   ]
 }
