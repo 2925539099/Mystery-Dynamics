@@ -29,6 +29,17 @@ public final class ThaumcraftRecipes {
         ItemStack casing = stack("create", "andesite_casing");
         ItemStack strawGolem = stack("thaumcraft", "golem_straw");
         ItemStack woodGolem = stack("thaumcraft", "golem_wood");
+        ItemStack fleshGolem = stack("thaumcraft", "golem_flesh");
+        ItemStack clayGolem = stack("thaumcraft", "golem_clay");
+        ItemStack tallowGolem = stack("thaumcraft", "golem_tallow");
+        ItemStack stoneGolem = stack("thaumcraft", "golem_stone");
+        ItemStack ironGolem = stack("thaumcraft", "golem_iron");
+        ItemStack thaumiumGolem = stack("thaumcraft", "golem_thaumium");
+        ItemStack bone = stack("minecraft", "bone");
+        ItemStack clayBall = stack("minecraft", "clay_ball");
+        ItemStack stoneBricks = stack("minecraft", "stone_bricks");
+        ItemStack magicTallow = stack("thaumcraft", "magic_tallow");
+        ItemStack airCrystal = stack("thaumcraft", "air_crystal_cluster");
         ItemStack stick = new ItemStack(Items.STICK);
 
         // 空傀儡动力系统框架：三神秘锭 + 齿轮/安山机壳/齿轮，六种元要素各 5 点
@@ -65,6 +76,79 @@ public final class ThaumcraftRecipes {
                 "F", "W",
                 'F', frame,
                 'W', woodGolem);
+
+        // 血肉傀儡动力系统：框架 / 骨头 / 血肉傀儡，水 20 + 地 20 + 秩序 20
+        ThaumcraftApi.addArcaneCraftingRecipe(
+                "FLESH_GOLEM_POWER",
+                new ItemStack(MysteryDynamics.FLESH_GOLEM_POWER.get()),
+                new AspectList().add(Aspect.WATER, 20).add(Aspect.EARTH, 20).add(Aspect.ORDER, 20),
+                "F", "B", "S",
+                'F', frame,
+                'B', bone,
+                'S', fleshGolem);
+
+        // 粘土傀儡动力系统：框架居中 / 粘土·粘土傀儡·粘土，火 30
+        ThaumcraftApi.addArcaneCraftingRecipe(
+                "CLAY_GOLEM_POWER",
+                new ItemStack(MysteryDynamics.CLAY_GOLEM_POWER.get()),
+                new AspectList().add(Aspect.FIRE, 30),
+                " F ", "CGC",
+                'F', frame,
+                'C', clayBall,
+                'G', clayGolem);
+
+        // 油脂傀儡动力系统：魔力油脂·框架·魔力油脂 / 木棍·油脂傀儡·木棍，
+        // 风/秩序/混沌/地各 10 + 水 20
+        ThaumcraftApi.addArcaneCraftingRecipe(
+                "TALLOW_GOLEM_POWER",
+                new ItemStack(MysteryDynamics.TALLOW_GOLEM_POWER.get()),
+                new AspectList()
+                        .add(Aspect.AIR, 10)
+                        .add(Aspect.ORDER, 10)
+                        .add(Aspect.ENTROPY, 10)
+                        .add(Aspect.EARTH, 10)
+                        .add(Aspect.WATER, 20),
+                "TFT", "SGS",
+                'T', magicTallow,
+                'F', frame,
+                'S', stick,
+                'G', tallowGolem);
+
+        // 石头傀儡动力系统：框架居中 / 石砖·石头傀儡·石砖，
+        // 风/秩序/混沌/地各 10 + 水 20 + 火 10
+        ThaumcraftApi.addArcaneCraftingRecipe(
+                "STONE_GOLEM_POWER",
+                new ItemStack(MysteryDynamics.STONE_GOLEM_POWER.get()),
+                new AspectList()
+                        .add(Aspect.AIR, 10)
+                        .add(Aspect.ORDER, 10)
+                        .add(Aspect.ENTROPY, 10)
+                        .add(Aspect.EARTH, 10)
+                        .add(Aspect.WATER, 20)
+                        .add(Aspect.FIRE, 10),
+                " F ", "BGB",
+                'F', frame,
+                'B', stoneBricks,
+                'G', stoneGolem);
+
+        // 铁卫傀儡动力系统：框架 / 铁卫傀儡，地 20 + 秩序 10
+        ThaumcraftApi.addArcaneCraftingRecipe(
+                "IRON_GOLEM_POWER",
+                new ItemStack(MysteryDynamics.IRON_GOLEM_POWER.get()),
+                new AspectList().add(Aspect.EARTH, 20).add(Aspect.ORDER, 10),
+                "F", "G",
+                'F', frame,
+                'G', ironGolem);
+
+        // 神秘傀儡动力系统：框架 / 神秘傀儡 / 风之魔晶，地 20 + 秩序 10 + 风 30
+        ThaumcraftApi.addArcaneCraftingRecipe(
+                "MYSTERY_GOLEM_POWER",
+                new ItemStack(MysteryDynamics.MYSTERY_GOLEM_POWER.get()),
+                new AspectList().add(Aspect.EARTH, 20).add(Aspect.ORDER, 10).add(Aspect.AIR, 30),
+                "F", "G", "A",
+                'F', frame,
+                'G', thaumiumGolem,
+                'A', airCrystal);
     }
 
     private static ItemStack stack(String namespace, String path) {

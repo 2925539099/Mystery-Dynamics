@@ -71,18 +71,23 @@
 
 本地化键：`tc.research_category.MYSTERY_DYNAMICS`、`tc.research_name.MYSTERY_TEST`、`tc.research_text.MYSTERY_TEST`、`mystery_dynamics.research.test.text`。
 ## 奥术工作台配方
+## 奥术工作台配方
 
-以下 3 个配方会注册到奥术工作台，并作为 ARCANE 配方页显示在对应研究里（其余设备暂未添加）：
+以下 9 个配方会注册到奥术工作台，并作为 ARCANE 配方页显示在对应研究里：
 
 | 产物 | 配方 | Vis 消耗 | 研究页 |
 |---|---|---|---|
 | 空傀儡动力系统框架 | 神秘锭 ×3 / 齿轮 · 安山机壳 · 齿轮 | 六种元要素各 5 | STRAW_GOLEM_POWER |
 | 稻草傀儡动力系统 | 空框架 / 稻草傀儡 / 木棍 | 水 3 + 地 6 | STRAW_GOLEM_POWER |
 | 木头傀儡动力系统 | 空框架 / 木头傀儡 | 水 3 + 地 6 + 风 3 | WOOD_GOLEM_POWER |
+| 血肉傀儡动力系统 | 空框架 / 骨头 / 血肉傀儡 | 水 20 + 地 20 + 秩序 20 | FLESH_GOLEM_POWER |
+| 粘土傀儡动力系统 | 空框架居中 / 粘土 · 粘土傀儡 · 粘土 | 火 30 | CLAY_GOLEM_POWER |
+| 油脂傀儡动力系统 | 魔力油脂 · 框架 · 魔力油脂 / 木棍 · 油脂傀儡 · 木棍 | 风/秩序/混沌/地各 10 + 水 20 | TALLOW_GOLEM_POWER |
+| 石头傀儡动力系统 | 空框架居中 / 石砖 · 石头傀儡 · 石砖 | 风/秩序/混沌/地各 10 + 水 20 + 火 10 | STONE_GOLEM_POWER |
+| 铁卫傀儡动力系统 | 空框架 / 铁卫傀儡 | 地 20 + 秩序 10 | IRON_GOLEM_POWER |
+| 神秘傀儡动力系统 | 空框架 / 神秘傀儡 / 风之魔晶 | 地 20 + 秩序 10 + 风 30 | MYSTERY_GOLEM_POWER |
 
-神秘时代与机械动力都是必需前置。稻草研究共 3 页（文字 + 框架配方 + 稻草配方），木头研究共 2 页（文字 + 木头配方）。
-
-## 构建
+神秘时代与机械动力都是必需前置。每个设备研究 2 页（文字 + 配方），稻草研究 3 页（文字 + 框架配方 + 稻草配方）。
 
 需要 JDK 21，以及 5 个编译期前置 jar（Create 6.0.10 与神秘时代 port.265）。前置**只用于编译，不随本模组发布**；默认从 `libs/` 读取，也可用 `-PdepsDir=<路径>` 指到项目外（本机放在 `../.tools/deps`）。详见 [libs/README.md](libs/README.md)。
 
