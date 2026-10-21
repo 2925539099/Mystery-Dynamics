@@ -58,36 +58,31 @@ public final class ThaumcraftRecipes {
                 'G', cogwheel,
                 'C', casing);
 
-        // 稻草傀儡动力系统：框架 / 稻草傀儡 / 木棍，水 3 + 地 6
-        ThaumcraftApi.addArcaneCraftingRecipe(
-                "STRAW_GOLEM_POWER",
+        // 稻草：框架 / 稻草傀儡 / 木棍，水 3 + 地 6
+        centered("STRAW_GOLEM_POWER",
                 new ItemStack(MysteryDynamics.STRAW_GOLEM_POWER.get()),
                 new AspectList().add(Aspect.WATER, 3).add(Aspect.EARTH, 6),
+                1, 3,
                 " F ", " S ", " K ",
-                'F', frame,
-                'S', strawGolem,
-                'K', stick);
+                'F', frame, 'S', strawGolem, 'K', stick);
 
-        // 木头傀儡动力系统：框架 / 木头傀儡，水 3 + 地 6 + 风 3
-        ThaumcraftApi.addArcaneCraftingRecipe(
-                "WOOD_GOLEM_POWER",
+        // 木头：框架 / 木头傀儡，水 3 + 地 6 + 风 3
+        centered("WOOD_GOLEM_POWER",
                 new ItemStack(MysteryDynamics.WOOD_GOLEM_POWER.get()),
                 new AspectList().add(Aspect.WATER, 3).add(Aspect.EARTH, 6).add(Aspect.AIR, 3),
+                1, 2,
                 " F ", " W ",
-                'F', frame,
-                'W', woodGolem);
+                'F', frame, 'W', woodGolem);
 
-        // 血肉傀儡动力系统：框架 / 骨头 / 血肉傀儡，水 20 + 地 20 + 秩序 20
-        ThaumcraftApi.addArcaneCraftingRecipe(
-                "FLESH_GOLEM_POWER",
+        // 血肉：框架 / 骨头 / 血肉傀儡，水 20 + 地 20 + 秩序 20
+        centered("FLESH_GOLEM_POWER",
                 new ItemStack(MysteryDynamics.FLESH_GOLEM_POWER.get()),
                 new AspectList().add(Aspect.WATER, 20).add(Aspect.EARTH, 20).add(Aspect.ORDER, 20),
+                1, 3,
                 " F ", " B ", " S ",
-                'F', frame,
-                'B', bone,
-                'S', fleshGolem);
+                'F', frame, 'B', bone, 'S', fleshGolem);
 
-        // 粘土傀儡动力系统：框架居中 / 粘土·粘土傀儡·粘土，火 30
+        // 粘土：框架居中 / 粘土·粘土傀儡·粘土，火 30
         ThaumcraftApi.addArcaneCraftingRecipe(
                 "CLAY_GOLEM_POWER",
                 new ItemStack(MysteryDynamics.CLAY_GOLEM_POWER.get()),
@@ -97,7 +92,7 @@ public final class ThaumcraftRecipes {
                 'C', clayBall,
                 'G', clayGolem);
 
-        // 油脂傀儡动力系统：魔力油脂·框架·魔力油脂 / 木棍·油脂傀儡·木棍，
+        // 油脂：魔力油脂·框架·魔力油脂 / 木棍·油脂傀儡·木棍，
         // 风/秩序/混沌/地各 10 + 水 20
         ThaumcraftApi.addArcaneCraftingRecipe(
                 "TALLOW_GOLEM_POWER",
@@ -114,7 +109,7 @@ public final class ThaumcraftRecipes {
                 'S', stick,
                 'G', tallowGolem);
 
-        // 石头傀儡动力系统：框架居中 / 石砖·石头傀儡·石砖，
+        // 石头：框架居中 / 石砖·石头傀儡·石砖，
         // 风/秩序/混沌/地各 10 + 水 20 + 火 10
         ThaumcraftApi.addArcaneCraftingRecipe(
                 "STONE_GOLEM_POWER",
@@ -131,24 +126,28 @@ public final class ThaumcraftRecipes {
                 'B', stoneBricks,
                 'G', stoneGolem);
 
-        // 铁卫傀儡动力系统：框架 / 铁卫傀儡，地 20 + 秩序 10
-        ThaumcraftApi.addArcaneCraftingRecipe(
-                "IRON_GOLEM_POWER",
+        // 铁卫：框架 / 铁卫傀儡，地 20 + 秩序 10
+        centered("IRON_GOLEM_POWER",
                 new ItemStack(MysteryDynamics.IRON_GOLEM_POWER.get()),
                 new AspectList().add(Aspect.EARTH, 20).add(Aspect.ORDER, 10),
+                1, 2,
                 " F ", " G ",
-                'F', frame,
-                'G', ironGolem);
+                'F', frame, 'G', ironGolem);
 
-        // 神秘傀儡动力系统：框架 / 神秘傀儡 / 风之魔晶，地 20 + 秩序 10 + 风 30
-        ThaumcraftApi.addArcaneCraftingRecipe(
-                "MYSTERY_GOLEM_POWER",
+        // 神秘：框架 / 神秘傀儡 / 风之魔晶，地 20 + 秩序 10 + 风 30
+        centered("MYSTERY_GOLEM_POWER",
                 new ItemStack(MysteryDynamics.MYSTERY_GOLEM_POWER.get()),
                 new AspectList().add(Aspect.EARTH, 20).add(Aspect.ORDER, 10).add(Aspect.AIR, 30),
+                1, 3,
                 " F ", " G ", " A ",
-                'F', frame,
-                'G', thaumiumGolem,
-                'A', airCrystal);
+                'F', frame, 'G', thaumiumGolem, 'A', airCrystal);
+    }
+
+    /** 书页居中显示（图案补到 3 格宽），合成时仍允许左右平移。 */
+    private static void centered(String research, ItemStack output, AspectList aspects,
+                                 int innerWidth, int innerHeight, Object... paddedRecipe) {
+        ThaumcraftApi.getCraftingRecipes()
+                .add(new CenteredArcaneRecipe(research, output, aspects, innerWidth, innerHeight, paddedRecipe));
     }
 
     private static ItemStack stack(String namespace, String path) {
