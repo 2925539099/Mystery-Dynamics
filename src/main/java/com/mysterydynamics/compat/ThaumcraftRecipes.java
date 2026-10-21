@@ -63,7 +63,7 @@ public final class ThaumcraftRecipes {
                 "STRAW_GOLEM_POWER",
                 new ItemStack(MysteryDynamics.STRAW_GOLEM_POWER.get()),
                 new AspectList().add(Aspect.WATER, 3).add(Aspect.EARTH, 6),
-                "F", "S", "K",
+                " F ", " S ", " K ",
                 'F', frame,
                 'S', strawGolem,
                 'K', stick);
@@ -73,7 +73,7 @@ public final class ThaumcraftRecipes {
                 "WOOD_GOLEM_POWER",
                 new ItemStack(MysteryDynamics.WOOD_GOLEM_POWER.get()),
                 new AspectList().add(Aspect.WATER, 3).add(Aspect.EARTH, 6).add(Aspect.AIR, 3),
-                "F", "W",
+                " F ", " W ",
                 'F', frame,
                 'W', woodGolem);
 
@@ -82,7 +82,7 @@ public final class ThaumcraftRecipes {
                 "FLESH_GOLEM_POWER",
                 new ItemStack(MysteryDynamics.FLESH_GOLEM_POWER.get()),
                 new AspectList().add(Aspect.WATER, 20).add(Aspect.EARTH, 20).add(Aspect.ORDER, 20),
-                "F", "B", "S",
+                " F ", " B ", " S ",
                 'F', frame,
                 'B', bone,
                 'S', fleshGolem);
@@ -136,7 +136,7 @@ public final class ThaumcraftRecipes {
                 "IRON_GOLEM_POWER",
                 new ItemStack(MysteryDynamics.IRON_GOLEM_POWER.get()),
                 new AspectList().add(Aspect.EARTH, 20).add(Aspect.ORDER, 10),
-                "F", "G",
+                " F ", " G ",
                 'F', frame,
                 'G', ironGolem);
 
@@ -145,7 +145,7 @@ public final class ThaumcraftRecipes {
                 "MYSTERY_GOLEM_POWER",
                 new ItemStack(MysteryDynamics.MYSTERY_GOLEM_POWER.get()),
                 new AspectList().add(Aspect.EARTH, 20).add(Aspect.ORDER, 10).add(Aspect.AIR, 30),
-                "F", "G", "A",
+                " F ", " G ", " A ",
                 'F', frame,
                 'G', thaumiumGolem,
                 'A', airCrystal);
