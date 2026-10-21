@@ -116,11 +116,16 @@ public class GolemPowerBlockEntity extends GeneratingKineticBlockEntity {
     @Override
     public void initialize() {
         super.initialize();
-        if (level != null && !level.isClientSide) {
-            if (pendingPlacementAlign) {
-                pendingPlacementAlign = false;
-                alignToConnection();
-            }
+        if (level == null || level.isClientSide) {
+            return;
+        }
+        // 只有刚放下（需要对齐）或还没接入网络时才重算转速。
+        // 区块重新加载时 Create 会自己从 NBT 恢复转速，不需要再触发一次网络更新。
+        if (pendingPlacementAlign) {
+            pendingPlacementAlign = false;
+            alignToConnection();
+            updateGeneratedRotation();
+        } else if (!hasNetwork()) {
             updateGeneratedRotation();
         }
     }
@@ -130,11 +135,6 @@ public class GolemPowerBlockEntity extends GeneratingKineticBlockEntity {
         return reversed ? -block().rpm() : block().rpm();
     }
 
-    @Override
-    public float calculateAddedStressCapacity() {
-        lastCapacityProvided = block().capacityPerRpm();
-        return lastCapacityProvided;
-    }
 
     @Override
     protected void write(CompoundTag compound, HolderLookup.Provider registries, boolean clientPacket) {

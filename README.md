@@ -139,6 +139,11 @@ tools/
 
 空框架放置后没有方块实体（纯装饰），符合设计。
 
+## 应力与性能
+
+- 应力容量只通过 Create 的 `BlockStressValues.CAPACITIES` 注册（与水车一致），不再额外覆盖 `calculateAddedStressCapacity`；
+- `initialize` 只在“刚放置需要对齐”或“尚未接入网络”时重算转速，区块重新加载时不会重复触发网络更新；
+- 实测 500 台铁卫傀儡动力系统连成同一网络：20 TPS、约 3.7 ms/tick，网络容量 1024000 SU，容量不随 tick 增长。
 ## 说明
 
 - 方块模型由 9 个 bbmodel 转换：读取元素的 `inflate`（负值内缩），UV 按 128 工程分辨率除以 8。
