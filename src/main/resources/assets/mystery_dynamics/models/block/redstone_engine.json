@@ -1,6 +1,6 @@
 {
  "parent": "minecraft:block/block",
- "ambientocclusion": true,
+ "render_type": "minecraft:cutout",
  "textures": {
   "particle": "mystery_dynamics:block/redstone_engine_thaumium",
   "thaumium": "mystery_dynamics:block/redstone_engine_thaumium",
@@ -658,7 +658,7 @@
      "uv": [
       14.0,
       4.0,
-      20.0,
+      16.0,
       10.0
      ],
      "texture": "#thaumium"
