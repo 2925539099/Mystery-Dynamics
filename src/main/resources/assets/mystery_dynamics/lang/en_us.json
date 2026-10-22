@@ -38,5 +38,6 @@
   "tc.research_text.FLESH_GOLEM_POWER": "A bit creepy, mate",
   "tc.research_text.TALLOW_GOLEM_POWER": "At least the fan needs no extra power",
   "mystery_dynamics.research.flesh_golem_power.text": "After leafing through some books on living things, you decided to modify the flesh golem.\n\nCreepy as it is, its low cost and decent performance are enough to cover up its other problems.\n\nAfter fitting the golem with extra bones to serve as a transmission, its efficiency turns out to be quite good, with a stress output of 384 SU.\n\nAnd thanks to the simple adjustments to its muscle structure, its speed reaches a rather good 160 RPM.",
-  "mystery_dynamics.research.tallow_golem_power.text": "Good news: this thing is slippery enough that its speed easily reaches 256 RPM.\n\nBad news: no matter how you tried, you could not improve its strength much, so you can only stick a wooden rod in as a transmission—hence only 128 SU."
+  "mystery_dynamics.research.tallow_golem_power.text": "Good news: this thing is slippery enough that its speed easily reaches 256 RPM.\n\nBad news: no matter how you tried, you could not improve its strength much, so you can only stick a wooden rod in as a transmission—hence only 128 SU.",
+  "block.mystery_dynamics.redstone_engine": "Redstone Engine"
 }

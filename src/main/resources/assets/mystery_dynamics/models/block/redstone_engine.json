@@ -1,0 +1,856 @@
+{
+ "parent": "minecraft:block/block",
+ "ambientocclusion": true,
+ "textures": {
+  "particle": "mystery_dynamics:block/redstone_engine_thaumium",
+  "thaumium": "mystery_dynamics:block/redstone_engine_thaumium",
+  "plate": "mystery_dynamics:block/redstone_engine_plate",
+  "alchemy": "mystery_dynamics:block/redstone_engine_alchemy",
+  "axis": "mystery_dynamics:block/redstone_engine_axis"
+ },
+ "elements": [
+  {
+   "from": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "to": [
+    16.0,
+    2.0,
+    16.0
+   ],
+   "faces": {
+    "north": {
+     "uv": [
+      0.0,
+      0.0,
+      16.0,
+      2.0
+     ],
+     "texture": "#thaumium"
+    },
+    "east": {
+     "uv": [
+      0.0,
+      0.0,
+      16.0,
+      2.0
+     ],
+     "texture": "#thaumium"
+    },
+    "south": {
+     "uv": [
+      0.0,
+      0.0,
+      16.0,
+      2.0
+     ],
+     "texture": "#thaumium"
+    },
+    "west": {
+     "uv": [
+      0.0,
+      0.0,
+      16.0,
+      2.0
+     ],
+     "texture": "#thaumium"
+    },
+    "up": {
+     "uv": [
+      0.0,
+      0.0,
+      16.0,
+      16.0
+     ],
+     "texture": "#thaumium"
+    },
+    "down": {
+     "uv": [
+      0.0,
+      0.0,
+      16.0,
+      16.0
+     ],
+     "texture": "#thaumium"
+    }
+   }
+  },
+  {
+   "from": [
+    12.0,
+    2.0,
+    0.0
+   ],
+   "to": [
+    14.0,
+    4.0,
+    15.0
+   ],
+   "faces": {
+    "north": {
+     "uv": [
+      16.0,
+      0.0,
+      14.0,
+      2.0
+     ],
+     "texture": "#plate"
+    },
+    "east": {
+     "uv": [
+      0.0,
+      16.0,
+      2.0,
+      0.0
+     ],
+     "texture": "#plate",
+     "rotation": 270
+    },
+    "south": {
+     "uv": [
+      14.0,
+      2.0,
+      16.0,
+      0.0
+     ],
+     "texture": "#plate",
+     "rotation": 90
+    },
+    "west": {
+     "uv": [
+      0.0,
+      16.0,
+      2.0,
+      0.0
+     ],
+     "texture": "#plate",
+     "rotation": 90
+    },
+    "up": {
+     "uv": [
+      2.0,
+      0.0,
+      0.0,
+      16.0
+     ],
+     "texture": "#plate"
+    },
+    "down": {
+     "uv": [
+      2.0,
+      0.0,
+      0.0,
+      16.0
+     ],
+     "texture": "#plate"
+    }
+   }
+  },
+  {
+   "from": [
+    3.0,
+    5.0,
+    4.0
+   ],
+   "to": [
+    13.0,
+    11.0,
+    10.0
+   ],
+   "faces": {
+    "north": {
+     "uv": [
+      10.0,
+      0.0,
+      16.0,
+      6.0
+     ],
+     "texture": "#plate"
+    },
+    "east": {
+     "uv": [
+      0.0,
+      0.0,
+      16.0,
+      16.0
+     ],
+     "texture": "#plate"
+    },
+    "south": {
+     "uv": [
+      0.0,
+      0.0,
+      16.0,
+      2.0
+     ],
+     "texture": "#plate"
+    },
+    "west": {
+     "uv": [
+      0.0,
+      0.0,
+      16.0,
+      16.0
+     ],
+     "texture": "#plate"
+    },
+    "up": {
+     "uv": [
+      0.0,
+      0.0,
+      16.0,
+      2.0
+     ],
+     "texture": "#plate"
+    },
+    "down": {
+     "uv": [
+      0.0,
+      0.0,
+      16.0,
+      2.0
+     ],
+     "texture": "#plate"
+    }
+   }
+  },
+  {
+   "from": [
+    3.0,
+    3.0,
+    0.1
+   ],
+   "to": [
+    13.0,
+    13.0,
+    2.1
+   ],
+   "faces": {
+    "north": {
+     "uv": [
+      0.0,
+      0.0,
+      16.0,
+      16.0
+     ],
+     "texture": "#thaumium"
+    },
+    "east": {
+     "uv": [
+      3.0,
+      0.0,
+      13.0,
+      2.0
+     ],
+     "texture": "#thaumium",
+     "rotation": 90
+    },
+    "south": {
+     "uv": [
+      0.0,
+      0.0,
+      10.0,
+      10.0
+     ],
+     "texture": "#thaumium"
+    },
+    "west": {
+     "uv": [
+      3.0,
+      0.0,
+      13.0,
+      2.0
+     ],
+     "texture": "#thaumium",
+     "rotation": 270
+    },
+    "up": {
+     "uv": [
+      3.0,
+      0.0,
+      13.0,
+      2.0
+     ],
+     "texture": "#thaumium"
+    },
+    "down": {
+     "uv": [
+      3.0,
+      0.0,
+      13.0,
+      2.0
+     ],
+     "texture": "#thaumium",
+     "rotation": 180
+    }
+   }
+  },
+  {
+   "from": [
+    4.0,
+    4.0,
+    2.0
+   ],
+   "to": [
+    12.0,
+    12.0,
+    11.0
+   ],
+   "faces": {
+    "north": {
+     "uv": [
+      0.0,
+      4.0,
+      8.0,
+      14.0
+     ],
+     "texture": "#thaumium",
+     "rotation": 180
+    },
+    "east": {
+     "uv": [
+      4.0,
+      3.0,
+      12.0,
+      12.0
+     ],
+     "texture": "#thaumium",
+     "rotation": 90
+    },
+    "south": {
+     "uv": [
+      3.0,
+      3.0,
+      11.0,
+      11.0
+     ],
+     "texture": "#thaumium",
+     "rotation": 180
+    },
+    "west": {
+     "uv": [
+      4.0,
+      3.0,
+      12.0,
+      12.0
+     ],
+     "texture": "#thaumium",
+     "rotation": 90
+    },
+    "up": {
+     "uv": [
+      4.0,
+      3.0,
+      12.0,
+      12.0
+     ],
+     "texture": "#thaumium",
+     "rotation": 180
+    },
+    "down": {
+     "uv": [
+      4.0,
+      3.0,
+      12.0,
+      12.0
+     ],
+     "texture": "#thaumium",
+     "rotation": 180
+    }
+   }
+  },
+  {
+   "from": [
+    5.0,
+    7.0,
+    4.0
+   ],
+   "to": [
+    11.0,
+    13.0,
+    10.0
+   ],
+   "faces": {
+    "north": {
+     "uv": [
+      10.0,
+      0.0,
+      16.0,
+      6.0
+     ],
+     "texture": "#plate"
+    },
+    "east": {
+     "uv": [
+      10.0,
+      0.0,
+      16.0,
+      6.0
+     ],
+     "texture": "#plate"
+    },
+    "south": {
+     "uv": [
+      10.0,
+      0.0,
+      16.0,
+      6.0
+     ],
+     "texture": "#plate"
+    },
+    "west": {
+     "uv": [
+      10.0,
+      0.0,
+      16.0,
+      6.0
+     ],
+     "texture": "#plate"
+    },
+    "up": {
+     "uv": [
+      0.0,
+      0.0,
+      16.0,
+      16.0
+     ],
+     "texture": "#plate"
+    },
+    "down": {
+     "uv": [
+      10.0,
+      0.0,
+      16.0,
+      6.0
+     ],
+     "texture": "#plate"
+    }
+   }
+  },
+  {
+   "from": [
+    2.0,
+    12.0,
+    0.0
+   ],
+   "to": [
+    4.0,
+    14.0,
+    15.0
+   ],
+   "faces": {
+    "north": {
+     "uv": [
+      14.0,
+      2.0,
+      16.0,
+      0.0
+     ],
+     "texture": "#plate",
+     "rotation": 270
+    },
+    "east": {
+     "uv": [
+      0.0,
+      16.0,
+      2.0,
+      0.0
+     ],
+     "texture": "#plate",
+     "rotation": 270
+    },
+    "south": {
+     "uv": [
+      14.0,
+      2.0,
+      16.0,
+      0.0
+     ],
+     "texture": "#plate",
+     "rotation": 270
+    },
+    "west": {
+     "uv": [
+      0.0,
+      16.0,
+      2.0,
+      0.0
+     ],
+     "texture": "#plate",
+     "rotation": 270
+    },
+    "up": {
+     "uv": [
+      0.0,
+      2.0,
+      16.0,
+      0.0
+     ],
+     "texture": "#plate",
+     "rotation": 270
+    },
+    "down": {
+     "uv": [
+      0.0,
+      16.0,
+      2.0,
+      0.0
+     ],
+     "texture": "#plate",
+     "rotation": 270
+    }
+   }
+  },
+  {
+   "from": [
+    12.0,
+    12.0,
+    0.0
+   ],
+   "to": [
+    14.0,
+    14.0,
+    15.0
+   ],
+   "faces": {
+    "north": {
+     "uv": [
+      2.0,
+      0.0,
+      0.0,
+      16.0
+     ],
+     "texture": "#plate"
+    },
+    "east": {
+     "uv": [
+      16.0,
+      0.0,
+      0.0,
+      2.0
+     ],
+     "texture": "#plate"
+    },
+    "south": {
+     "uv": [
+      16.0,
+      0.0,
+      14.0,
+      2.0
+     ],
+     "texture": "#plate"
+    },
+    "west": {
+     "uv": [
+      2.0,
+      0.0,
+      0.0,
+      16.0
+     ],
+     "texture": "#plate"
+    },
+    "up": {
+     "uv": [
+      16.0,
+      0.0,
+      14.0,
+      16.0
+     ],
+     "texture": "#plate"
+    },
+    "down": {
+     "uv": [
+      2.0,
+      0.0,
+      0.0,
+      16.0
+     ],
+     "texture": "#plate"
+    }
+   }
+  },
+  {
+   "from": [
+    3.5,
+    3.5,
+    2.0
+   ],
+   "to": [
+    12.5,
+    12.5,
+    5.0
+   ],
+   "faces": {
+    "north": {
+     "uv": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "texture": "#alchemy"
+    },
+    "east": {
+     "uv": [
+      3.5,
+      10.0,
+      12.5,
+      13.0
+     ],
+     "texture": "#alchemy",
+     "rotation": 270
+    },
+    "south": {
+     "uv": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "texture": "#alchemy"
+    },
+    "west": {
+     "uv": [
+      3.5,
+      10.0,
+      12.5,
+      13.0
+     ],
+     "texture": "#alchemy",
+     "rotation": 90
+    },
+    "up": {
+     "uv": [
+      3.5,
+      10.0,
+      12.5,
+      13.0
+     ],
+     "texture": "#alchemy",
+     "rotation": 180
+    },
+    "down": {
+     "uv": [
+      3.5,
+      10.0,
+      12.5,
+      13.0
+     ],
+     "texture": "#alchemy"
+    }
+   }
+  },
+  {
+   "from": [
+    5.0,
+    5.0,
+    9.0
+   ],
+   "to": [
+    11.0,
+    11.0,
+    13.0
+   ],
+   "faces": {
+    "north": {
+     "uv": [
+      14.0,
+      4.0,
+      20.0,
+      10.0
+     ],
+     "texture": "#thaumium"
+    },
+    "east": {
+     "uv": [
+      10.0,
+      6.0,
+      16.0,
+      10.0
+     ],
+     "texture": "#thaumium",
+     "rotation": 90
+    },
+    "south": {
+     "uv": [
+      10.0,
+      0.0,
+      16.0,
+      6.0
+     ],
+     "texture": "#thaumium"
+    },
+    "west": {
+     "uv": [
+      10.0,
+      6.0,
+      16.0,
+      10.0
+     ],
+     "texture": "#thaumium",
+     "rotation": 270
+    },
+    "up": {
+     "uv": [
+      10.0,
+      6.0,
+      16.0,
+      10.0
+     ],
+     "texture": "#thaumium"
+    },
+    "down": {
+     "uv": [
+      10.0,
+      6.0,
+      16.0,
+      10.0
+     ],
+     "texture": "#thaumium",
+     "rotation": 180
+    }
+   }
+  },
+  {
+   "from": [
+    3.0,
+    3.0,
+    12.0
+   ],
+   "to": [
+    13.0,
+    13.0,
+    14.0
+   ],
+   "faces": {
+    "north": {
+     "uv": [
+      10.0,
+      0.0,
+      0.0,
+      10.0
+     ],
+     "texture": "#thaumium"
+    },
+    "east": {
+     "uv": [
+      3.0,
+      2.0,
+      13.0,
+      0.0
+     ],
+     "texture": "#thaumium",
+     "rotation": 90
+    },
+    "south": {
+     "uv": [
+      16.0,
+      0.0,
+      0.0,
+      16.0
+     ],
+     "texture": "#thaumium"
+    },
+    "west": {
+     "uv": [
+      3.0,
+      2.0,
+      13.0,
+      0.0
+     ],
+     "texture": "#thaumium",
+     "rotation": 270
+    },
+    "up": {
+     "uv": [
+      3.0,
+      2.0,
+      13.0,
+      0.0
+     ],
+     "texture": "#thaumium"
+    },
+    "down": {
+     "uv": [
+      3.0,
+      2.0,
+      13.0,
+      0.0
+     ],
+     "texture": "#thaumium",
+     "rotation": 180
+    }
+   }
+  },
+  {
+   "from": [
+    2.0,
+    2.0,
+    0.0
+   ],
+   "to": [
+    4.0,
+    4.0,
+    15.0
+   ],
+   "faces": {
+    "north": {
+     "uv": [
+      16.0,
+      0.0,
+      14.0,
+      2.0
+     ],
+     "texture": "#plate"
+    },
+    "east": {
+     "uv": [
+      2.0,
+      0.0,
+      0.0,
+      16.0
+     ],
+     "texture": "#plate"
+    },
+    "south": {
+     "uv": [
+      16.0,
+      0.0,
+      14.0,
+      2.0
+     ],
+     "texture": "#plate"
+    },
+    "west": {
+     "uv": [
+      16.0,
+      0.0,
+      0.0,
+      2.0
+     ],
+     "texture": "#plate"
+    },
+    "up": {
+     "uv": [
+      2.0,
+      0.0,
+      0.0,
+      16.0
+     ],
+     "texture": "#plate"
+    },
+    "down": {
+     "uv": [
+      2.0,
+      0.0,
+      0.0,
+      16.0
+     ],
+     "texture": "#plate"
+    }
+   }
+  }
+ ]
+}

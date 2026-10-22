@@ -3,6 +3,8 @@ package com.mysterydynamics;
 import com.mysterydynamics.block.GolemPowerBlock;
 import com.mysterydynamics.block.GolemPowerBlockEntity;
 import com.mysterydynamics.block.GolemPowerFrameBlock;
+import com.mysterydynamics.block.RedstoneEngineBlock;
+import com.mysterydynamics.block.RedstoneEngineBlockEntity;
 import com.simibubi.create.api.stress.BlockStressValues;
 
 import net.minecraft.core.registries.Registries;
@@ -68,6 +70,10 @@ public class MysteryDynamics {
     public static final DeferredBlock<GolemPowerFrameBlock> GOLEM_POWER_FRAME = BLOCKS.register(
             "golem_power_frame", () -> new GolemPowerFrameBlock(deviceProperties()));
 
+    /** 红石发动机：红石信号 1~15 → 32~256 RPM、128~8192 SU。 */
+    public static final DeferredBlock<RedstoneEngineBlock> REDSTONE_ENGINE = BLOCKS.register(
+            "redstone_engine", () -> new RedstoneEngineBlock(deviceProperties()));
+
     // ---- 物品 ----
     public static final DeferredItem<BlockItem> STRAW_ITEM = ITEMS.registerSimpleBlockItem(STRAW_GOLEM_POWER);
     public static final DeferredItem<BlockItem> WOOD_ITEM = ITEMS.registerSimpleBlockItem(WOOD_GOLEM_POWER);
@@ -78,12 +84,18 @@ public class MysteryDynamics {
     public static final DeferredItem<BlockItem> IRON_ITEM = ITEMS.registerSimpleBlockItem(IRON_GOLEM_POWER);
     public static final DeferredItem<BlockItem> MYSTERY_ITEM = ITEMS.registerSimpleBlockItem(MYSTERY_GOLEM_POWER);
     public static final DeferredItem<BlockItem> FRAME_ITEM = ITEMS.registerSimpleBlockItem(GOLEM_POWER_FRAME);
+    public static final DeferredItem<BlockItem> REDSTONE_ENGINE_ITEM = ITEMS.registerSimpleBlockItem(REDSTONE_ENGINE);
 
     // ---- 方块实体（8 台设备共用） ----
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<GolemPowerBlockEntity>> GOLEM_POWER_BE =
             BLOCK_ENTITY_TYPES.register("golem_power", () -> BlockEntityType.Builder.of(
                     (pos, state) -> new GolemPowerBlockEntity(blockEntityType(), pos, state),
                     GENERATORS.stream().map(DeferredBlock::get).toArray(Block[]::new)).build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<RedstoneEngineBlockEntity>> REDSTONE_ENGINE_BE =
+            BLOCK_ENTITY_TYPES.register("redstone_engine", () -> BlockEntityType.Builder.of(
+                    (pos, state) -> new RedstoneEngineBlockEntity(redstoneEngineType(), pos, state),
+                    REDSTONE_ENGINE.get()).build(null));
 
     /** 独立创造模式标签页。 */
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> TAB = CREATIVE_TABS.register("main",
@@ -93,6 +105,7 @@ public class MysteryDynamics {
                     .displayItems((params, output) -> {
                         GENERATORS.forEach(block -> output.accept(block.get()));
                         output.accept(GOLEM_POWER_FRAME.get());
+                        output.accept(REDSTONE_ENGINE.get());
                     })
                     .build());
 
@@ -124,6 +137,10 @@ public class MysteryDynamics {
         return GOLEM_POWER_BE.get();
     }
 
+    private static BlockEntityType<?> redstoneEngineType() {
+        return REDSTONE_ENGINE_BE.get();
+    }
+
     private static void commonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
             for (DeferredBlock<GolemPowerBlock> holder : GENERATORS) {
@@ -132,6 +149,11 @@ public class MysteryDynamics {
                 BlockStressValues.RPM.register(block,
                         new BlockStressValues.GeneratedRpm(Math.round(block.rpm()), false));
             }
+            // 红石发动机的容量随信号变化，具体由方块实体覆盖；这里登记满信号值供提示使用
+            BlockStressValues.CAPACITIES.register(REDSTONE_ENGINE.get(),
+                    () -> (double) (RedstoneEngineBlockEntity.MAX_STRESS / RedstoneEngineBlockEntity.MAX_RPM));
+            BlockStressValues.RPM.register(REDSTONE_ENGINE.get(),
+                    new BlockStressValues.GeneratedRpm(Math.round(RedstoneEngineBlockEntity.MAX_RPM), false));
             // 安装了神秘时代时才注册奥术工作台配方（未安装时不加载 compat 类）
             if (net.neoforged.fml.ModList.get().isLoaded("thaumcraft")) {
                 com.mysterydynamics.compat.ThaumcraftRecipes.register();
