@@ -1,0 +1,30 @@
+{
+  "key": "ESSENTIADISTILLATION_LINK",
+  "order": 9,
+  "category": "MYSTERY_DYNAMICS",
+  "col": 1,
+  "row": 3,
+  "complexity": 0,
+  "warp": 0,
+  "parents": [
+    "DISTILESSENTIA"
+  ],
+  "parents_hidden": [],
+  "siblings": [],
+  "flags": [
+    "secondary",
+    "round"
+  ],
+  "text_pages": [
+    "mystery_dynamics.research.essentia_distillation.text"
+  ],
+  "item": "thaumcraft:alchemical_furnace",
+  "aspects": [],
+  "pages": [
+    {
+      "type": "TEXT",
+      "text": "mystery_dynamics.research.essentia_distillation.text",
+      "source": "mystery_dynamics.research.essentia_distillation.text"
+    }
+  ]
+}

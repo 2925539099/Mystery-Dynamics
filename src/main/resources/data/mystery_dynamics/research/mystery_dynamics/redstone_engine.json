@@ -1,0 +1,40 @@
+{
+  "key": "REDSTONE_ENGINE",
+  "order": 10,
+  "category": "MYSTERY_DYNAMICS",
+  "col": 3,
+  "row": 4,
+  "complexity": 3,
+  "warp": 0,
+  "parents": [
+    "ESSENTIADISTILLATION_LINK"
+  ],
+  "parents_hidden": [],
+  "siblings": [],
+  "flags": [],
+  "text_pages": [
+    "mystery_dynamics.research.redstone_engine.text"
+  ],
+  "item": "mystery_dynamics:redstone_engine",
+  "aspects": [
+    {
+      "aspect": "potentia",
+      "amount": 6
+    },
+    {
+      "aspect": "machina",
+      "amount": 6
+    },
+    {
+      "aspect": "fabrico",
+      "amount": 3
+    }
+  ],
+  "pages": [
+    {
+      "type": "TEXT",
+      "text": "mystery_dynamics.research.redstone_engine.text",
+      "source": "mystery_dynamics.research.redstone_engine.text"
+    }
+  ]
+}
