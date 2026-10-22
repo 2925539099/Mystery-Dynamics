@@ -41,7 +41,7 @@
   "mystery_dynamics.research.tallow_golem_power.text": "Good news: this thing is slippery enough that its speed easily reaches 256 RPM.\n\nBad news: no matter how you tried, you could not improve its strength much, so you can only stick a wooden rod in as a transmission—hence only 128 SU.",
   "block.mystery_dynamics.redstone_engine": "Redstone Engine",
   "tc.research_name.ESSENTIADISTILLATION_LINK": "Essentia Distillation",
-  "tc.research_text.ESSENTIADISTILLATION_LINK": "A reference to the Alchemy essentia distillation research; stays active once unlocked.",
+  "tc.research_text.ESSENTIADISTILLATION_LINK": "Harvesting essentia",
   "mystery_dynamics.research.essentia_distillation.text": "Placeholder text: essentia distillation reference node.",
   "tc.research_name.REDSTONE_ENGINE": "Redstone Engine",
   "tc.research_text.REDSTONE_ENGINE": "Placeholder text: redstone engine research.",

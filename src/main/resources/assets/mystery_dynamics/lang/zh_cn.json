@@ -41,7 +41,7 @@
   "mystery_dynamics.research.tallow_golem_power.text": "好消息：这玩意够滑，转速轻轻松松就可以达到256 RPM。\n\n坏消息：想尽办法都没法很好的提升强度，只能插一根木棍来当传动，所以只有128 SU。",
   "block.mystery_dynamics.redstone_engine": "红石发动机",
   "tc.research_name.ESSENTIADISTILLATION_LINK": "要素蒸馏",
-  "tc.research_text.ESSENTIADISTILLATION_LINK": "引用炼金术的要素蒸馏研究；解锁后保持激活状态。",
+  "tc.research_text.ESSENTIADISTILLATION_LINK": "收获要素",
   "mystery_dynamics.research.essentia_distillation.text": "占位文本：要素蒸馏引用节点。",
   "tc.research_name.REDSTONE_ENGINE": "红石发动机",
   "tc.research_text.REDSTONE_ENGINE": "占位文本：红石发动机研究。",
