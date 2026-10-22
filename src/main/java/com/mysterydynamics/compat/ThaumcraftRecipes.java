@@ -41,6 +41,11 @@ public final class ThaumcraftRecipes {
         ItemStack magicTallow = stack("thaumcraft", "magic_tallow");
         ItemStack airCrystal = stack("thaumcraft", "air_crystal_cluster");
         ItemStack stick = new ItemStack(Items.STICK);
+        ItemStack thaumiumBlock = stack("thaumcraft", "thaumium_block");
+        ItemStack redstoneBlock = new ItemStack(Items.REDSTONE_BLOCK);
+        ItemStack alchemicalConstruct = stack("thaumcraft", "alchemical_construct");
+        ItemStack precisionMechanism = stack("create", "precision_mechanism");
+        ItemStack shaft = stack("create", "shaft");
 
         // 空傀儡动力系统框架：三神秘锭 + 齿轮/安山机壳/齿轮，六种元要素各 5 点
         ThaumcraftApi.addArcaneCraftingRecipe(
@@ -141,6 +146,29 @@ public final class ThaumcraftRecipes {
                 1, 3,
                 " F ", " G ", " A ",
                 'F', frame, 'G', thaumiumGolem, 'A', airCrystal);
+
+        // 红石发动机：
+        // 神秘锭 / 红石块 / 神秘锭
+        // 炼金构材 / 精密构件 / 传动杆
+        // 神秘锭 / 神秘方块 / 神秘锭
+        // 风 10、秩序 20、水 30、地 30、火 10、混沌 10
+        ThaumcraftApi.addArcaneCraftingRecipe(
+                "REDSTONE_ENGINE",
+                new ItemStack(MysteryDynamics.REDSTONE_ENGINE.get()),
+                new AspectList()
+                        .add(Aspect.AIR, 10)
+                        .add(Aspect.ORDER, 20)
+                        .add(Aspect.WATER, 30)
+                        .add(Aspect.EARTH, 30)
+                        .add(Aspect.FIRE, 10)
+                        .add(Aspect.ENTROPY, 10),
+                "TBT", "ACS", "TMT",
+                'T', thaumium,
+                'B', redstoneBlock,
+                'A', alchemicalConstruct,
+                'C', precisionMechanism,
+                'S', shaft,
+                'M', thaumiumBlock);
     }
 
     /** 书页居中显示（图案补到 3 格宽），合成时仍允许左右平移。 */

@@ -72,7 +72,7 @@ public class MysteryDynamics {
 
     /** 红石发动机：红石信号 1~15 → 32~256 RPM、128~8192 SU。 */
     public static final DeferredBlock<RedstoneEngineBlock> REDSTONE_ENGINE = BLOCKS.register(
-            "redstone_engine", () -> new RedstoneEngineBlock(deviceProperties()));
+            "redstone_engine", () -> new RedstoneEngineBlock(redstoneEngineProperties()));
 
     // ---- 物品 ----
     public static final DeferredItem<BlockItem> STRAW_ITEM = ITEMS.registerSimpleBlockItem(STRAW_GOLEM_POWER);
@@ -135,6 +135,20 @@ public class MysteryDynamics {
 
     private static BlockEntityType<?> blockEntityType() {
         return GOLEM_POWER_BE.get();
+    }
+
+    /**
+     * 与神秘方块（thaumcraft:thaumium_block）一致：
+     * 金属地图色、硬度 4、抗性 20、石质音效、需要正确工具才掉落。
+     * 额外保留 noOcclusion 以适配红石发动机的非满模型。
+     */
+    private static BlockBehaviour.Properties redstoneEngineProperties() {
+        return BlockBehaviour.Properties.of()
+                .mapColor(MapColor.METAL)
+                .strength(4.0F, 20.0F)
+                .requiresCorrectToolForDrops()
+                .sound(SoundType.STONE)
+                .noOcclusion();
     }
 
     private static BlockEntityType<?> redstoneEngineType() {
