@@ -3,15 +3,21 @@ package com.mysterydynamics.compat;
 import com.mysterydynamics.MysteryDynamics;
 import com.mysterydynamics.block.InfernalBoilerBlockEntity;
 import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.EssentiaCapabilities;
 import thaumcraft.api.aspects.IEssentiaTransport;
 import thaumcraft.api.wands.WandTriggerRegistry;
 import thaumcraft.common.blocks.BellowsBlock;
+import thaumcraft.common.items.TCFunctionalItems;
 import thaumcraft.common.registry.TCBlocks;
 import thaumcraft.common.vis.TCVisHelper;
 
@@ -31,6 +37,28 @@ public final class InfernalBoilerCompat {
                         || state.is(TCBlocks.ARCANE_FURNACE.get())
                         || state.is(TCBlocks.WARDED_GLASS.get()),
                 "infernal_boiler_structure");
+
+        // 守卫者玻璃的 useItemOn 会拦截法杖，所以额外在交互事件里处理玻璃点击。
+        NeoForge.EVENT_BUS.addListener(InfernalBoilerCompat::onRightClickBlock);
+    }
+
+    private static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
+        if (event.getLevel().isClientSide() || !(event.getEntity() instanceof Player player)) {
+            return;
+        }
+        ItemStack stack = event.getItemStack();
+        if (!(stack.getItem() instanceof TCFunctionalItems.WandCastingItem)) {
+            return;
+        }
+        if (!event.getLevel().getBlockState(event.getPos()).is(TCBlocks.WARDED_GLASS.get())) {
+            return;
+        }
+        Direction face = event.getFace();
+        if (new InfernalBoilerTrigger().performTrigger(event.getLevel(), stack, player,
+                event.getPos(), face == null ? Direction.UP : face, 0)) {
+            event.setCanceled(true);
+            event.setCancellationResult(InteractionResult.SUCCESS);
+        }
     }
 
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
