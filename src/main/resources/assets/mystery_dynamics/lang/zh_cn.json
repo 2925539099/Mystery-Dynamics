@@ -55,5 +55,6 @@
   "tc.research_text.INFERNAL_BOILER": "占位简介",
   "mystery_dynamics.research.infernal_boiler.text": "占位内容：炼狱锅炉研究正文。",
   "mystery_dynamics.infernal_boiler.no_vis": "魔力不足，无法成型。",
-  "mystery_dynamics.infernal_boiler.formed": "炼狱锅炉已成型。"
+  "mystery_dynamics.infernal_boiler.formed": "炼狱锅炉已成型。",
+  "mystery_dynamics.infernal_boiler.locked": "尚未解锁炼狱锅炉研究。"
 }

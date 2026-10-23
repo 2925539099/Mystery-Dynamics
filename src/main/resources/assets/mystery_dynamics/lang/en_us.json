@@ -55,5 +55,6 @@
   "tc.research_text.INFERNAL_BOILER": "Placeholder introduction",
   "mystery_dynamics.research.infernal_boiler.text": "Placeholder: infernal boiler research text.",
   "mystery_dynamics.infernal_boiler.no_vis": "Not enough vis to form the boiler.",
-  "mystery_dynamics.infernal_boiler.formed": "The infernal boiler has formed."
+  "mystery_dynamics.infernal_boiler.formed": "The infernal boiler has formed.",
+  "mystery_dynamics.infernal_boiler.locked": "You have not unlocked the Infernal Boiler research."
 }

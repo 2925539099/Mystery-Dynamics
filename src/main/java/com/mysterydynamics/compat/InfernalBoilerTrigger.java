@@ -12,6 +12,7 @@ import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.wands.IWandTriggerManager;
 import thaumcraft.common.items.TCFunctionalItems;
+import thaumcraft.common.research.TCResearchManager;
 
 /** 法杖右击守卫者玻璃时尝试成型。 */
 public final class InfernalBoilerTrigger implements IWandTriggerManager {
@@ -23,6 +24,10 @@ public final class InfernalBoilerTrigger implements IWandTriggerManager {
             return false;
         }
         if (!(stack.getItem() instanceof TCFunctionalItems.WandCastingItem wand)) {
+            return false;
+        }
+        if (!TCResearchManager.has(player, "INFERNAL_BOILER")) {
+            player.displayClientMessage(Component.translatable("mystery_dynamics.infernal_boiler.locked"), true);
             return false;
         }
         if (!InfernalBoilerStructure.matches(level, pos)) {
