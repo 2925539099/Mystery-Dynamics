@@ -26,15 +26,15 @@ public final class InfernalBoilerTrigger implements IWandTriggerManager {
         if (!(stack.getItem() instanceof TCFunctionalItems.WandCastingItem wand)) {
             return false;
         }
-        if (!TCResearchManager.has(player, "INFERNAL_BOILER")) {
-            player.displayClientMessage(Component.translatable("mystery_dynamics.infernal_boiler.locked"), true);
-            return false;
-        }
         BlockPos glass = InfernalBoilerStructure.findGlass(level, pos);
         if (glass == null) {
             return false;
         }
         if (!InfernalBoilerStructure.matches(level, glass)) {
+            return false;
+        }
+        if (!TCResearchManager.has(player, "INFERNAL_BOILER")) {
+            player.displayClientMessage(Component.translatable("mystery_dynamics.infernal_boiler.locked"), true);
             return false;
         }
 

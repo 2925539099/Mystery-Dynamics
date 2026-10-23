@@ -1,6 +1,8 @@
 package com.mysterydynamics.block;
 
 import com.mysterydynamics.compat.InfernalBoilerCompat;
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.api.stress.BlockStressValues;
 import com.simibubi.create.content.fluids.tank.BoilerData;
 import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
 
@@ -94,6 +96,10 @@ public class InfernalBoilerData extends BoilerData {
             return 0.0F;
         }
         float deviceMax = ENGINE_STRESS * attachedEngines;
+        double configuredCapacity = BlockStressValues.getCapacity(AllBlocks.STEAM_ENGINE.get());
+        if (configuredCapacity > 0.0D) {
+            deviceMax = (float) configuredCapacity * attachedEngines;
+        }
         float target = BASE_TOTAL_STRESS * Math.min(2.0F, heat / 3.0F);
         if (controller.isOverclock()) {
             target *= 2.0F;
