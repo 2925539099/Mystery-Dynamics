@@ -118,6 +118,7 @@ class Splitter:
         self.args = args
         self.ns = args.namespace
         self.prefix = args.prefix
+        self.part_block = args.part_block
         self.origin = [float(v) for v in args.origin.split(",")] if isinstance(args.origin, str) else [float(v) for v in args.origin]
         self.out = Path(args.out)
         self.model_dir = self.out / "assets" / self.ns / "models" / "block"
@@ -381,16 +382,49 @@ class Splitter:
             mn = [0, 0, 0]
             mx = [0, 0, 0]
 
-        parts = [
-            {"pos": list(c), "model": self.placements[c],
-             "blockstate": f"{self.ns}:{self.placements[c]}"}
-            for c in cells
-        ]
+        unique_models = sorted(set(self.placements.values()))
+        model_index = {m: i for i, m in enumerate(unique_models)}
+
+        if self.part_block:
+            if len(unique_models) > 16:
+                self.warn("唯一模型超过 16 个，单个 part 整数属性可能不够；"
+                          "可以拆成多个属性，或改成每个模型一个方块")
+            block_name = f"{self.ns}:{self.part_block}"
+            variants = {f"part={i}": {"model": f"{self.ns}:block/{m}"}
+                        for m, i in model_index.items()}
+            (self.state_dir / f"{self.part_block}.json").write_text(
+                json.dumps({"variants": variants}, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8")
+            parts = []
+            for c in cells:
+                model = self.placements[c]
+                idx = model_index[model]
+                parts.append({
+                    "pos": list(c),
+                    "model": model,
+                    "block": block_name,
+                    "part": idx,
+                    "blockstate": f"{block_name}[part={idx}]",
+                })
+            (self.bp_dir / f"{self.prefix}_place.mcfunction").write_text(
+                "\n".join(
+                    [f"# {self.prefix} placements, origin-relative"]
+                    + [f"setblock ~{p['pos'][0]} ~{p['pos'][1]} ~{p['pos'][2]} {p['blockstate']}"
+                       for p in parts]
+                ) + "\n", encoding="utf-8")
+        else:
+            parts = [
+                {"pos": list(c), "model": self.placements[c],
+                 "blockstate": f"{self.ns}:{self.placements[c]}"}
+                for c in cells
+            ]
+
         blueprint = {
             "namespace": self.ns,
             "prefix": self.prefix,
             "origin": self.origin,
             "block_size": 16,
+            "part_block": self.part_block,
             "size": [mx[i] - mn[i] + 1 for i in range(3)],
             "min": mn,
             "parts": parts,
@@ -399,15 +433,18 @@ class Splitter:
             json.dumps(blueprint, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
         with (self.bp_dir / f"{self.prefix}_blueprint.csv").open("w", encoding="utf-8", newline="") as f:
-            f.write("x,y,z,model\n")
+            f.write("x,y,z,model,part,blockstate\n")
             for p in parts:
-                f.write(f"{p['pos'][0]},{p['pos'][1]},{p['pos'][2]},{p['model']}\n")
+                part = p.get("part", "")
+                blockstate = p.get("blockstate", "")
+                f.write(f"{p['pos'][0]},{p['pos'][1]},{p['pos'][2]},{p['model']},{part},{blockstate}\n")
 
         report = {
             "input": str(bb_path),
             "namespace": self.ns,
             "prefix": self.prefix,
             "origin": self.origin,
+            "part_block": self.part_block,
             "elements": element_count,
             "pieces": self.pieces,
             "unique_models": self.models,
@@ -441,6 +478,9 @@ def main():
                         help="block model 的 render_type，默认 minecraft:cutout")
     parser.add_argument("--blueprint-dir", default="blueprint",
                         help="蓝图输出目录（相对 --out），默认 blueprint")
+    parser.add_argument("--part-block", default=None,
+                        help="可选：所有部件共用一个方块时，方块注册名（不含命名空间）。"
+                             "会额外生成带 part=0..N 变体的 blockstate 和 setblock 函数")
     parser.add_argument("--no-split", action="store_true",
                         help="不拆分跨格元素（只按中心格放置）")
     parser.add_argument("--no-split-uv", dest="split_uv", action="store_false",
