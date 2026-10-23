@@ -1,0 +1,28 @@
+{
+  "key": "INFERNALFURNACE_LINK",
+  "order": 11,
+  "category": "MYSTERY_DYNAMICS",
+  "col": 1,
+  "row": 5,
+  "complexity": 0,
+  "warp": 0,
+  "parents": [],
+  "parents_hidden": [],
+  "siblings": [],
+  "flags": [
+    "secondary",
+    "round"
+  ],
+  "text_pages": [
+    "mystery_dynamics.research.infernalfurnace_link.text"
+  ],
+  "item": "thaumcraft:arcane_furnace",
+  "aspects": [],
+  "pages": [
+    {
+      "type": "TEXT",
+      "text": "mystery_dynamics.research.infernalfurnace_link.text",
+      "source": "mystery_dynamics.research.infernalfurnace_link.text"
+    }
+  ]
+}

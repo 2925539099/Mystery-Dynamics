@@ -30,8 +30,23 @@ public final class InfernalBoilerStructure {
     private InfernalBoilerStructure() {
     }
 
-    public static boolean matches(Level level, BlockPos glassPos) {
-        if (!level.getBlockState(glassPos).is(TCBlocks.WARDED_GLASS.get())) {
+    /** 从任意一个结构方块位置找出对应的正面玻璃位置。 */
+    public static BlockPos findGlass(Level level, BlockPos clicked) {
+        for (int dx = -5; dx <= 5; dx++) {
+            for (int dy = -4; dy <= 4; dy++) {
+                for (int dz = -5; dz <= 5; dz++) {
+                    BlockPos candidate = clicked.offset(dx, dy, dz);
+                    if (level.getBlockState(candidate).is(TCBlocks.WARDED_GLASS.get())
+                            && matches(level, candidate)) {
+                        return candidate;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    public static boolean matches(Level level, BlockPos glassPos) {        if (!level.getBlockState(glassPos).is(TCBlocks.WARDED_GLASS.get())) {
             return false;
         }
         BlockPos origin = glassPos.offset(-1, -1, -3);

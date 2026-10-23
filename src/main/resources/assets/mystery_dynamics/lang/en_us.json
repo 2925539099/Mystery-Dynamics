@@ -48,13 +48,13 @@
   "mystery_dynamics.research.redstone_engine.text": "According to a paper someone shared, Redstone Flux can drive high-power engines to generate kinetic power without needing boilers or fuel—that sounds pretty good.<BR><BR>I thought I would try designing one myself, and this is the result. Just feed it Redstone Flux and adjust the signal to demand; it can output up to 8192 SU of stress and 256 RPM.<BR><BR>When I showed the design to others, their expressions were rather strange. I suppose there must be something unusual about my design.",
   "block.mystery_dynamics.infernal_boiler": "Infernal Boiler",
   "block.mystery_dynamics.infernal_boiler_face": "Infernal Boiler Window",
-  "tc.research_name.INFERNAL_BOILER_LINK": "Infernal Boiler",
-  "tc.research_text.INFERNAL_BOILER_LINK": "Placeholder introduction",
-  "mystery_dynamics.research.infernal_boiler_link.text": "Placeholder: infernal boiler reference node.",
   "tc.research_name.INFERNAL_BOILER": "Infernal Boiler",
   "tc.research_text.INFERNAL_BOILER": "Placeholder introduction",
   "mystery_dynamics.research.infernal_boiler.text": "Placeholder: infernal boiler research text.",
   "mystery_dynamics.infernal_boiler.no_vis": "Not enough vis to form the boiler.",
   "mystery_dynamics.infernal_boiler.formed": "The infernal boiler has formed.",
-  "mystery_dynamics.infernal_boiler.locked": "You have not unlocked the Infernal Boiler research."
+  "mystery_dynamics.infernal_boiler.locked": "You have not unlocked the Infernal Boiler research.",
+  "tc.research_name.INFERNALFURNACE_LINK": "Infernal Furnace",
+  "tc.research_text.INFERNALFURNACE_LINK": "Infernal Furnace",
+  "mystery_dynamics.research.infernalfurnace_link.text": "Placeholder: infernal furnace reference node."
 }

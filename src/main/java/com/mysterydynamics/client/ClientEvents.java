@@ -23,10 +23,10 @@ public final class ClientEvents {
         event.registerBlockEntityRenderer(MysteryDynamics.INFERNAL_BOILER_BE.get(), FluidTankRenderer::new);
 
         // 让 (1,3) 的引用节点直接显示炼金术“要素蒸馏”的原始页面，
-        // (1,5) 的引用节点显示“炼狱锅炉”原始页面。
+        // (1,5) 的引用节点直接显示“炼狱熔炉”的原始页面。
         ResearchBookApi.addPageAlias(key ->
                 "ESSENTIADISTILLATION_LINK".equals(key) ? "DISTILESSENTIA"
-                        : "INFERNAL_BOILER_LINK".equals(key) ? "INFERNAL_BOILER"
+                        : "INFERNALFURNACE_LINK".equals(key) ? "INFERNALFURNACE"
                         : key);
     }
 }

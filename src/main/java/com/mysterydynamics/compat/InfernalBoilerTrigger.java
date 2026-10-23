@@ -14,7 +14,7 @@ import thaumcraft.api.wands.IWandTriggerManager;
 import thaumcraft.common.items.TCFunctionalItems;
 import thaumcraft.common.research.TCResearchManager;
 
-/** 法杖右击守卫者玻璃时尝试成型。 */
+/** 法杖右击结构任意方块时尝试成型。 */
 public final class InfernalBoilerTrigger implements IWandTriggerManager {
 
     @Override
@@ -30,7 +30,11 @@ public final class InfernalBoilerTrigger implements IWandTriggerManager {
             player.displayClientMessage(Component.translatable("mystery_dynamics.infernal_boiler.locked"), true);
             return false;
         }
-        if (!InfernalBoilerStructure.matches(level, pos)) {
+        BlockPos glass = InfernalBoilerStructure.findGlass(level, pos);
+        if (glass == null) {
+            return false;
+        }
+        if (!InfernalBoilerStructure.matches(level, glass)) {
             return false;
         }
 
@@ -45,7 +49,7 @@ public final class InfernalBoilerTrigger implements IWandTriggerManager {
             player.displayClientMessage(Component.translatable("mystery_dynamics.infernal_boiler.no_vis"), true);
             return false;
         }
-        if (!InfernalBoilerStructure.form(level, pos)) {
+        if (!InfernalBoilerStructure.form(level, glass)) {
             return false;
         }
 

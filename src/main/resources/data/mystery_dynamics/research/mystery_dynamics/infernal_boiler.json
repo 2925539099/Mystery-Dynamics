@@ -7,8 +7,8 @@
   "complexity": 3,
   "warp": 4,
   "parents": [
-    "ESSENTIADISTILLATION_LINK",
-    "INFERNALFURNACE"
+    "INFERNALFURNACE_LINK",
+    "ESSENTIADISTILLATION_LINK"
   ],
   "parents_hidden": [],
   "siblings": [],

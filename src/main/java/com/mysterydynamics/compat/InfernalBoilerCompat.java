@@ -2,10 +2,9 @@ package com.mysterydynamics.compat;
 
 import com.mysterydynamics.MysteryDynamics;
 import com.mysterydynamics.block.InfernalBoilerBlockEntity;
-import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
-
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import thaumcraft.api.aspects.Aspect;
@@ -23,8 +22,15 @@ public final class InfernalBoilerCompat {
     }
 
     public static void register() {
+        // 不只在玻璃上：点击任意结构方块都能触发成型。
         WandTriggerRegistry.registerWandBlockTrigger(new InfernalBoilerTrigger(), 0,
-                TCBlocks.WARDED_GLASS.get());
+                state -> state.is(Blocks.OBSIDIAN)
+                        || state.is(Blocks.NETHER_BRICKS)
+                        || state.is(TCBlocks.THAUMIUM_BLOCK.get())
+                        || state.is(TCBlocks.ALCHEMICAL_CONSTRUCT.get())
+                        || state.is(TCBlocks.ARCANE_FURNACE.get())
+                        || state.is(TCBlocks.WARDED_GLASS.get()),
+                "infernal_boiler_structure");
     }
 
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
