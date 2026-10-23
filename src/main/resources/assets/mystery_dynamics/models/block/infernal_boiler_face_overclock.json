@@ -1,0 +1,37 @@
+{
+  "parent": "minecraft:block/block",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "particle": "mystery_dynamics:block/infernal_boiler/face",
+    "face": "mystery_dynamics:block/infernal_boiler/face",
+    "fire": "mystery_dynamics:block/infernal_boiler/fire"
+  },
+  "elements": [
+    {
+      "from": [0, 0, 0],
+      "to": [16, 16, 16],
+      "faces": {
+        "north": { "uv": [0, 0, 16, 16], "texture": "#face" },
+        "south": { "uv": [0, 0, 16, 16], "texture": "#face" },
+        "east": { "uv": [0, 0, 16, 16], "texture": "#face" },
+        "west": { "uv": [0, 0, 16, 16], "texture": "#face" },
+        "up": { "uv": [0, 0, 16, 16], "texture": "#face" },
+        "down": { "uv": [0, 0, 16, 16], "texture": "#face" }
+      }
+    },
+    {
+      "from": [1, 1, 16.01],
+      "to": [15, 15, 16.2],
+      "faces": {
+        "south": { "uv": [0, 0, 16, 16], "texture": "#fire" }
+      }
+    },
+    {
+      "from": [3, 1, 16.21],
+      "to": [13, 13, 16.4],
+      "faces": {
+        "south": { "uv": [2, 2, 14, 14], "texture": "#fire" }
+      }
+    }
+  ]
+}

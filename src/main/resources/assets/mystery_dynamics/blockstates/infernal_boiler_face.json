@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "overclock=false": { "model": "mystery_dynamics:block/infernal_boiler_face" },
+    "overclock=true": { "model": "mystery_dynamics:block/infernal_boiler_face_overclock" }
+  }
+}

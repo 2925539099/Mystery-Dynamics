@@ -3,9 +3,13 @@ package com.mysterydynamics;
 import com.mysterydynamics.block.GolemPowerBlock;
 import com.mysterydynamics.block.GolemPowerBlockEntity;
 import com.mysterydynamics.block.GolemPowerFrameBlock;
+import com.mysterydynamics.block.InfernalBoilerBlock;
+import com.mysterydynamics.block.InfernalBoilerBlockEntity;
+import com.mysterydynamics.block.InfernalBoilerFaceBlock;
 import com.mysterydynamics.block.RedstoneEngineBlock;
 import com.mysterydynamics.block.RedstoneEngineBlockEntity;
 import com.simibubi.create.api.stress.BlockStressValues;
+import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -18,8 +22,11 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -74,6 +81,14 @@ public class MysteryDynamics {
     public static final DeferredBlock<RedstoneEngineBlock> REDSTONE_ENGINE = BLOCKS.register(
             "redstone_engine", () -> new RedstoneEngineBlock(redstoneEngineProperties()));
 
+    /** 炼狱锅炉 3×3×3 主体，继承 Create 流体储罐。 */
+    public static final DeferredBlock<InfernalBoilerBlock> INFERNAL_BOILER = BLOCKS.register(
+            "infernal_boiler", () -> new InfernalBoilerBlock(infernalBoilerProperties()));
+
+    /** 炼狱锅炉正面观察窗；超频时显示超级燃烧层。 */
+    public static final DeferredBlock<InfernalBoilerFaceBlock> INFERNAL_BOILER_FACE = BLOCKS.register(
+            "infernal_boiler_face", () -> new InfernalBoilerFaceBlock(infernalBoilerFaceProperties()));
+
     // ---- 物品 ----
     public static final DeferredItem<BlockItem> STRAW_ITEM = ITEMS.registerSimpleBlockItem(STRAW_GOLEM_POWER);
     public static final DeferredItem<BlockItem> WOOD_ITEM = ITEMS.registerSimpleBlockItem(WOOD_GOLEM_POWER);
@@ -85,6 +100,8 @@ public class MysteryDynamics {
     public static final DeferredItem<BlockItem> MYSTERY_ITEM = ITEMS.registerSimpleBlockItem(MYSTERY_GOLEM_POWER);
     public static final DeferredItem<BlockItem> FRAME_ITEM = ITEMS.registerSimpleBlockItem(GOLEM_POWER_FRAME);
     public static final DeferredItem<BlockItem> REDSTONE_ENGINE_ITEM = ITEMS.registerSimpleBlockItem(REDSTONE_ENGINE);
+    public static final DeferredItem<BlockItem> INFERNAL_BOILER_ITEM = ITEMS.registerSimpleBlockItem(INFERNAL_BOILER);
+    public static final DeferredItem<BlockItem> INFERNAL_BOILER_FACE_ITEM = ITEMS.registerSimpleBlockItem(INFERNAL_BOILER_FACE);
 
     // ---- 方块实体（8 台设备共用） ----
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<GolemPowerBlockEntity>> GOLEM_POWER_BE =
@@ -97,6 +114,11 @@ public class MysteryDynamics {
                     (pos, state) -> new RedstoneEngineBlockEntity(redstoneEngineType(), pos, state),
                     REDSTONE_ENGINE.get()).build(null));
 
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<InfernalBoilerBlockEntity>> INFERNAL_BOILER_BE =
+            BLOCK_ENTITY_TYPES.register("infernal_boiler", () -> BlockEntityType.Builder.of(
+                    (pos, state) -> new InfernalBoilerBlockEntity(infernalBoilerType(), pos, state),
+                    INFERNAL_BOILER.get()).build(null));
+
     /** 独立创造模式标签页。 */
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> TAB = CREATIVE_TABS.register("main",
             () -> CreativeModeTab.builder()
@@ -106,6 +128,8 @@ public class MysteryDynamics {
                         GENERATORS.forEach(block -> output.accept(block.get()));
                         output.accept(GOLEM_POWER_FRAME.get());
                         output.accept(REDSTONE_ENGINE.get());
+                        output.accept(INFERNAL_BOILER.get());
+                        output.accept(INFERNAL_BOILER_FACE.get());
                     })
                     .build());
 
@@ -115,6 +139,7 @@ public class MysteryDynamics {
         BLOCK_ENTITY_TYPES.register(modEventBus);
         CREATIVE_TABS.register(modEventBus);
         modEventBus.addListener(MysteryDynamics::commonSetup);
+        modEventBus.addListener(MysteryDynamics::registerCapabilities);
     }
 
     private static DeferredBlock<GolemPowerBlock> registerGolem(String name, float rpm, float stressUnits) {
@@ -155,6 +180,37 @@ public class MysteryDynamics {
         return REDSTONE_ENGINE_BE.get();
     }
 
+    private static BlockEntityType<?> infernalBoilerType() {
+        return INFERNAL_BOILER_BE.get();
+    }
+
+    private static BlockBehaviour.Properties infernalBoilerProperties() {
+        return BlockBehaviour.Properties.of()
+                .mapColor(MapColor.METAL)
+                .strength(4.0F, 20.0F)
+                .requiresCorrectToolForDrops()
+                .sound(SoundType.STONE);
+    }
+
+    private static BlockBehaviour.Properties infernalBoilerFaceProperties() {
+        return BlockBehaviour.Properties.of()
+                .mapColor(MapColor.COLOR_LIGHT_BLUE)
+                .strength(0.3F)
+                .sound(SoundType.GLASS)
+                .noOcclusion();
+    }
+
+    private static void registerCapabilities(RegisterCapabilitiesEvent event) {
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, INFERNAL_BOILER_BE.get(),
+                (be, side) -> {
+                    FluidTankBlockEntity controller = be.isController() ? be : be.getControllerBE();
+                    return controller == null ? null : controller.getTankInventory();
+                });
+        if (ModList.get().isLoaded("thaumcraft")) {
+            com.mysterydynamics.compat.InfernalBoilerCompat.registerCapabilities(event);
+        }
+    }
+
     private static void commonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
             for (DeferredBlock<GolemPowerBlock> holder : GENERATORS) {
@@ -171,6 +227,7 @@ public class MysteryDynamics {
             // 安装了神秘时代时才注册奥术工作台配方（未安装时不加载 compat 类）
             if (net.neoforged.fml.ModList.get().isLoaded("thaumcraft")) {
                 com.mysterydynamics.compat.ThaumcraftRecipes.register();
+                com.mysterydynamics.compat.InfernalBoilerCompat.register();
             }
         });
     }

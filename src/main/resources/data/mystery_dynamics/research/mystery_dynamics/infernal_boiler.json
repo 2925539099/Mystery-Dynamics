@@ -1,0 +1,57 @@
+{
+  "key": "INFERNAL_BOILER",
+  "order": 12,
+  "category": "MYSTERY_DYNAMICS",
+  "col": 3,
+  "row": 5,
+  "complexity": 3,
+  "warp": 4,
+  "parents": [
+    "ESSENTIADISTILLATION_LINK",
+    "INFERNALFURNACE"
+  ],
+  "parents_hidden": [],
+  "siblings": [],
+  "flags": [],
+  "text_pages": [
+    "mystery_dynamics.research.infernal_boiler.text"
+  ],
+  "item": "mystery_dynamics:infernal_boiler",
+  "aspects": [
+    {
+      "aspect": "ignis",
+      "amount": 10
+    },
+    {
+      "aspect": "terra",
+      "amount": 10
+    },
+    {
+      "aspect": "aer",
+      "amount": 6
+    },
+    {
+      "aspect": "aqua",
+      "amount": 6
+    },
+    {
+      "aspect": "ordo",
+      "amount": 6
+    },
+    {
+      "aspect": "perditio",
+      "amount": 6
+    },
+    {
+      "aspect": "machina",
+      "amount": 6
+    }
+  ],
+  "pages": [
+    {
+      "type": "TEXT",
+      "text": "mystery_dynamics.research.infernal_boiler.text",
+      "source": "mystery_dynamics.research.infernal_boiler.text"
+    }
+  ]
+}

@@ -45,5 +45,15 @@
   "mystery_dynamics.research.essentia_distillation.text": "占位文本：要素蒸馏引用节点。",
   "tc.research_name.REDSTONE_ENGINE": "红石发动机",
   "tc.research_text.REDSTONE_ENGINE": "是这个红石通量对吧？",
-  "mystery_dynamics.research.redstone_engine.text": "根据别人发的论文来看，Redstone Flux可以驱动大功率发动机来产生动力，不用烧锅炉什么的来供应了，这看起来挺不错的。<BR><BR>我想我也可以试着设计一下，所以就有了这玩意，只需要通入红石通量，在根据需求来调节大小，就可以最高输出8192 SU的动力和256 RPM的转速。<BR><BR>不过在我将这个设计展示给其他人看的时候，他们的表情都特别奇怪，我想应该是我的设计上有什么与众不同之处。"
+  "mystery_dynamics.research.redstone_engine.text": "根据别人发的论文来看，Redstone Flux可以驱动大功率发动机来产生动力，不用烧锅炉什么的来供应了，这看起来挺不错的。<BR><BR>我想我也可以试着设计一下，所以就有了这玩意，只需要通入红石通量，在根据需求来调节大小，就可以最高输出8192 SU的动力和256 RPM的转速。<BR><BR>不过在我将这个设计展示给其他人看的时候，他们的表情都特别奇怪，我想应该是我的设计上有什么与众不同之处。",
+  "block.mystery_dynamics.infernal_boiler": "炼狱锅炉",
+  "block.mystery_dynamics.infernal_boiler_face": "炼狱锅炉观察窗",
+  "tc.research_name.INFERNAL_BOILER_LINK": "炼狱锅炉",
+  "tc.research_text.INFERNAL_BOILER_LINK": "占位简介",
+  "mystery_dynamics.research.infernal_boiler_link.text": "占位内容：炼狱锅炉引用节点。",
+  "tc.research_name.INFERNAL_BOILER": "炼狱锅炉",
+  "tc.research_text.INFERNAL_BOILER": "占位简介",
+  "mystery_dynamics.research.infernal_boiler.text": "占位内容：炼狱锅炉研究正文。",
+  "mystery_dynamics.infernal_boiler.no_vis": "魔力不足，无法成型。",
+  "mystery_dynamics.infernal_boiler.formed": "炼狱锅炉已成型。"
 }
