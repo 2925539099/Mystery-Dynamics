@@ -65,6 +65,12 @@ neoForge {
     }
 }
 
+tasks.named('jar', Jar).configure {
+    manifest {
+        attributes 'MixinConfigs': 'mystery_dynamics.mixins.json'
+    }
+}
+
 processResources {
     filteringCharset = 'UTF-8'
     inputs.property 'version', project.version
