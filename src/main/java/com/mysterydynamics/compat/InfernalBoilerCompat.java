@@ -44,7 +44,11 @@ public final class InfernalBoilerCompat {
                 || state.is(Blocks.NETHER_BRICKS)
                 || state.is(TCBlocks.THAUMIUM_BLOCK.get())
                 || state.is(TCBlocks.ALCHEMICAL_CONSTRUCT.get())
+                || state.is(TCBlocks.ADVANCED_ALCHEMICAL_CONSTRUCT.get())
+                || state.is(TCBlocks.ALCHEMICAL_FURNACE.get())
+                || state.is(TCBlocks.ADVANCED_ALCHEMICAL_FURNACE.get())
                 || state.is(TCBlocks.ARCANE_FURNACE.get())
+                || state.is(TCBlocks.ARCANE_FURNACE_CASING.get())
                 || state.is(TCBlocks.WARDED_GLASS.get());
     }
 

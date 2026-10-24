@@ -197,9 +197,13 @@ public final class InfernalBoilerStructure {
         if (actual.is(expected)) {
             return true;
         }
-        // 炼金炉在成型后可能是核心块，也可能是炼金炉外壳/出口。
+        // 神秘时代里“炼金炉”实际注册名是 alchemical_furnace；
+        // 同时兼容奥术熔炉核心、炼金炉外壳等不同摆放形式。
         if (expected == TCBlocks.ARCANE_FURNACE.get()
-                && actual.is(TCBlocks.ARCANE_FURNACE_CASING.get())) {
+                && (actual.is(TCBlocks.ALCHEMICAL_FURNACE.get())
+                || actual.is(TCBlocks.ADVANCED_ALCHEMICAL_FURNACE.get())
+                || actual.is(TCBlocks.ARCANE_FURNACE.get())
+                || actual.is(TCBlocks.ARCANE_FURNACE_CASING.get()))) {
             return true;
         }
         // 允许使用高级炼金构材。
