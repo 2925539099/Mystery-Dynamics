@@ -4,7 +4,7 @@
   "category": "MYSTERY_DYNAMICS",
   "col": 3,
   "row": 5,
-  "complexity": 3,
+  "complexity": 4,
   "warp": 4,
   "parents": [
     "INFERNALFURNACE_LINK",
@@ -14,7 +14,8 @@
   "siblings": [],
   "flags": [],
   "text_pages": [
-    "mystery_dynamics.research.infernal_boiler.text"
+    "mystery_dynamics.research.infernal_boiler.text",
+    "mystery_dynamics.research.infernal_boiler.text2"
   ],
   "aspects": [
     {
@@ -51,6 +52,11 @@
       "type": "TEXT",
       "text": "mystery_dynamics.research.infernal_boiler.text",
       "source": "mystery_dynamics.research.infernal_boiler.text"
+    },
+    {
+      "type": "TEXT",
+      "text": "mystery_dynamics.research.infernal_boiler.text2",
+      "source": "mystery_dynamics.research.infernal_boiler.text2"
     }
   ],
   "icon": "mystery_dynamics:textures/misc/r_infernal_boiler.png"

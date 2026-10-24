@@ -4,8 +4,8 @@
   "category": "MYSTERY_DYNAMICS",
   "col": 1,
   "row": 5,
-  "complexity": 0,
-  "warp": 0,
+  "complexity": 2,
+  "warp": 2,
   "parents": [],
   "parents_hidden": [],
   "siblings": [],
@@ -14,15 +14,38 @@
     "round"
   ],
   "text_pages": [
-    "mystery_dynamics.research.infernalfurnace_link.text"
+    "tc.research_page.INFERNALFURNACE.1",
+    "tc.research_page.INFERNALFURNACE.2"
   ],
   "icon": "thaumcraft:textures/misc/r_infernalfurnace.png",
-  "aspects": [],
+  "aspects": [
+    {
+      "aspect": "ignis",
+      "amount": 6
+    },
+    {
+      "aspect": "metallum",
+      "amount": 3
+    },
+    {
+      "aspect": "fabrico",
+      "amount": 3
+    },
+    {
+      "aspect": "auram",
+      "amount": 3
+    }
+  ],
   "pages": [
     {
       "type": "TEXT",
-      "text": "mystery_dynamics.research.infernalfurnace_link.text",
-      "source": "mystery_dynamics.research.infernalfurnace_link.text"
+      "text": "tc.research_page.INFERNALFURNACE.1",
+      "source": "tc.research_page.INFERNALFURNACE.1"
+    },
+    {
+      "type": "TEXT",
+      "text": "tc.research_page.INFERNALFURNACE.2",
+      "source": "tc.research_page.INFERNALFURNACE.2"
     }
   ]
 }
