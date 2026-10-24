@@ -55,7 +55,7 @@ public class MysteryDynamics {
     static {
         // 结构页必须双端可见，否则服务端加载研究会丢弃 CONSTRUCT 页面。
         ResearchBookApi.addConstructSource(key ->
-                "InfernalBoiler".equals(key)
+                "InfernalBoiler".equalsIgnoreCase(key) || "INFERNAL_BOILER".equalsIgnoreCase(key)
                         ? java.util.List.of(InfernalBoilerConstruct.create())
                         : java.util.List.of());
     }
