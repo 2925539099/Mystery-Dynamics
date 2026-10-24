@@ -224,8 +224,8 @@ public final class InfernalBoilerStructure {
         for (int y = 3; y <= 4; y++) {
             for (int x = 0; x <= 2; x++) {
                 for (int z = 0; z <= 2; z++) {
-                    if (!level.getBlockState(world(origin, x, y, z, rotation))
-                            .is(TCBlocks.THAUMIUM_BLOCK.get())) {
+                    if (!accepted(TCBlocks.THAUMIUM_BLOCK.get(),
+                            level.getBlockState(world(origin, x, y, z, rotation)))) {
                         return false;
                     }
                 }
