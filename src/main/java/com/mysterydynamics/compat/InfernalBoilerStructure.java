@@ -1,6 +1,7 @@
 package com.mysterydynamics.compat;
 
 import com.mysterydynamics.MysteryDynamics;
+import com.mysterydynamics.block.InfernalBoilerBlock;
 import com.mysterydynamics.block.InfernalBoilerBlockEntity;
 import com.mysterydynamics.block.InfernalBoilerFaceBlock;
 import com.simibubi.create.api.connectivity.ConnectivityHandler;
@@ -235,8 +236,19 @@ public final class InfernalBoilerStructure {
         BlockPos center = world(origin, 1, 3, 1, rotation);
         BlockPos face = match.glass();
 
+        // 成型后整个 4×4×2 底座换成不可见填充块，由 shell 模型绘制。
+        for (int y = 0; y <= 1; y++) {
+            for (int x = 0; x <= 3; x++) {
+                for (int z = 0; z <= 3; z++) {
+                    level.setBlock(world(origin, x, y, z, rotation),
+                            MysteryDynamics.INFERNAL_BOILER_CASING.get().defaultBlockState(), 3);
+                }
+            }
+        }
+
         // 先放中心，让 Create 的连通性把 controller 选在中心附近
-        level.setBlock(center, MysteryDynamics.INFERNAL_BOILER.get().defaultBlockState(), 3);
+        level.setBlock(center, MysteryDynamics.INFERNAL_BOILER.get().defaultBlockState()
+                .setValue(InfernalBoilerBlock.FORMED, true), 3);
         for (int y = 2; y <= 4; y++) {
             for (int x = 0; x <= 2; x++) {
                 for (int z = 0; z <= 2; z++) {
@@ -244,10 +256,14 @@ public final class InfernalBoilerStructure {
                         continue;
                     }
                     level.setBlock(world(origin, x, y, z, rotation),
-                            MysteryDynamics.INFERNAL_BOILER.get().defaultBlockState(), 3);
+                            MysteryDynamics.INFERNAL_BOILER.get().defaultBlockState()
+                                    .setValue(InfernalBoilerBlock.FORMED, true), 3);
                 }
             }
         }
+
+        // 整栋模型承载方块放在底座西北角，模型从该位置向外延伸 4×4×5。
+        level.setBlock(origin, MysteryDynamics.INFERNAL_BOILER_SHELL.get().defaultBlockState(), 3);
 
         BlockState faceState = MysteryDynamics.INFERNAL_BOILER_FACE.get().defaultBlockState()
                 .setValue(InfernalBoilerFaceBlock.FACING, match.facing());

@@ -1,7 +1,6 @@
 package com.mysterydynamics.client;
 
 import com.mysterydynamics.MysteryDynamics;
-import com.simibubi.create.content.fluids.tank.FluidTankRenderer;
 
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -20,7 +19,6 @@ public final class ClientEvents {
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(MysteryDynamics.REDSTONE_ENGINE_BE.get(), RedstoneEngineRenderer::new);
-        event.registerBlockEntityRenderer(MysteryDynamics.INFERNAL_BOILER_BE.get(), FluidTankRenderer::new);
 
         // 让 (1,3) 的引用节点直接显示炼金术“要素蒸馏”的原始页面，
         // (1,5) 的引用节点直接显示“炼狱熔炉”的原始页面。

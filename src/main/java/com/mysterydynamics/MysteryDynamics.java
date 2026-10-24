@@ -5,7 +5,9 @@ import com.mysterydynamics.block.GolemPowerBlockEntity;
 import com.mysterydynamics.block.GolemPowerFrameBlock;
 import com.mysterydynamics.block.InfernalBoilerBlock;
 import com.mysterydynamics.block.InfernalBoilerBlockEntity;
+import com.mysterydynamics.block.InfernalBoilerCasingBlock;
 import com.mysterydynamics.block.InfernalBoilerFaceBlock;
+import com.mysterydynamics.block.InfernalBoilerShellBlock;
 import com.mysterydynamics.block.RedstoneEngineBlock;
 import com.mysterydynamics.block.RedstoneEngineBlockEntity;
 import com.simibubi.create.api.stress.BlockStressValues;
@@ -88,6 +90,14 @@ public class MysteryDynamics {
     /** 炼狱锅炉正面观察窗；超频时显示超级燃烧层。 */
     public static final DeferredBlock<InfernalBoilerFaceBlock> INFERNAL_BOILER_FACE = BLOCKS.register(
             "infernal_boiler_face", () -> new InfernalBoilerFaceBlock(infernalBoilerFaceProperties()));
+
+    /** 成型后底座填充块；不渲染，由 shell 整体模型覆盖。 */
+    public static final DeferredBlock<InfernalBoilerCasingBlock> INFERNAL_BOILER_CASING = BLOCKS.register(
+            "infernal_boiler_casing", () -> new InfernalBoilerCasingBlock(infernalBoilerCasingProperties()));
+
+    /** 整栋锅炉模型（4×4×5）的承载方块。 */
+    public static final DeferredBlock<InfernalBoilerShellBlock> INFERNAL_BOILER_SHELL = BLOCKS.register(
+            "infernal_boiler_shell", () -> new InfernalBoilerShellBlock(infernalBoilerShellProperties()));
 
     // ---- 物品 ----
     public static final DeferredItem<BlockItem> STRAW_ITEM = ITEMS.registerSimpleBlockItem(STRAW_GOLEM_POWER);
@@ -189,7 +199,8 @@ public class MysteryDynamics {
                 .mapColor(MapColor.METAL)
                 .strength(4.0F, 20.0F)
                 .requiresCorrectToolForDrops()
-                .sound(SoundType.STONE);
+                .sound(SoundType.STONE)
+                .noOcclusion();
     }
 
     private static BlockBehaviour.Properties infernalBoilerFaceProperties() {
@@ -197,6 +208,22 @@ public class MysteryDynamics {
                 .mapColor(MapColor.COLOR_LIGHT_BLUE)
                 .strength(0.3F)
                 .sound(SoundType.GLASS)
+                .noOcclusion();
+    }
+
+    private static BlockBehaviour.Properties infernalBoilerCasingProperties() {
+        return BlockBehaviour.Properties.of()
+                .mapColor(MapColor.NETHER)
+                .strength(2.0F, 6.0F)
+                .sound(SoundType.NETHER_BRICKS)
+                .noOcclusion();
+    }
+
+    private static BlockBehaviour.Properties infernalBoilerShellProperties() {
+        return BlockBehaviour.Properties.of()
+                .mapColor(MapColor.NETHER)
+                .strength(2.0F, 6.0F)
+                .sound(SoundType.NETHER_BRICKS)
                 .noOcclusion();
     }
 

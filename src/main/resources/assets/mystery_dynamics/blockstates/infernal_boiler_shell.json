@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "overclock=false": {
+      "model": "mystery_dynamics:block/infernal_boiler_formed"
+    },
+    "overclock=true": {
+      "model": "mystery_dynamics:block/infernal_boiler_formed_overclock"
+    }
+  }
+}

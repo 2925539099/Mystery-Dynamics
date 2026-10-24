@@ -72,8 +72,24 @@ public class InfernalBoilerBlockEntity extends FluidTankBlockEntity {
         }
 
         updateFaceState();
+        updateShellState();
         if (changed) {
             setChanged();
+        }
+    }
+
+    private void updateShellState() {
+        if (boilerOrigin.equals(BlockPos.ZERO) || level == null || !level.isLoaded(boilerOrigin)) {
+            return;
+        }
+        BlockState state = level.getBlockState(boilerOrigin);
+        if (!state.is(MysteryDynamics.INFERNAL_BOILER_SHELL.get())) {
+            return;
+        }
+        boolean overclock = isOverclock();
+        if (state.getValue(InfernalBoilerShellBlock.OVERCLOCK) != overclock) {
+            level.setBlock(boilerOrigin,
+                    state.setValue(InfernalBoilerShellBlock.OVERCLOCK, overclock), 3);
         }
     }
 
