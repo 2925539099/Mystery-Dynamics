@@ -76,14 +76,34 @@ public class InfernalBoilerRenderer implements BlockEntityRenderer<InfernalBoile
         pose.mulPose(Axis.YP.rotationDegrees(boiler.rotation() * 90.0F));
         pose.translate(-2.0D, 0.0D, -2.0D);
 
-        VertexConsumer solidBuffer = bufferSource.getBuffer(RenderType.cutout());
-        VertexConsumer translucentBuffer = bufferSource.getBuffer(RenderType.translucent());
         Function<ResourceLocation, TextureAtlasSprite> atlas =
                 Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS);
+        drawPass(data, false, RenderType.cutout(), pose, bufferSource, atlas, packedLight);
+        drawPass(data, true, RenderType.translucent(), pose, bufferSource, atlas, packedLight);
+        pose.popPose();
+    }
+
+    private static void drawPass(ModelData data, boolean translucent, RenderType renderType,
+                                 PoseStack pose, MultiBufferSource bufferSource,
+                                 Function<ResourceLocation, TextureAtlasSprite> atlas,
+                                 int packedLight) {
+        boolean any = false;
         for (Quad quad : data.quads()) {
+            if (quad.translucent() == translucent) {
+                any = true;
+                break;
+            }
+        }
+        if (!any) {
+            return;
+        }
+        VertexConsumer consumer = bufferSource.getBuffer(renderType);
+        for (Quad quad : data.quads()) {
+            if (quad.translucent() != translucent) {
+                continue;
+            }
             TextureAtlasSprite sprite = SPRITES.computeIfAbsent(quad.texture(), atlas);
             int light = quad.bright() ? LightTexture.FULL_BRIGHT : packedLight;
-            VertexConsumer consumer = quad.translucent() ? translucentBuffer : solidBuffer;
             for (Vertex vertex : quad.vertices()) {
                 consumer.addVertex(pose.last(), vertex.x() / 16.0F, vertex.y() / 16.0F,
                                 vertex.z() / 16.0F)
@@ -95,7 +115,6 @@ public class InfernalBoilerRenderer implements BlockEntityRenderer<InfernalBoile
                         .setNormal(pose.last(), quad.nx(), quad.ny(), quad.nz());
             }
         }
-        pose.popPose();
     }
 
     private static ModelData normal() {
