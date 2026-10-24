@@ -249,6 +249,15 @@ public final class InfernalBoilerStructure {
             }
         }
 
+        // 第三层的 4×4 外圈也是多结构的一部分，同样交给 shell；
+        // 中心 3×3 随后会被锅炉主体覆盖。
+        for (int x = 0; x <= 3; x++) {
+            for (int z = 0; z <= 3; z++) {
+                level.setBlock(world(origin, x, 2, z, rotation),
+                        MysteryDynamics.INFERNAL_BOILER_CASING.get().defaultBlockState(), 3);
+            }
+        }
+
         // 先放中心，让 Create 的连通性把 controller 选在中心附近
         level.setBlock(center, MysteryDynamics.INFERNAL_BOILER.get().defaultBlockState()
                 .setValue(InfernalBoilerBlock.FORMED, true), 3);
@@ -299,8 +308,8 @@ public final class InfernalBoilerStructure {
         }
         RESTORING.set(true);
         try {
-            for (int y = 0; y <= 1; y++) {
-                Block[][] layer = y == 0 ? LAYER_0 : LAYER_1;
+            for (int y = 0; y <= 2; y++) {
+                Block[][] layer = y == 0 ? LAYER_0 : y == 1 ? LAYER_1 : LAYER_2;
                 for (int x = 0; x <= 3; x++) {
                     for (int z = 0; z <= 3; z++) {
                         level.setBlock(world(origin, x, y, z, rotation),
