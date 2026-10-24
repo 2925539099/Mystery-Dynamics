@@ -1,25 +1,25 @@
 package com.mysterydynamics.block;
 
-import com.mysterydynamics.MysteryDynamics;
 import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 
-/** 底座填充块自己的流体接口；把管道的水转给整栋锅炉的 controller。 */
-public class InfernalBoilerCasingBlockEntity extends BlockEntity implements IFluidHandler {
+/**
+ * 底座填充块同时也是 FluidTankBlockEntity，这样贴在底座上的蒸汽引擎
+ * 能像识别原版锅炉一样识别到锅炉 controller。
+ */
+public class InfernalBoilerCasingBlockEntity extends FluidTankBlockEntity implements IFluidHandler {
 
     public InfernalBoilerCasingBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
 
-    private IFluidHandler tank() {
+    private InfernalBoilerBlockEntity controller() {
         if (level == null) {
             return null;
         }
@@ -27,13 +27,9 @@ public class InfernalBoilerCasingBlockEntity extends BlockEntity implements IFlu
             for (int dy = 0; dy <= 5; dy++) {
                 for (int dz = -4; dz <= 4; dz++) {
                     if (level.getBlockEntity(worldPosition.offset(dx, dy, dz))
-                            instanceof InfernalBoilerBlockEntity boiler) {
-                        FluidTankBlockEntity controller = boiler.isController()
-                                ? boiler
-                                : boiler.getControllerBE();
-                        if (controller != null) {
-                            return controller.getTankInventory();
-                        }
+                            instanceof InfernalBoilerBlockEntity boiler
+                            && boiler.isController()) {
+                        return boiler;
                     }
                 }
             }
@@ -42,43 +38,64 @@ public class InfernalBoilerCasingBlockEntity extends BlockEntity implements IFlu
     }
 
     @Override
+    public void tick() {
+        // 这不是实际储罐，只是底座上的锅炉代理。
+    }
+
+    @Override
+    public boolean isController() {
+        return false;
+    }
+
+    @Override
+    public FluidTankBlockEntity getControllerBE() {
+        return controller();
+    }
+
+    @Override
+    public FluidTank getTankInventory() {
+        InfernalBoilerBlockEntity controller = controller();
+        return controller == null ? super.getTankInventory() : controller.getTankInventory();
+    }
+
+    @Override
+    public int getTotalTankSize() {
+        InfernalBoilerBlockEntity controller = controller();
+        return controller == null ? 0 : controller.getTotalTankSize();
+    }
+
+    @Override
     public int getTanks() {
-        return tank() == null ? 0 : 1;
+        return getTankInventory() == null ? 0 : 1;
     }
 
     @Override
     public FluidStack getFluidInTank(int tank) {
-        IFluidHandler handler = tank();
-        return handler == null ? FluidStack.EMPTY : handler.getFluidInTank(tank);
+        return getTankInventory().getFluidInTank(tank);
     }
 
     @Override
     public int getTankCapacity(int tank) {
-        IFluidHandler handler = tank();
-        return handler == null ? 0 : handler.getTankCapacity(tank);
+        return getTankInventory().getTankCapacity(tank);
     }
 
     @Override
     public boolean isFluidValid(int tank, FluidStack stack) {
-        IFluidHandler handler = tank();
-        return handler != null && handler.isFluidValid(tank, stack);
+        return getTankInventory().isFluidValid(tank, stack);
     }
 
     @Override
     public int fill(FluidStack resource, FluidAction action) {
-        IFluidHandler handler = tank();
-        return handler == null ? 0 : handler.fill(resource, action);
+        return getTankInventory().fill(resource, action);
     }
 
     @Override
     public FluidStack drain(FluidStack resource, FluidAction action) {
-        IFluidHandler handler = tank();
-        return handler == null ? FluidStack.EMPTY : handler.drain(resource, action);
+        return getTankInventory().drain(resource, action);
     }
 
     @Override
     public FluidStack drain(int maxDrain, FluidAction action) {
-        IFluidHandler handler = tank();
-        return handler == null ? FluidStack.EMPTY : handler.drain(maxDrain, action);
+        return getTankInventory().drain(maxDrain, action);
     }
 }
