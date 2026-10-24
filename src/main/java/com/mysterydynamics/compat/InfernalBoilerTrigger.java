@@ -28,13 +28,8 @@ public final class InfernalBoilerTrigger implements IWandTriggerManager {
         }
         BlockPos glass = InfernalBoilerStructure.findGlass(level, pos);
         if (glass == null) {
-            player.displayClientMessage(
-                    Component.literal(InfernalBoilerStructure.describeMismatch(level, pos)), false);
-            return false;
-        }
-        if (!InfernalBoilerStructure.matches(level, glass)) {
-            player.displayClientMessage(
-                    Component.literal(InfernalBoilerStructure.describeMismatch(level, pos)), false);
+            // 这里只是普通结构方块，可能属于炼狱熔炉/荒古炼金炉等其他多方块。
+            // 不输出锅炉专属报错，直接让其他法杖触发器继续处理。
             return false;
         }
         if (!TCResearchManager.has(player, "INFERNAL_BOILER")) {

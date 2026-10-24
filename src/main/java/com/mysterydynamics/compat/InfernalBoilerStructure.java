@@ -10,15 +10,12 @@ import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import thaumcraft.common.registry.TCBlocks;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 炼狱锅炉结构。
@@ -75,72 +72,6 @@ public final class InfernalBoilerStructure {
 
     public static boolean matches(Level level, BlockPos glassPos) {
         return findMatch(level, glassPos) != null;
-    }
-
-    /** 失败时给出最接近朝向的具体错位方块，方便排查。 */
-    public static String describeMismatch(Level level, BlockPos clicked) {
-        BlockPos glass = nearbyGlass(level, clicked);
-        if (glass == null) {
-            return "未找到守卫者玻璃";
-        }
-        int bestRotation = -1;
-        int bestCount = Integer.MAX_VALUE;
-        List<String> bestDetails = List.of();
-        for (int rotation = 0; rotation < 4; rotation++) {
-            int gx = rotateX(1, 3, rotation);
-            int gz = rotateZ(1, 3, rotation);
-            BlockPos origin = glass.offset(-gx, -1, -gz);
-            List<String> details = new ArrayList<>();
-            int count = 0;
-            for (int y = 0; y <= 4; y++) {
-                for (int x = 0; x <= 3; x++) {
-                    for (int z = 0; z <= 3; z++) {
-                        Block expected = expectedAt(x, y, z);
-                        if (expected == null) {
-                            continue;
-                        }
-                        BlockState actual = level.getBlockState(world(origin, x, y, z, rotation));
-                        if (!accepted(expected, actual)) {
-                            count++;
-                            if (details.size() < 4) {
-                                details.add("(" + x + "," + y + "," + z + ") 期望 "
-                                        + BuiltInRegistries.BLOCK.getKey(expected).getPath()
-                                        + "，实际 "
-                                        + BuiltInRegistries.BLOCK.getKey(actual.getBlock()).getPath());
-                            }
-                        }
-                    }
-                }
-            }
-            if (count < bestCount) {
-                bestCount = count;
-                bestRotation = rotation;
-                bestDetails = details;
-            }
-        }
-        if (bestCount == 0) {
-            return "结构匹配，但成型被其他条件阻止";
-        }
-        StringBuilder message = new StringBuilder("结构未匹配：错误 ")
-                .append(bestCount).append(" 处，检测朝向 ").append(facingFor(bestRotation));
-        for (String detail : bestDetails) {
-            message.append("；").append(detail);
-        }
-        return message.toString();
-    }
-
-    private static BlockPos nearbyGlass(Level level, BlockPos clicked) {
-        for (int dx = -5; dx <= 5; dx++) {
-            for (int dy = -4; dy <= 4; dy++) {
-                for (int dz = -5; dz <= 5; dz++) {
-                    BlockPos candidate = clicked.offset(dx, dy, dz);
-                    if (level.getBlockState(candidate).is(TCBlocks.WARDED_GLASS.get())) {
-                        return candidate;
-                    }
-                }
-            }
-        }
-        return null;
     }
 
     private static Block expectedAt(int x, int y, int z) {
