@@ -102,8 +102,12 @@ public class InfernalBoilerData extends BoilerData {
     }
 
     private boolean hasWater(FluidTankBlockEntity tank) {
-        return tank.getTankInventory().getFluid().getFluid() == Fluids.WATER
-                && tank.getTankInventory().getFluidAmount() > 0;
+        if (tank.getTankInventory().getFluid().getFluid() == Fluids.WATER
+                && tank.getTankInventory().getFluidAmount() > 0) {
+            return true;
+        }
+        // 兼容水从 casing 端口/锅炉 handler 进来、但主 tank 读取有延迟的情况。
+        return tank.boiler != null && tank.boiler.waterSupply > 0.0F;
     }
 
     @Override
