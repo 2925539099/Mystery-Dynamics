@@ -160,8 +160,10 @@ public class InfernalBoilerBlockEntity extends FluidTankBlockEntity implements I
                 }
             }
         }
-        if (boiler != null) {
+        if (boiler != null && boiler.attachedEngines != engines) {
             boiler.attachedEngines = engines;
+            // 让客户端护目镜拿到同一个引擎数，避免显示值来回闪。
+            notifyUpdate();
         }
         this.linkedEngineCount = engines;
     }

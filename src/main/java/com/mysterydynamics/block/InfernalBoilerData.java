@@ -40,9 +40,11 @@ public class InfernalBoilerData extends BoilerData {
         }
         this.controller = boiler;
         updateCustomHeat(boiler);
-        // 使用 controller 缓存的引擎数，避免每 tick 重扫 6×6×6；
-        // controller 每 2 tick 更新一次缓存，足够快且不会让引擎数抖动。
-        this.attachedEngines = boiler.linkedEngineCount();
+        // 只在服务端写引擎数；客户端使用同步下来的值。
+        // 否则客户端 linkedEngineCount 永远是0，护目镜会在0和真实值之间闪烁。
+        if (boiler.getLevel() != null && !boiler.getLevel().isClientSide) {
+            this.attachedEngines = boiler.linkedEngineCount();
+        }
     }
 
     @Override
