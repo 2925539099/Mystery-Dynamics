@@ -6,12 +6,12 @@
   "row": -2,
   "complexity": 2,
   "warp": 0,
-  "parents": [
-    "GOGGLES"
-  ],
+  "parents": [],
   "parents_hidden": [],
   "siblings": [],
-  "flags": [],
+  "flags": [
+    "autoUnlock"
+  ],
   "text_pages": [
     "mystery_dynamics.research.revealing_engineer_goggles.text"
   ],
