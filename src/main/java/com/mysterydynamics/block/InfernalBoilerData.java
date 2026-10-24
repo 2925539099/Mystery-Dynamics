@@ -5,6 +5,9 @@ import com.simibubi.create.AllBlocks;
 import com.simibubi.create.api.stress.BlockStressValues;
 import com.simibubi.create.content.fluids.tank.BoilerData;
 import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
+import com.simibubi.create.foundation.utility.CreateLang;
+
+import net.minecraft.network.chat.MutableComponent;
 
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.fml.ModList;
@@ -79,6 +82,21 @@ public class InfernalBoilerData extends BoilerData {
     @Override
     public boolean isPassive(int attachedEngines) {
         return false;
+    }
+
+    @Override
+    public MutableComponent getHeatLevelTextComponent() {
+        int heat = Math.min(18, Math.max(0, activeHeat));
+        if (isPassive()) {
+            return CreateLang.translateDirect("boiler.passive");
+        }
+        if (heat == 0) {
+            return CreateLang.translateDirect("boiler.idle");
+        }
+        if (heat == 18) {
+            return CreateLang.translateDirect("boiler.max_lvl");
+        }
+        return CreateLang.translateDirect("boiler.lvl", String.valueOf(heat));
     }
 
     @Override
