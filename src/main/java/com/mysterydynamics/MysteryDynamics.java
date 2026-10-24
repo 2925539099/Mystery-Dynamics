@@ -6,6 +6,7 @@ import com.mysterydynamics.block.GolemPowerFrameBlock;
 import com.mysterydynamics.block.InfernalBoilerBlock;
 import com.mysterydynamics.block.InfernalBoilerBlockEntity;
 import com.mysterydynamics.block.InfernalBoilerCasingBlock;
+import com.mysterydynamics.block.InfernalBoilerCasingBlockEntity;
 import com.mysterydynamics.block.InfernalBoilerFaceBlock;
 import com.mysterydynamics.block.InfernalBoilerShellBlock;
 import com.mysterydynamics.block.RedstoneEngineBlock;
@@ -132,6 +133,11 @@ public class MysteryDynamics {
                     (pos, state) -> new InfernalBoilerBlockEntity(infernalBoilerType(), pos, state),
                     INFERNAL_BOILER.get()).build(null));
 
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<InfernalBoilerCasingBlockEntity>> INFERNAL_BOILER_CASING_BE =
+            BLOCK_ENTITY_TYPES.register("infernal_boiler_casing", () -> BlockEntityType.Builder.of(
+                    (pos, state) -> new InfernalBoilerCasingBlockEntity(infernalBoilerCasingType(), pos, state),
+                    INFERNAL_BOILER_CASING.get()).build(null));
+
     /** 独立创造模式标签页。 */
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> TAB = CREATIVE_TABS.register("main",
             () -> CreativeModeTab.builder()
@@ -197,6 +203,10 @@ public class MysteryDynamics {
         return INFERNAL_BOILER_BE.get();
     }
 
+    private static BlockEntityType<?> infernalBoilerCasingType() {
+        return INFERNAL_BOILER_CASING_BE.get();
+    }
+
     private static BlockBehaviour.Properties infernalBoilerProperties() {
         return BlockBehaviour.Properties.of()
                 .mapColor(MapColor.METAL)
@@ -260,6 +270,8 @@ public class MysteryDynamics {
                 (level, pos, state, blockEntity, side) -> findBoilerTank(level, pos),
                 INFERNAL_BOILER_CASING.get(), INFERNAL_BOILER_SHELL.get(),
                 INFERNAL_BOILER_FACE.get());
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,
+                INFERNAL_BOILER_CASING_BE.get(), (be, side) -> be);
         if (ModList.get().isLoaded("thaumcraft")) {
             com.mysterydynamics.compat.InfernalBoilerCompat.registerCapabilities(event);
         }

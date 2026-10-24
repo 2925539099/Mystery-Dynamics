@@ -312,8 +312,11 @@ public final class InfernalBoilerStructure {
                 Block[][] layer = y == 0 ? LAYER_0 : y == 1 ? LAYER_1 : LAYER_2;
                 for (int x = 0; x <= 3; x++) {
                     for (int z = 0; z <= 3; z++) {
-                        level.setBlock(world(origin, x, y, z, rotation),
-                                layer[z][x].defaultBlockState(), 3);
+                        Block block = layer[z][x];
+                        BlockState restored = block == TCBlocks.ARCANE_FURNACE.get()
+                                ? TCBlocks.ALCHEMICAL_FURNACE.get().defaultBlockState()
+                                : block.defaultBlockState();
+                        level.setBlock(world(origin, x, y, z, rotation), restored, 3);
                     }
                 }
             }
