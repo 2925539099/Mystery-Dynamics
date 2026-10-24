@@ -13,11 +13,13 @@ import com.mysterydynamics.block.RedstoneEngineBlockEntity;
 import com.simibubi.create.api.stress.BlockStressValues;
 import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -29,6 +31,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -227,12 +230,36 @@ public class MysteryDynamics {
                 .noOcclusion();
     }
 
+    private static IFluidHandler findBoilerTank(Level level, BlockPos pos) {
+        for (int dx = -4; dx <= 4; dx++) {
+            for (int dy = 0; dy <= 5; dy++) {
+                for (int dz = -4; dz <= 4; dz++) {
+                    if (level.getBlockEntity(pos.offset(dx, dy, dz))
+                            instanceof InfernalBoilerBlockEntity boiler) {
+                        FluidTankBlockEntity controller = boiler.isController()
+                                ? boiler
+                                : boiler.getControllerBE();
+                        if (controller != null) {
+                            return controller.getTankInventory();
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
     private static void registerCapabilities(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, INFERNAL_BOILER_BE.get(),
                 (be, side) -> {
                     FluidTankBlockEntity controller = be.isController() ? be : be.getControllerBE();
                     return controller == null ? null : controller.getTankInventory();
                 });
+        // 底座/正面/shell 本身没有 BE，但管道应能把水送进整栋锅炉的储罐。
+        event.registerBlock(Capabilities.FluidHandler.BLOCK,
+                (level, pos, state, blockEntity, side) -> findBoilerTank(level, pos),
+                INFERNAL_BOILER_CASING.get(), INFERNAL_BOILER_SHELL.get(),
+                INFERNAL_BOILER_FACE.get());
         if (ModList.get().isLoaded("thaumcraft")) {
             com.mysterydynamics.compat.InfernalBoilerCompat.registerCapabilities(event);
         }
