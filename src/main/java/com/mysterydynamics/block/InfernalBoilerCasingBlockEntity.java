@@ -17,6 +17,9 @@ public class InfernalBoilerCasingBlockEntity extends FluidTankBlockEntity implem
 
     public InfernalBoilerCasingBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
+        // Create 的 FluidTankBlockEntity.write() 会无条件写 controller 位置；
+        // 这是代理 BE，不是真正的 tank part，先写入自身避免 null 崩溃。
+        setController(pos);
     }
 
     private InfernalBoilerBlockEntity controller() {
