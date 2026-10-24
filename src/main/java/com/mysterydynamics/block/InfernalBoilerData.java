@@ -8,11 +8,16 @@ import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
 import com.simibubi.create.content.kinetics.steamEngine.SteamEngineBlock;
 import com.simibubi.create.foundation.utility.CreateLang;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.CommonComponents;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.fml.ModList;
+
+import java.util.List;
 
 /**
  * 炼狱锅炉的锅炉数据。
@@ -27,8 +32,8 @@ public class InfernalBoilerData extends BoilerData {
     public static final float BASE_TOTAL_STRESS = 4096.0F;
     /** Create 蒸汽引擎单台最大应力输出。 */
     public static final float ENGINE_STRESS = 1024.0F;
-    /** 原版满级锅炉最高 18 级热，18 台引擎各 1024 SU。 */
-    public static final float VANILLA_MAX_BOILER_STRESS = 18.0F * ENGINE_STRESS;
+    /** 原版满级锅炉护目镜显示：18 热 × 16 × 1024 = 294912 SU。 */
+    public static final float VANILLA_MAX_BOILER_STRESS = 18.0F * 16.0F * ENGINE_STRESS;
     /** 超频时按原版满级锅炉最大应力的两倍计算。 */
     public static final float OVERCLOCK_TOTAL_STRESS = VANILLA_MAX_BOILER_STRESS * 2.0F;
 
@@ -144,6 +149,9 @@ public class InfernalBoilerData extends BoilerData {
         if (heat <= 0) {
             return 0.0F;
         }
+        if (!hasWater(controller)) {
+            return 0.0F;
+        }
         float deviceMax = ENGINE_STRESS * attachedEngines;
         double configuredCapacity = BlockStressValues.getCapacity(AllBlocks.STEAM_ENGINE.get());
         if (configuredCapacity > 0.0D) {
@@ -157,5 +165,28 @@ public class InfernalBoilerData extends BoilerData {
         // 上限是“链接的应力输出设备”的最大总输出，而不是固定值。
         target = Math.min(target, deviceMax);
         return Math.min(1.0F, target / deviceMax);
+    }
+
+    @Override
+    public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking,
+                                      int totalTankSize) {
+        boolean added = super.addToGoggleTooltip(tooltip, isPlayerSneaking, totalTankSize);
+        if (added && controller != null && controller.isOverclock() && attachedEngines > 0
+                && tooltip.size() >= 2) {
+            // 原版护目镜的应力行按 18 热封顶；超频要显示两倍满级锅炉最大应力。
+            tooltip.remove(tooltip.size() - 1);
+            tooltip.remove(tooltip.size() - 1);
+            tooltip.add(CommonComponents.EMPTY);
+            CreateLang.translate("tooltip.capacityProvided")
+                    .style(ChatFormatting.GRAY).forGoggles(tooltip);
+            CreateLang.number(OVERCLOCK_TOTAL_STRESS)
+                    .translate("generic.unit.stress")
+                    .style(ChatFormatting.AQUA)
+                    .space()
+                    .add(CreateLang.translate("boiler.via_engines", attachedEngines)
+                            .style(ChatFormatting.DARK_GRAY))
+                    .forGoggles(tooltip);
+        }
+        return added;
     }
 }
