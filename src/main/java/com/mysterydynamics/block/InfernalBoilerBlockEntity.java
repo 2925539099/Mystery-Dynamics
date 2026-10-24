@@ -3,6 +3,10 @@ package com.mysterydynamics.block;
 import com.mysterydynamics.MysteryDynamics;
 import com.mysterydynamics.compat.InfernalBoilerCompat;
 import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
+import com.simibubi.create.content.kinetics.steamEngine.SteamEngineBlock;
+import com.simibubi.create.content.kinetics.steamEngine.SteamEngineBlockEntity;
+
+import java.lang.ref.WeakReference;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -86,8 +90,35 @@ public class InfernalBoilerBlockEntity extends FluidTankBlockEntity {
 
         updateFaceState();
         updateShellState();
+        if (level.getGameTime() % 10L == 0L) {
+            linkNearbySteamEngines();
+        }
         if (changed) {
             setChanged();
+        }
+    }
+
+    /**
+     * Create 的 SteamEngineBlockEntity 只会从“背后的方块”重新找 tank。
+     * 我们的引擎常贴在 casing/外壳上，若该位置没有可识别 BE，引擎就会一直空闲。
+     * 这里把整栋结构附近的蒸汽引擎直接挂到真正的锅炉 controller 上。
+     */
+    private void linkNearbySteamEngines() {
+        if (boilerOrigin.equals(BlockPos.ZERO) || level == null) {
+            return;
+        }
+        for (int x = -1; x <= 4; x++) {
+            for (int y = -1; y <= 5; y++) {
+                for (int z = -1; z <= 4; z++) {
+                    BlockPos pos = boilerOrigin.offset(x, y, z);
+                    if (!(level.getBlockState(pos).getBlock() instanceof SteamEngineBlock)) {
+                        continue;
+                    }
+                    if (level.getBlockEntity(pos) instanceof SteamEngineBlockEntity engine) {
+                        engine.source = new WeakReference<>(this);
+                    }
+                }
+            }
         }
     }
 
