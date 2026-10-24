@@ -50,7 +50,7 @@
   "block.mystery_dynamics.infernal_boiler_face": "Infernal Boiler Window",
   "tc.research_name.INFERNAL_BOILER": "Infernal Boiler",
   "tc.research_text.INFERNAL_BOILER": "Heat and Pressure",
-  "mystery_dynamics.research.infernal_boiler.text": "After deploying more machines, you find that the power at home is no longer enough.\n\nSo you turn your eyes to the Infernal Furnace that never stops working.\n\nUsing its fuel-free principle as a foundation, you design this boiler. It has three heat levels by default, needs no fuel at all, and can be heated further with vis and bellows just like the Infernal Furnace.",
+  "mystery_dynamics.research.infernal_boiler.text": "After deploying more machines, you find that the power at home is no longer enough.\n\nSo you turn your eyes to the Infernal Furnace that never stops working.\n\nUsing its fuel-free principle as a foundation, you design this boiler. It has three heat levels by default, needs no fuel at all, and can be heated further with vis and bellows just like the Infernal Furnace.\n\nNotably, feeding it Fire essentia sends it into an overclocked state like a combustion chamber, doubling its output.",
   "mystery_dynamics.infernal_boiler.no_vis": "Not enough vis to form the boiler.",
   "mystery_dynamics.infernal_boiler.formed": "The infernal boiler has formed.",
   "mystery_dynamics.infernal_boiler.locked": "You have not unlocked the Infernal Boiler research.",
@@ -59,9 +59,5 @@
   "mystery_dynamics.research.infernalfurnace_link.text": "Placeholder: infernal furnace reference node.",
   "mystery_dynamics.infernal_boiler.no_structure": "Structure mismatch: check the five layers, facing, and warded glass position.",
   "block.mystery_dynamics.infernal_boiler_casing": "Infernal Boiler Casing",
-  "block.mystery_dynamics.infernal_boiler_shell": "Infernal Boiler Casing",
-  "mystery_dynamics.research.infernal_boiler.text2": "The Infernal Boiler forms from a five-layer 4×4×5 structure: a nether brick and obsidian base, a 3×3×3 thaumium body, and warded glass at the front.\n\nIt maintains heat level 3 by default. The three pasted6 bellows positions add 2 heat each. Fire Vis raises the heat level to 9.\n\nFeed Fire essentia at the pasted7 port to overclock: it stores up to 256 Fire essentia and consumes 1 per second while working, raising the stress output to twice the vanilla max-level boiler (589,824 SU).\n\nWithout water the boiler provides no power.",
-  "tc.research_name.BLAZING": "Blazing",
-  "tc.research_text.BLAZING": "Make the fire burn brighter",
-  "mystery_dynamics.research.blazing.text": "Fire essentia is not merely fuel in this boiler; it is the spark that throws the whole furnace into a blazing state.\n\nFeed Fire essentia at the pasted7 port to overclock. The internal buffer holds up to 256 essentia and consumes 1 per second while working. Steam engine stress output doubles, capped at twice the vanilla max-level boiler.\n\nWhile overclocked, the super-combustion model on the boiler face becomes visible. It hides again when the essentia runs out."
+  "block.mystery_dynamics.infernal_boiler_shell": "Infernal Boiler Casing"
 }

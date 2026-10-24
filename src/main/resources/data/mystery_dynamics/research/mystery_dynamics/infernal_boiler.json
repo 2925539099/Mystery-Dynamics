@@ -14,8 +14,7 @@
   "siblings": [],
   "flags": [],
   "text_pages": [
-    "mystery_dynamics.research.infernal_boiler.text",
-    "mystery_dynamics.research.infernal_boiler.text2"
+    "mystery_dynamics.research.infernal_boiler.text"
   ],
   "aspects": [
     {
@@ -54,9 +53,8 @@
       "source": "mystery_dynamics.research.infernal_boiler.text"
     },
     {
-      "type": "TEXT",
-      "text": "mystery_dynamics.research.infernal_boiler.text2",
-      "source": "mystery_dynamics.research.infernal_boiler.text2"
+      "type": "CONSTRUCT",
+      "source": "InfernalBoiler"
     }
   ],
   "icon": "mystery_dynamics:textures/misc/r_infernal_boiler.png"

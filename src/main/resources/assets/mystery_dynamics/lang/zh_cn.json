@@ -50,7 +50,7 @@
   "block.mystery_dynamics.infernal_boiler_face": "炼狱锅炉观察窗",
   "tc.research_name.INFERNAL_BOILER": "炼狱锅炉",
   "tc.research_text.INFERNAL_BOILER": "升温加压",
-  "mystery_dynamics.research.infernal_boiler.text": "在部署了一些设备之后，你发觉家里面的动力已经不太够用了。\n\n于是乎，你盯上了家里面那个不断工作着的炼狱熔炉。\n\n以熔炉无需燃料之类的原理为基础，你设计出了这个锅炉，它自带三档温度，完全不需要任何燃料，还可以和炼狱熔炉一般用魔力和风箱来进一步提升温度。",
+  "mystery_dynamics.research.infernal_boiler.text": "在部署了一些设备之后，你发觉家里面的动力已经不太够用了。\n\n于是乎，你盯上了家里面那个不断工作着的炼狱熔炉。\n\n以熔炉无需燃料之类的原理为基础，你设计出了这个锅炉，它自带三档温度，完全不需要任何燃料，还可以和炼狱熔炉一般用魔力和风箱来进一步提升温度。\n\n值得一提的是，通入火源质则会使得它如同燃烧室一般的进入超频状态，使得输出效率翻倍。",
   "mystery_dynamics.infernal_boiler.no_vis": "魔力不足，无法成型。",
   "mystery_dynamics.infernal_boiler.formed": "炼狱锅炉已成型。",
   "mystery_dynamics.infernal_boiler.locked": "尚未解锁炼狱锅炉研究。",
@@ -59,9 +59,5 @@
   "mystery_dynamics.research.infernalfurnace_link.text": "占位内容：炼狱熔炉引用节点。",
   "mystery_dynamics.infernal_boiler.no_structure": "结构未匹配：请检查五层方块、朝向与守卫者玻璃位置。",
   "block.mystery_dynamics.infernal_boiler_casing": "炼狱锅炉底座",
-  "block.mystery_dynamics.infernal_boiler_shell": "炼狱锅炉底座",
-  "mystery_dynamics.research.infernal_boiler.text2": "炼狱锅炉以 4×4×5 的五层结构成型：底座以下界砖与黑曜石围合，主体 3×3×3 为神秘方块，正面以守卫者玻璃作为观察窗。\n\n成型后默认维持三级热量；底座三个 pasted6 风箱位可各提升 2 级热量。导入火 Vis 可使热量达到九级。\n\n在 pasted7 位置接入火源质后进入超频：内部最多缓存 256 点火源质，工作时每秒消耗 1 点，应力输出提升至原版满级锅炉的两倍（589,824 SU）。\n\n没有水时锅炉不会输出动力。",
-  "tc.research_name.BLAZING": "炽烈",
-  "tc.research_text.BLAZING": "让火烧得更旺",
-  "mystery_dynamics.research.blazing.text": "火源质在锅炉中并非只是燃料，而是让整个炉体进入炽烈状态的引子。\n\n将火源质接入 pasted7 端口，锅炉便会进入超频：缓存上限为 256 点，工作时每秒消耗 1 点，蒸汽引擎的应力输出翻倍，最高不超过原版满级锅炉的两倍。\n\n超频期间，锅炉面部的超级燃烧模型会显现；火源质耗尽后自动退出。"
+  "block.mystery_dynamics.infernal_boiler_shell": "炼狱锅炉底座"
 }

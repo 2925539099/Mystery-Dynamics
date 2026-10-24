@@ -21,6 +21,10 @@ public final class ClientEvents {
             case "INFERNALFURNACE_LINK", "INFERNAL_BOILER_LINK" -> "INFERNALFURNACE";
             default -> key;
         });
+        ResearchBookApi.addConstructSource(key ->
+                "InfernalBoiler".equals(key)
+                        ? java.util.List.of(InfernalBoilerConstruct.create())
+                        : java.util.List.of());
     }
 
     private ClientEvents() {
