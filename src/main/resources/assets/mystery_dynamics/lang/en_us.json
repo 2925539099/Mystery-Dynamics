@@ -57,5 +57,7 @@
   "tc.research_name.INFERNALFURNACE_LINK": "Infernal Furnace",
   "tc.research_text.INFERNALFURNACE_LINK": "Infernal Furnace",
   "mystery_dynamics.research.infernalfurnace_link.text": "Placeholder: infernal furnace reference node.",
-  "mystery_dynamics.infernal_boiler.no_structure": "Structure mismatch: check the five layers, facing, and warded glass position."
+  "mystery_dynamics.infernal_boiler.no_structure": "Structure mismatch: check the five layers, facing, and warded glass position.",
+  "block.mystery_dynamics.infernal_boiler_casing": "Infernal Boiler Casing",
+  "block.mystery_dynamics.infernal_boiler_shell": "Infernal Boiler Casing"
 }

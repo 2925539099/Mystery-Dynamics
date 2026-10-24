@@ -63,8 +63,10 @@ public final class InfernalBoilerRenderer implements BlockEntityRenderer<Inferna
             return;
         }
         RENDERED_THIS_FRAME.add(boiler.getBlockPos());
-        Vec3 camera = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
-        renderAt(boiler, pose, camera, bufferSource, packedLight);
+        // BER 的 pose 已经被 dispatcher 平移到 BE 位置，所以这里必须传 BE 位置，
+        // 不能传真实相机位置，否则会再减一次相机坐标，模型直接飞出屏幕。
+        Vec3 anchor = Vec3.atLowerCornerOf(boiler.getBlockPos());
+        renderAt(boiler, pose, anchor, bufferSource, packedLight);
     }
 
     public static boolean wasRenderedThisFrame(BlockPos controllerPos) {
