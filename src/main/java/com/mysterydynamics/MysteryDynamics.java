@@ -241,6 +241,11 @@ public class MysteryDynamics {
     }
 
     private static IFluidHandler findBoilerTank(Level level, BlockPos pos) {
+        FluidTankBlockEntity controller = findController(level, pos);
+        return controller == null ? null : controller.getTankInventory();
+    }
+
+    private static FluidTankBlockEntity findController(Level level, BlockPos pos) {
         for (int dx = -4; dx <= 4; dx++) {
             for (int dy = 0; dy <= 5; dy++) {
                 for (int dz = -4; dz <= 4; dz++) {
@@ -250,7 +255,7 @@ public class MysteryDynamics {
                                 ? boiler
                                 : boiler.getControllerBE();
                         if (controller != null) {
-                            return controller.getTankInventory();
+                            return controller;
                         }
                     }
                 }
@@ -263,8 +268,15 @@ public class MysteryDynamics {
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, INFERNAL_BOILER_BE.get(),
                 (be, side) -> {
                     FluidTankBlockEntity controller = be.isController() ? be : be.getControllerBE();
+                    if (controller == null) {
+                        controller = findController(be.getLevel(), be.getBlockPos());
+                    }
                     return controller == null ? null : controller.getTankInventory();
                 });
+        // 管道如果接在非 controller 的主体方块上，同样能查询到锅炉水仓。
+        event.registerBlock(Capabilities.FluidHandler.BLOCK,
+                (level, pos, state, blockEntity, side) -> findBoilerTank(level, pos),
+                INFERNAL_BOILER.get());
         // 底座/正面/shell 本身没有 BE，但管道应能把水送进整栋锅炉的储罐。
         event.registerBlock(Capabilities.FluidHandler.BLOCK,
                 (level, pos, state, blockEntity, side) -> findBoilerTank(level, pos),
