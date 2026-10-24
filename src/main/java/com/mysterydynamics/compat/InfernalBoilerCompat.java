@@ -97,28 +97,27 @@ public final class InfernalBoilerCompat {
         }
     }
 
-    /** 贴在锅炉任意一侧的风箱，每个 +2 热等级，最多 3 个。 */
+    /**
+     * 只有模型里 pasted6 贴图对应的三个面能装风箱：
+     * 东侧 (4,0,1)/(4,0,2)，北侧 (2,0,-1)。
+     * 每个 +2 热等级，最多三个。
+     */
     public static int countBellows(InfernalBoilerBlockEntity boiler) {
         Level level = boiler.getLevel();
         if (level == null) {
             return 0;
         }
-        int count = 0;
         var origin = boiler.boilerOrigin();
         if (origin.equals(net.minecraft.core.BlockPos.ZERO)) {
             origin = boiler.getBlockPos().offset(-1, -3, -1);
         }
-        for (int dx = -1; dx <= 4 && count < 3; dx++) {
-            for (int dy = 0; dy <= 5 && count < 3; dy++) {
-                for (int dz = -1; dz <= 4 && count < 3; dz++) {
-                    var pos = origin.offset(dx, dy, dz);
-                    if (!(level.getBlockState(pos).getBlock() instanceof BellowsBlock)) {
-                        continue;
-                    }
-                    if (touchesBoiler(level, pos)) {
-                        count++;
-                    }
-                }
+        int rotation = boiler.rotation();
+        int count = 0;
+        int[][] positions = {{4, 0, 1}, {4, 0, 2}, {2, 0, -1}};
+        for (int[] p : positions) {
+            var pos = InfernalBoilerStructure.world(origin, p[0], p[1], p[2], rotation);
+            if (level.getBlockState(pos).getBlock() instanceof BellowsBlock) {
+                count++;
             }
         }
         return count * 2;
