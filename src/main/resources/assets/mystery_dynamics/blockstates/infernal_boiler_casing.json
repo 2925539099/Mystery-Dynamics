@@ -1,5 +1,76 @@
 {
   "variants": {
-    "": { "model": "mystery_dynamics:block/infernal_boiler_casing" }
+    "bottom=false,shape=plain,top=false": {
+      "model": "mystery_dynamics:block/infernal_boiler_casing"
+    },
+    "bottom=false,shape=window,top=false": {
+      "model": "mystery_dynamics:block/infernal_boiler_casing"
+    },
+    "bottom=false,shape=window_nw,top=false": {
+      "model": "mystery_dynamics:block/infernal_boiler_casing"
+    },
+    "bottom=false,shape=window_sw,top=false": {
+      "model": "mystery_dynamics:block/infernal_boiler_casing"
+    },
+    "bottom=false,shape=window_ne,top=false": {
+      "model": "mystery_dynamics:block/infernal_boiler_casing"
+    },
+    "bottom=false,shape=window_se,top=false": {
+      "model": "mystery_dynamics:block/infernal_boiler_casing"
+    },
+    "bottom=true,shape=plain,top=false": {
+      "model": "mystery_dynamics:block/infernal_boiler_casing"
+    },
+    "bottom=true,shape=window,top=false": {
+      "model": "mystery_dynamics:block/infernal_boiler_casing"
+    },
+    "bottom=true,shape=window_nw,top=false": {
+      "model": "mystery_dynamics:block/infernal_boiler_casing"
+    },
+    "bottom=true,shape=window_sw,top=false": {
+      "model": "mystery_dynamics:block/infernal_boiler_casing"
+    },
+    "bottom=true,shape=window_ne,top=false": {
+      "model": "mystery_dynamics:block/infernal_boiler_casing"
+    },
+    "bottom=true,shape=window_se,top=false": {
+      "model": "mystery_dynamics:block/infernal_boiler_casing"
+    },
+    "bottom=false,shape=plain,top=true": {
+      "model": "mystery_dynamics:block/infernal_boiler_casing"
+    },
+    "bottom=false,shape=window,top=true": {
+      "model": "mystery_dynamics:block/infernal_boiler_casing"
+    },
+    "bottom=false,shape=window_nw,top=true": {
+      "model": "mystery_dynamics:block/infernal_boiler_casing"
+    },
+    "bottom=false,shape=window_sw,top=true": {
+      "model": "mystery_dynamics:block/infernal_boiler_casing"
+    },
+    "bottom=false,shape=window_ne,top=true": {
+      "model": "mystery_dynamics:block/infernal_boiler_casing"
+    },
+    "bottom=false,shape=window_se,top=true": {
+      "model": "mystery_dynamics:block/infernal_boiler_casing"
+    },
+    "bottom=true,shape=plain,top=true": {
+      "model": "mystery_dynamics:block/infernal_boiler_casing"
+    },
+    "bottom=true,shape=window,top=true": {
+      "model": "mystery_dynamics:block/infernal_boiler_casing"
+    },
+    "bottom=true,shape=window_nw,top=true": {
+      "model": "mystery_dynamics:block/infernal_boiler_casing"
+    },
+    "bottom=true,shape=window_sw,top=true": {
+      "model": "mystery_dynamics:block/infernal_boiler_casing"
+    },
+    "bottom=true,shape=window_ne,top=true": {
+      "model": "mystery_dynamics:block/infernal_boiler_casing"
+    },
+    "bottom=true,shape=window_se,top=true": {
+      "model": "mystery_dynamics:block/infernal_boiler_casing"
+    }
   }
 }
