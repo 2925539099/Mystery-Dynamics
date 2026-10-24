@@ -86,8 +86,32 @@ public class InfernalBoilerBlockEntity extends FluidTankBlockEntity {
 
         updateFaceState();
         updateShellState();
+        if (level.getGameTime() % 20L == 0L) {
+            ensureCasingEntities();
+        }
         if (changed) {
             setChanged();
+        }
+    }
+
+    private void ensureCasingEntities() {
+        if (boilerOrigin.equals(BlockPos.ZERO)) {
+            return;
+        }
+        for (int y = 0; y <= 2; y++) {
+            for (int x = 0; x <= 3; x++) {
+                for (int z = 0; z <= 3; z++) {
+                    BlockPos pos = com.mysterydynamics.compat.InfernalBoilerStructure.world(
+                            boilerOrigin, x, y, z, rotation);
+                    BlockState state = level.getBlockState(pos);
+                    if (state.is(MysteryDynamics.INFERNAL_BOILER_CASING.get())
+                            && level.getBlockEntity(pos) == null) {
+                        // 旧存档的 casing 可能没有 BE；补一个，Create 管道才能查询流体能力。
+                        level.setBlockEntity(new InfernalBoilerCasingBlockEntity(
+                                MysteryDynamics.INFERNAL_BOILER_CASING_BE.get(), pos, state));
+                    }
+                }
+            }
         }
     }
 
