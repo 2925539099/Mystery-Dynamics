@@ -11,7 +11,6 @@ import com.simibubi.create.foundation.utility.CreateLang;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.MutableComponent;
 
-import net.minecraft.world.level.material.Fluids;
 import net.neoforged.fml.ModList;
 
 /**
@@ -102,12 +101,10 @@ public class InfernalBoilerData extends BoilerData {
     }
 
     private boolean hasWater(FluidTankBlockEntity tank) {
-        if (tank.getTankInventory().getFluid().getFluid() == Fluids.WATER
-                && tank.getTankInventory().getFluidAmount() > 0) {
-            return true;
-        }
-        // 兼容水从 casing 端口/锅炉 handler 进来、但主 tank 读取有延迟的情况。
-        return tank.boiler != null && tank.boiler.waterSupply > 0.0F;
+        // 有任意储量（正常情况就是水）或仍有管道供水，都允许工作。
+        // 完全空仓且没有 waterSupply 时才停机。
+        return tank.getTankInventory().getFluidAmount() > 0
+                || (tank.boiler != null && tank.boiler.waterSupply > 0.0F);
     }
 
     @Override
