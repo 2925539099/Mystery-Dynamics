@@ -10,6 +10,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.neoforged.fml.ModList;
 
 /**
@@ -48,6 +49,18 @@ public class InfernalBoilerBlockEntity extends FluidTankBlockEntity {
     public int getTotalTankSize() {
         // 尺寸按 Create 满级 3×3×32 锅炉显示；实际结构与容量仍按 3×3×3。
         return 288;
+    }
+
+    @Override
+    public AABB getRenderBoundingBox() {
+        BlockPos origin = boilerOrigin.equals(BlockPos.ZERO)
+                ? getBlockPos().offset(-1, -3, -1)
+                : boilerOrigin;
+        // 整栋模型是 4×4×5，必须把渲染裁剪盒扩大到整栋，
+        // 否则视角稍偏、controller 离开视锥时模型会整栋消失。
+        return new AABB(origin.getX(), origin.getY(), origin.getZ(),
+                origin.getX() + 4.0D, origin.getY() + 5.0D, origin.getZ() + 4.0D)
+                .inflate(0.5D);
     }
 
     @Override
