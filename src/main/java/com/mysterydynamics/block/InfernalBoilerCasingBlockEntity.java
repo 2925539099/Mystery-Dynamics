@@ -17,9 +17,19 @@ public class InfernalBoilerCasingBlockEntity extends FluidTankBlockEntity implem
 
     public InfernalBoilerCasingBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
-        // Create 的 FluidTankBlockEntity.write() 会无条件写 controller 位置；
-        // 这是代理 BE，不是真正的 tank part，先写入自身避免 null 崩溃。
-        setController(pos);
+    }
+
+    @Override
+    public void write(net.minecraft.nbt.CompoundTag tag,
+                      net.minecraft.core.HolderLookup.Provider registries, boolean clientPacket) {
+        // 这是代理 BE，不保存 FluidTankBlockEntity 的 controller/width 数据。
+        // Create 原版 write 会在 controller 为 null 时抛 NPE。
+    }
+
+    @Override
+    protected void read(net.minecraft.nbt.CompoundTag tag,
+                        net.minecraft.core.HolderLookup.Provider registries, boolean clientPacket) {
+        // 代理 BE 不读取储罐数据。
     }
 
     private InfernalBoilerBlockEntity controller() {
