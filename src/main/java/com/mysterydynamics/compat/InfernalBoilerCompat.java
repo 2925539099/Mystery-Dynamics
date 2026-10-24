@@ -89,6 +89,10 @@ public final class InfernalBoilerCompat {
         }
         int drained = TCVisHelper.drainFromNearbyEnergizedNodes(level, boiler.getBlockPos(), Aspect.FIRE, 1);
         if (drained <= 0) {
+            // 普通灵气节点（未充能）也要算；工作台/炼狱熔炉的节点通常就是普通节点。
+            drained = TCVisHelper.drainFromNearbyNodes(level, boiler.getBlockPos(), Aspect.FIRE, 1, 8);
+        }
+        if (drained <= 0) {
             drained = TCVisHelper.drainFromNearbyRelays(level, boiler.getBlockPos(), Aspect.FIRE, 1,
                     TCVisHelper.newVisited(boiler.getBlockPos()));
         }
