@@ -14,6 +14,15 @@ import thaumcraft.api.research.ResearchBookApi;
 @EventBusSubscriber(modid = MysteryDynamics.MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class ClientEvents {
 
+    static {
+        // 尽早注册别名，确保研究书构建页面时已经生效。
+        ResearchBookApi.addPageAlias(key -> switch (key) {
+            case "ESSENTIADISTILLATION_LINK" -> "DISTILESSENTIA";
+            case "INFERNALFURNACE_LINK", "INFERNAL_BOILER_LINK" -> "INFERNALFURNACE";
+            default -> key;
+        });
+    }
+
     private ClientEvents() {
     }
 
@@ -23,12 +32,5 @@ public final class ClientEvents {
         event.registerBlockEntityRenderer(MysteryDynamics.INFERNAL_BOILER_BE.get(),
                 InfernalBoilerRenderer::new);
         NeoForge.EVENT_BUS.addListener(InfernalBoilerWorldRenderer::onRenderLevel);
-
-        // 让 (1,3) 的引用节点直接显示炼金术“要素蒸馏”的原始页面，
-        // (1,5) 的引用节点直接显示“炼狱熔炉”的原始页面。
-        ResearchBookApi.addPageAlias(key ->
-                "ESSENTIADISTILLATION_LINK".equals(key) ? "DISTILESSENTIA"
-                        : "INFERNALFURNACE_LINK".equals(key) ? "INFERNALFURNACE"
-                        : key);
     }
 }
