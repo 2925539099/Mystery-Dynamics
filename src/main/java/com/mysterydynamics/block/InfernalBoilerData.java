@@ -27,6 +27,10 @@ public class InfernalBoilerData extends BoilerData {
     public static final float BASE_TOTAL_STRESS = 4096.0F;
     /** Create 蒸汽引擎单台最大应力输出。 */
     public static final float ENGINE_STRESS = 1024.0F;
+    /** 原版满级锅炉最高 18 级热，18 台引擎各 1024 SU。 */
+    public static final float VANILLA_MAX_BOILER_STRESS = 18.0F * ENGINE_STRESS;
+    /** 超频时按原版满级锅炉最大应力的两倍计算。 */
+    public static final float OVERCLOCK_TOTAL_STRESS = VANILLA_MAX_BOILER_STRESS * 2.0F;
 
     private InfernalBoilerBlockEntity controller;
     private int heatLevel;
@@ -147,7 +151,8 @@ public class InfernalBoilerData extends BoilerData {
         }
         float target = BASE_TOTAL_STRESS * Math.min(2.0F, heat / 3.0F);
         if (controller.isOverclock()) {
-            target *= 2.0F;
+            // 超频：原版满级锅炉最大应力（18×1024）的两倍。
+            target = OVERCLOCK_TOTAL_STRESS;
         }
         // 上限是“链接的应力输出设备”的最大总输出，而不是固定值。
         target = Math.min(target, deviceMax);

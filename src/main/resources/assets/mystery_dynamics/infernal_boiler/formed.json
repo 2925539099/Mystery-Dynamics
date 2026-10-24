@@ -29,7 +29,8 @@
     "t26": "mystery_dynamics:block/infernal_boiler/formed/3tc_fluid_tank_connected",
     "t29": "mystery_dynamics:block/infernal_boiler/formed/warded_glass_1",
     "t30": "mystery_dynamics:block/infernal_boiler/formed/pasted6",
-    "t31": "mystery_dynamics:block/infernal_boiler/formed/pasted7"
+    "t31": "mystery_dynamics:block/infernal_boiler/formed/pasted7",
+    "t32": "mystery_dynamics:block/infernal_boiler/formed/furnace13"
   },
   "elements": [
     {
@@ -2057,6 +2058,74 @@
             1,
             16,
             2
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        16,
+        16,
+        54
+      ],
+      "to": [
+        32,
+        32,
+        55
+      ],
+      "faces": {
+        "north": {
+          "texture": "#t32",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#t32",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#t32",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#t32",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "up": {
+          "texture": "#t32",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "down": {
+          "texture": "#t32",
+          "uv": [
+            0,
+            0,
+            16,
+            16
           ]
         }
       }
