@@ -7,7 +7,7 @@ version = project.mod_version
 group = project.maven_group
 
 base {
-    archivesName = '神秘动力学'
+    archivesName = 'Thaumcraft-神秘动力学'
 }
 
 // 下载源镜像（Mojang / NeoForge 官方源在本机不可达）

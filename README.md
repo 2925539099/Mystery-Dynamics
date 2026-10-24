@@ -1,4 +1,4 @@
-# 神秘动力学（Mystery Dynamics）
+# Thaumcraft: 神秘动力学（Thaumic Dynamics）
 
 基于神秘时代，为机械动力额外增添一些设备。NeoForge 1.21.1 / Create 6.0.x / 神秘时代 port.265+（必需前置）。
 
@@ -120,7 +120,7 @@
 .\gradlew.bat build
 ```
 
-产物：`build/libs/神秘动力学-<version>.jar`。
+产物：`build/libs/Thaumcraft-神秘动力学-<version>.jar`。
 
 > 如果访问不了 Mojang / NeoForge 官方源，`gradle/mojang-mirror.gradle` 会把仓库切到镜像；网络正常时可以删掉 `build.gradle` 里的 `apply from` 一行。
 

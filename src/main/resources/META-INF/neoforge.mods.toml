@@ -5,8 +5,8 @@ license = "MIT"
 [[mods]]
 modId = "mystery_dynamics"
 version = "${version}"
-displayName = "神秘动力学 (Mystery Dynamics)"
-description = '''添加了基于神秘时代来为机械动力额外增添一些设备。'''
+displayName = "Thaumcraft: 神秘动力学 (Thaumic Dynamics)"
+description = '''Thaumcraft: 神秘动力学（Thaumic Dynamics）——基于神秘时代，为机械动力增添新的炼金与动力设备。'''
 
 [[dependencies.mystery_dynamics]]
 modId = "neoforge"

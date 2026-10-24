@@ -1,5 +1,5 @@
 {
-  "itemGroup.mystery_dynamics": "Mystery Dynamics",
+  "itemGroup.mystery_dynamics": "Thaumic Dynamics",
   "block.mystery_dynamics.straw_golem_power": "Straw Golem Dynamo",
   "block.mystery_dynamics.wood_golem_power": "Wooden Golem Dynamo",
   "block.mystery_dynamics.flesh_golem_power": "Flesh Golem Dynamo",
@@ -11,7 +11,7 @@
   "block.mystery_dynamics.golem_power_frame": "Golem Power Frame",
   "mystery_dynamics.direction.cw": "Rotation: Clockwise",
   "mystery_dynamics.direction.ccw": "Rotation: Counter-clockwise",
-  "tc.research_category.MYSTERY_DYNAMICS": "Mystery Dynamics",
+  "tc.research_category.MYSTERY_DYNAMICS": "Thaumic Dynamics",
   "tc.research_name.MYSTERY_TEST": "Thaumaturgy and Life",
   "tc.research_text.MYSTERY_TEST": "Thaumaturgy, life, and motion",
   "mystery_dynamics.research.test.text": "In an age where technology reigns, we ought to move with the times.\n\nBut honestly, my colleagues' hidebound ways are unbearable. When running generators and other equipment, they only ever order golems to turn the crank, and would not even bother inventing dedicated devices for it. It is utterly pointless—hiring a few villagers would be more practical.\n\nFortunately, I have had quite a few ideas lately. Perhaps some of them can be put into practice, replacing these cumbersome devices with simpler, faster sources of power.",

@@ -41,7 +41,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import java.util.List;
 
 /**
- * 神秘动力学（Mystery Dynamics）。
+ * Thaumcraft: 神秘动力学（Thaumic Dynamics）。
  *
  * <p>8 台傀儡动力系统（应力源）+ 1 个空框架。转速 / 应力来自「傀儡动力设计.txt」。</p>
  */
