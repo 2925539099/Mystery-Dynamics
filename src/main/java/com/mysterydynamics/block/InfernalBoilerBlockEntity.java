@@ -206,8 +206,15 @@ public class InfernalBoilerBlockEntity extends FluidTankBlockEntity implements I
                             boilerOrigin, x, y, z, rotation);
                     for (Direction direction : Direction.values()) {
                         BlockPos enginePos = bodyPos.relative(direction);
-                        if (!level.isLoaded(enginePos)
-                                || !(level.getBlockState(enginePos).getBlock() instanceof SteamEngineBlock)
+                        if (!level.isLoaded(enginePos)) {
+                            continue;
+                        }
+                        BlockState engineState = level.getBlockState(enginePos);
+                        if (!(engineState.getBlock() instanceof SteamEngineBlock)) {
+                            continue;
+                        }
+                        Direction engineBack = SteamEngineBlock.getConnectedDirection(engineState).getOpposite();
+                        if (!enginePos.relative(engineBack).equals(bodyPos)
                                 || !engines.add(enginePos)) {
                             continue;
                         }
