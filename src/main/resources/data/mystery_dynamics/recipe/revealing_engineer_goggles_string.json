@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "goggles",
+  "ingredients": [
+    {
+      "item": "thaumcraft:goggles_revealing"
+    },
+    {
+      "item": "minecraft:string"
+    },
+    {
+      "item": "create:goggles"
+    }
+  ],
+  "result": {
+    "id": "mystery_dynamics:revealing_engineer_goggles",
+    "count": 1
+  }
+}

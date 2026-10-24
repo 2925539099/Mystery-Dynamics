@@ -1,0 +1,30 @@
+{
+  "key": "REVEALING_ENGINEER_GOGGLES",
+  "order": 13,
+  "category": "MYSTERY_DYNAMICS",
+  "col": 2,
+  "row": -2,
+  "complexity": 2,
+  "warp": 0,
+  "parents": [
+    "GOGGLES"
+  ],
+  "parents_hidden": [],
+  "siblings": [],
+  "flags": [],
+  "text_pages": [
+    "mystery_dynamics.research.revealing_engineer_goggles.text"
+  ],
+  "item": "mystery_dynamics:revealing_engineer_goggles",
+  "pages": [
+    {
+      "type": "TEXT",
+      "text": "mystery_dynamics.research.revealing_engineer_goggles.text",
+      "source": "mystery_dynamics.research.revealing_engineer_goggles.text"
+    },
+    {
+      "type": "NORMAL",
+      "source": "REVEALING_ENGINEER_GOGGLES"
+    }
+  ]
+}

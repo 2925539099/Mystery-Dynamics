@@ -59,5 +59,10 @@
   "mystery_dynamics.research.infernalfurnace_link.text": "占位内容：炼狱熔炉引用节点。",
   "mystery_dynamics.infernal_boiler.no_structure": "结构未匹配：请检查五层方块、朝向与守卫者玻璃位置。",
   "block.mystery_dynamics.infernal_boiler_casing": "炼狱锅炉底座",
-  "block.mystery_dynamics.infernal_boiler_shell": "炼狱锅炉底座"
+  "block.mystery_dynamics.infernal_boiler_shell": "炼狱锅炉底座",
+  "item.mystery_dynamics.revealing_engineer_goggles": "揭示之工程师护目镜",
+  "tc.research_name.REVEALING_ENGINEER_GOGGLES": "揭示之工程师护目镜",
+  "tc.research_text.REVEALING_ENGINEER_GOGGLES": "神秘使大技霸",
+  "mystery_dynamics.research.revealing_engineer_goggles.text": "只需要一点点的寻思，然后用一些玩意将他俩粘起来，或者随便用什么东西捆起来就可以做出一个新的装备了。",
+  "tooltip.mystery_dynamics.revealing_engineer_goggles": "同时具备揭示之护目镜与工程师护目镜的功能"
 }

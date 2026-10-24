@@ -13,15 +13,26 @@ import com.mysterydynamics.block.RedstoneEngineBlock;
 import com.mysterydynamics.block.RedstoneEngineBlockEntity;
 import com.mysterydynamics.compat.InfernalBoilerConstruct;
 import com.mysterydynamics.compat.InfernalBoilerStructure;
+import com.mysterydynamics.item.RevealingEngineerGogglesItem;
 import com.simibubi.create.api.stress.BlockStressValues;
+import com.simibubi.create.content.equipment.goggles.GogglesItem;
 import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
@@ -40,6 +51,8 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import thaumcraft.api.research.ResearchBookApi;
+import thaumcraft.api.research.ResearchRecipePageRegistry;
+import top.theillusivec4.curios.api.CuriosApi;
 
 import java.util.List;
 
@@ -65,6 +78,8 @@ public class MysteryDynamics {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MODID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES =
             DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, MODID);
+    public static final DeferredRegister<ArmorMaterial> ARMOR_MATERIALS =
+            DeferredRegister.create(Registries.ARMOR_MATERIAL, MODID);
     public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
@@ -128,6 +143,27 @@ public class MysteryDynamics {
     public static final DeferredItem<BlockItem> INFERNAL_BOILER_ITEM = ITEMS.registerSimpleBlockItem(INFERNAL_BOILER);
     public static final DeferredItem<BlockItem> INFERNAL_BOILER_FACE_ITEM = ITEMS.registerSimpleBlockItem(INFERNAL_BOILER_FACE);
 
+    // ---- 揭示之工程师护目镜：护甲值继承揭示之护目镜，无耐久 ----
+    public static final DeferredHolder<ArmorMaterial, ArmorMaterial> REVEALING_ENGINEER_GOGGLES_MATERIAL =
+            ARMOR_MATERIALS.register("revealing_engineer_goggles", () -> new ArmorMaterial(
+                    java.util.Map.of(
+                            ArmorItem.Type.BOOTS, 1,
+                            ArmorItem.Type.LEGGINGS, 2,
+                            ArmorItem.Type.CHESTPLATE, 3,
+                            ArmorItem.Type.HELMET, 1),
+                    25,
+                    SoundEvents.ARMOR_EQUIP_GOLD,
+                    () -> Ingredient.of(Items.SLIME_BALL),
+                    List.of(new ArmorMaterial.Layer(
+                            ResourceLocation.fromNamespaceAndPath(MODID, "revealing_engineer_goggles"), "", false)),
+                    0.0F,
+                    0.0F));
+
+    public static final DeferredItem<RevealingEngineerGogglesItem> REVEALING_ENGINEER_GOGGLES =
+            ITEMS.register("revealing_engineer_goggles",
+                    () -> new RevealingEngineerGogglesItem(
+                            new Item.Properties().stacksTo(1).rarity(Rarity.RARE)));
+
     // ---- 方块实体（8 台设备共用） ----
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<GolemPowerBlockEntity>> GOLEM_POWER_BE =
             BLOCK_ENTITY_TYPES.register("golem_power", () -> BlockEntityType.Builder.of(
@@ -160,12 +196,14 @@ public class MysteryDynamics {
                         output.accept(REDSTONE_ENGINE.get());
                         output.accept(INFERNAL_BOILER.get());
                         output.accept(INFERNAL_BOILER_FACE.get());
+                        output.accept(REVEALING_ENGINEER_GOGGLES.get());
                     })
                     .build());
 
     public MysteryDynamics(IEventBus modEventBus) {
         BLOCKS.register(modEventBus);
         ITEMS.register(modEventBus);
+        ARMOR_MATERIALS.register(modEventBus);
         BLOCK_ENTITY_TYPES.register(modEventBus);
         CREATIVE_TABS.register(modEventBus);
         modEventBus.addListener(MysteryDynamics::commonSetup);
@@ -292,6 +330,16 @@ public class MysteryDynamics {
                 com.mysterydynamics.compat.ThaumcraftRecipes.register();
                 com.mysterydynamics.compat.InfernalBoilerCompat.register();
             }
+            // 让工程师护目镜的信息覆盖层也识别本物品：头盔栏或 Curio 头部栏。
+            GogglesItem.addIsWearingPredicate(player ->
+                    player.getItemBySlot(EquipmentSlot.HEAD).is(REVEALING_ENGINEER_GOGGLES.get())
+                            || CuriosApi.getCuriosInventory(player)
+                            .map(inv -> inv.isEquipped(REVEALING_ENGINEER_GOGGLES.get()))
+                            .orElse(false));
+            // 两种无序合成都放进同一个研究页，页面内可切换/分组显示。
+            ResearchRecipePageRegistry.registerNormalRecipes("REVEALING_ENGINEER_GOGGLES",
+                    ResourceLocation.fromNamespaceAndPath(MODID, "revealing_engineer_goggles_slime"),
+                    ResourceLocation.fromNamespaceAndPath(MODID, "revealing_engineer_goggles_string"));
         });
     }
 }

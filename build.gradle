@@ -29,6 +29,7 @@ dependencies {
             "${depsDir}/create-6.0.10.jar",
             "${depsDir}/ponder-neoforge-1.0.82+mc1.21.1.jar",
             "${depsDir}/flywheel-neoforge-1.21.1-1.0.6.jar",
+            "${depsDir}/curios-neoforge-9.5.1+1.21.1.jar",
             "${depsDir}/Registrate-MC1.21-1.3.0+67.jar",
             "${depsDir}/thaumcraft-0.2.2.95-port.265.jar"
     )

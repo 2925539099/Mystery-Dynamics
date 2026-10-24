@@ -59,5 +59,10 @@
   "mystery_dynamics.research.infernalfurnace_link.text": "Placeholder: infernal furnace reference node.",
   "mystery_dynamics.infernal_boiler.no_structure": "Structure mismatch: check the five layers, facing, and warded glass position.",
   "block.mystery_dynamics.infernal_boiler_casing": "Infernal Boiler Casing",
-  "block.mystery_dynamics.infernal_boiler_shell": "Infernal Boiler Casing"
+  "block.mystery_dynamics.infernal_boiler_shell": "Infernal Boiler Casing",
+  "item.mystery_dynamics.revealing_engineer_goggles": "Goggles of the Revealing Engineer",
+  "tc.research_name.REVEALING_ENGINEER_GOGGLES": "Goggles of the Revealing Engineer",
+  "tc.research_text.REVEALING_ENGINEER_GOGGLES": "Thaumaturge Big Mek",
+  "mystery_dynamics.research.revealing_engineer_goggles.text": "A little bit of tinkering, some odds and ends to stick them together, or just something to tie them up with, and you have a brand new piece of equipment.",
+  "tooltip.mystery_dynamics.revealing_engineer_goggles": "Combines the Goggles of Revealing and Engineer's Goggles"
 }
