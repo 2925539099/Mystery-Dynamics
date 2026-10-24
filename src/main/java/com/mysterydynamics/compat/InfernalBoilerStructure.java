@@ -31,6 +31,8 @@ public final class InfernalBoilerStructure {
     private InfernalBoilerStructure() {
     }
 
+    private static final ThreadLocal<Boolean> RESTORING = ThreadLocal.withInitial(() -> false);
+
     private static final Block[][] LAYER_0 = {
             {Blocks.NETHER_BRICKS, Blocks.OBSIDIAN, Blocks.OBSIDIAN, Blocks.NETHER_BRICKS},
             {Blocks.OBSIDIAN, Blocks.OBSIDIAN, Blocks.OBSIDIAN, Blocks.OBSIDIAN},
@@ -235,6 +237,7 @@ public final class InfernalBoilerStructure {
         int rotation = match.rotation();
         BlockPos center = world(origin, 1, 3, 1, rotation);
         BlockPos face = match.glass();
+        RESTORING.set(true);
 
         // 成型后整个 4×4×2 底座换成不可见填充块，由 shell 模型绘制。
         for (int y = 0; y <= 1; y++) {
@@ -285,7 +288,74 @@ public final class InfernalBoilerStructure {
         BlockState centerState = level.getBlockState(center);
         FluidTankBlock.updateBoilerState(centerState, level, center);
         level.updateNeighborsAt(face, MysteryDynamics.INFERNAL_BOILER_FACE.get());
+        RESTORING.set(false);
         return true;
+    }
+
+    /** 破坏成型锅炉时恢复成建造时的五层方块。 */
+    public static void dismantle(Level level, BlockPos origin, int rotation) {
+        if (level.isClientSide || isRestoring()) {
+            return;
+        }
+        RESTORING.set(true);
+        try {
+            for (int y = 0; y <= 1; y++) {
+                Block[][] layer = y == 0 ? LAYER_0 : LAYER_1;
+                for (int x = 0; x <= 3; x++) {
+                    for (int z = 0; z <= 3; z++) {
+                        level.setBlock(world(origin, x, y, z, rotation),
+                                layer[z][x].defaultBlockState(), 3);
+                    }
+                }
+            }
+            for (int y = 2; y <= 4; y++) {
+                for (int x = 0; x <= 2; x++) {
+                    for (int z = 0; z <= 2; z++) {
+                        level.setBlock(world(origin, x, y, z, rotation),
+                                TCBlocks.THAUMIUM_BLOCK.get().defaultBlockState(), 3);
+                    }
+                }
+            }
+        } finally {
+            RESTORING.set(false);
+        }
+    }
+
+    public static boolean isRestoring() {
+        return RESTORING.get();
+    }
+
+    /** 在任意已成型方块被破坏时请求恢复整栋结构。 */
+    public static void requestDismantle(Level level, BlockPos around) {
+        if (level.isClientSide || isRestoring() || level.getServer() == null) {
+            return;
+        }
+        InfernalBoilerBlockEntity controller = findController(level, around);
+        if (controller == null) {
+            return;
+        }
+        BlockPos origin = controller.boilerOrigin();
+        int rotation = controller.rotation();
+        if (origin.equals(BlockPos.ZERO)) {
+            return;
+        }
+        level.getServer().execute(() -> dismantle(level, origin, rotation));
+    }
+
+    private static InfernalBoilerBlockEntity findController(Level level, BlockPos around) {
+        for (int dx = -3; dx <= 4; dx++) {
+            for (int dy = 0; dy <= 5; dy++) {
+                for (int dz = -3; dz <= 4; dz++) {
+                    if (level.getBlockEntity(around.offset(dx, dy, dz))
+                            instanceof InfernalBoilerBlockEntity boiler
+                            && boiler.isController()
+                            && !boiler.boilerOrigin().equals(BlockPos.ZERO)) {
+                        return boiler;
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     /** 局部坐标 (x,y,z) 旋转到世界坐标。rotation 0 为正面朝南。 */

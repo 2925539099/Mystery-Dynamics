@@ -82,7 +82,8 @@ public class InfernalBoilerRenderer implements BlockEntityRenderer<InfernalBoile
                 consumer.addVertex(pose.last(), vertex.x() / 16.0F, vertex.y() / 16.0F,
                                 vertex.z() / 16.0F)
                         .setColor(255, 255, 255, 255)
-                        .setUv(sprite.getU(vertex.u()), sprite.getV(vertex.v()))
+                        .setUv(sprite.getU(vertex.u() / 16.0F),
+                                sprite.getV(vertex.v() / 16.0F))
                         .setLight(light)
                         .setOverlay(OverlayTexture.NO_OVERLAY)
                         .setNormal(pose.last(), quad.nx(), quad.ny(), quad.nz());

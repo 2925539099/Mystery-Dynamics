@@ -1,5 +1,9 @@
 package com.mysterydynamics.block;
 
+import com.mysterydynamics.compat.InfernalBoilerStructure;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -15,5 +19,14 @@ public class InfernalBoilerCasingBlock extends Block {
     @Override
     protected RenderShape getRenderShape(BlockState state) {
         return RenderShape.INVISIBLE;
+    }
+
+    @Override
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState,
+                         boolean movedByPiston) {
+        if (!level.isClientSide && !InfernalBoilerStructure.isRestoring()) {
+            InfernalBoilerStructure.requestDismantle(level, pos);
+        }
+        super.onRemove(state, level, pos, newState, movedByPiston);
     }
 }

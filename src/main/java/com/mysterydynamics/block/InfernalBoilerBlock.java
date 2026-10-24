@@ -1,10 +1,12 @@
 package com.mysterydynamics.block;
 
 import com.mysterydynamics.MysteryDynamics;
+import com.mysterydynamics.compat.InfernalBoilerStructure;
 import com.simibubi.create.content.fluids.tank.FluidTankBlock;
 import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -39,6 +41,16 @@ public class InfernalBoilerBlock extends FluidTankBlock {
     @Override
     protected RenderShape getRenderShape(BlockState state) {
         return state.getValue(FORMED) ? RenderShape.INVISIBLE : super.getRenderShape(state);
+    }
+
+    @Override
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState,
+                         boolean movedByPiston) {
+        if (!level.isClientSide && state.getValue(FORMED)
+                && !InfernalBoilerStructure.isRestoring()) {
+            InfernalBoilerStructure.requestDismantle(level, pos);
+        }
+        super.onRemove(state, level, pos, newState, movedByPiston);
     }
 
     @Override

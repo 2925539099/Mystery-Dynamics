@@ -47,12 +47,12 @@ public class InfernalBoilerData extends BoilerData {
     }
 
     private void updateCustomHeat(InfernalBoilerBlockEntity boiler) {
-        boolean hasWater = hasWater(boiler);
-        int heat = hasWater ? 3 : 0;
-        if (hasWater && ModList.get().isLoaded("thaumcraft")) {
+        // 按设计默认就是三级热量；水不再作为进入三级的前提。
+        int heat = 3;
+        if (ModList.get().isLoaded("thaumcraft")) {
             heat += InfernalBoilerCompat.countBellows(boiler);
         }
-        if (hasWater && boiler.fireVisTicks() > 0) {
+        if (boiler.fireVisTicks() > 0) {
             heat += 9;
         }
         this.heatLevel = Math.min(18, heat);
@@ -88,7 +88,7 @@ public class InfernalBoilerData extends BoilerData {
 
     @Override
     public float getEngineEfficiency(int totalTankSize) {
-        if (controller == null || attachedEngines <= 0 || !hasWater(controller)) {
+        if (controller == null || attachedEngines <= 0) {
             return 0.0F;
         }
         int heat = Math.max(0, activeHeat);
