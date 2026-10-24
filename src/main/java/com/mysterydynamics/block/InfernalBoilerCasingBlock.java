@@ -64,7 +64,8 @@ public class InfernalBoilerCasingBlock extends FluidTankBlock {
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState,
                          boolean movedByPiston) {
-        if (!level.isClientSide && !InfernalBoilerStructure.isRestoring()) {
+        if (!level.isClientSide && !newState.is(state.getBlock())
+                && !InfernalBoilerStructure.isRestoring()) {
             InfernalBoilerStructure.requestDismantle(level, pos);
         }
         // 不调用 FluidTankBlock.onRemove：否则 Create 的连通性更新会反过来

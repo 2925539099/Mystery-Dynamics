@@ -34,7 +34,8 @@ public class InfernalBoilerShellBlock extends Block {
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState,
                          boolean movedByPiston) {
-        if (!level.isClientSide && !InfernalBoilerStructure.isRestoring()) {
+        if (!level.isClientSide && !newState.is(state.getBlock())
+                && !InfernalBoilerStructure.isRestoring()) {
             InfernalBoilerStructure.requestDismantle(level, pos);
         }
         super.onRemove(state, level, pos, newState, movedByPiston);

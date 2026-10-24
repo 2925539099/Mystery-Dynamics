@@ -89,6 +89,7 @@ public class InfernalBoilerBlockEntity extends FluidTankBlockEntity implements I
             InfernalBoilerCompat.tickVis(this);
             if (level.getGameTime() % 20L == 0L) {
                 InfernalBoilerCompat.pullFireEssentiaFromPort(this);
+                cleanupCasingEntities();
             }
         }
         if (fireVisTicks > 0) {
@@ -106,6 +107,31 @@ public class InfernalBoilerBlockEntity extends FluidTankBlockEntity implements I
         }
         if (essentiaChanged) {
             notifyUpdate();
+        }
+    }
+
+    private void cleanupCasingEntities() {
+        if (boilerOrigin.equals(BlockPos.ZERO) || level == null) {
+            return;
+        }
+        for (int y = 0; y <= 2; y++) {
+            for (int x = 0; x <= 3; x++) {
+                for (int z = 0; z <= 3; z++) {
+                    BlockPos pos = com.mysterydynamics.compat.InfernalBoilerStructure.world(
+                            boilerOrigin, x, y, z, rotation);
+                    BlockState state = level.getBlockState(pos);
+                    var blockEntity = level.getBlockEntity(pos);
+                    if (state.is(MysteryDynamics.INFERNAL_BOILER_CASING.get())) {
+                        if (!(blockEntity instanceof InfernalBoilerCasingBlockEntity)) {
+                            level.setBlockEntity(new InfernalBoilerCasingBlockEntity(
+                                    MysteryDynamics.INFERNAL_BOILER_CASING_BE.get(), pos, state));
+                        }
+                    } else if (blockEntity instanceof InfernalBoilerCasingBlockEntity) {
+                        // 拆除/修复后残留在黑曜石、下界砖、外壳上的旧 casing BE。
+                        level.removeBlockEntity(pos);
+                    }
+                }
+            }
         }
     }
 

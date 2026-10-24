@@ -47,6 +47,7 @@ public class InfernalBoilerBlock extends FluidTankBlock {
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState,
                          boolean movedByPiston) {
         if (!level.isClientSide && state.getValue(FORMED)
+                && !newState.is(state.getBlock())
                 && !InfernalBoilerStructure.isRestoring()) {
             InfernalBoilerStructure.requestDismantle(level, pos);
         }
