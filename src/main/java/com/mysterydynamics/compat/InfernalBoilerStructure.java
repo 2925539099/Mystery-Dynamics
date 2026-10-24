@@ -9,11 +9,15 @@ import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import thaumcraft.common.registry.TCBlocks;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 炼狱锅炉结构。
@@ -25,6 +29,27 @@ public final class InfernalBoilerStructure {
 
     private InfernalBoilerStructure() {
     }
+
+    private static final Block[][] LAYER_0 = {
+            {Blocks.NETHER_BRICKS, Blocks.OBSIDIAN, Blocks.OBSIDIAN, Blocks.NETHER_BRICKS},
+            {Blocks.OBSIDIAN, Blocks.OBSIDIAN, Blocks.OBSIDIAN, Blocks.OBSIDIAN},
+            {Blocks.OBSIDIAN, Blocks.OBSIDIAN, Blocks.OBSIDIAN, Blocks.OBSIDIAN},
+            {Blocks.NETHER_BRICKS, Blocks.OBSIDIAN, Blocks.OBSIDIAN, Blocks.NETHER_BRICKS}
+    };
+
+    private static final Block[][] LAYER_1 = {
+            {Blocks.NETHER_BRICKS, Blocks.OBSIDIAN, Blocks.OBSIDIAN, Blocks.NETHER_BRICKS},
+            {Blocks.OBSIDIAN, Blocks.LAVA, TCBlocks.ALCHEMICAL_CONSTRUCT.get(), Blocks.OBSIDIAN},
+            {Blocks.OBSIDIAN, Blocks.LAVA, TCBlocks.ARCANE_FURNACE.get(), Blocks.OBSIDIAN},
+            {Blocks.NETHER_BRICKS, TCBlocks.WARDED_GLASS.get(), Blocks.OBSIDIAN, Blocks.NETHER_BRICKS}
+    };
+
+    private static final Block[][] LAYER_2 = {
+            {TCBlocks.THAUMIUM_BLOCK.get(), TCBlocks.THAUMIUM_BLOCK.get(), TCBlocks.THAUMIUM_BLOCK.get(), Blocks.NETHER_BRICKS},
+            {TCBlocks.THAUMIUM_BLOCK.get(), TCBlocks.THAUMIUM_BLOCK.get(), TCBlocks.THAUMIUM_BLOCK.get(), Blocks.OBSIDIAN},
+            {TCBlocks.THAUMIUM_BLOCK.get(), TCBlocks.THAUMIUM_BLOCK.get(), TCBlocks.THAUMIUM_BLOCK.get(), Blocks.OBSIDIAN},
+            {Blocks.NETHER_BRICKS, Blocks.OBSIDIAN, Blocks.OBSIDIAN, Blocks.NETHER_BRICKS}
+    };
 
     public record Match(BlockPos origin, BlockPos glass, int rotation, Direction facing) {
     }
@@ -49,6 +74,88 @@ public final class InfernalBoilerStructure {
         return findMatch(level, glassPos) != null;
     }
 
+    /** 失败时给出最接近朝向的具体错位方块，方便排查。 */
+    public static String describeMismatch(Level level, BlockPos clicked) {
+        BlockPos glass = nearbyGlass(level, clicked);
+        if (glass == null) {
+            return "未找到守卫者玻璃";
+        }
+        int bestRotation = -1;
+        int bestCount = Integer.MAX_VALUE;
+        List<String> bestDetails = List.of();
+        for (int rotation = 0; rotation < 4; rotation++) {
+            int gx = rotateX(1, 3, rotation);
+            int gz = rotateZ(1, 3, rotation);
+            BlockPos origin = glass.offset(-gx, -1, -gz);
+            List<String> details = new ArrayList<>();
+            int count = 0;
+            for (int y = 0; y <= 4; y++) {
+                for (int x = 0; x <= 3; x++) {
+                    for (int z = 0; z <= 3; z++) {
+                        Block expected = expectedAt(x, y, z);
+                        if (expected == null) {
+                            continue;
+                        }
+                        BlockState actual = level.getBlockState(world(origin, x, y, z, rotation));
+                        if (!accepted(expected, actual)) {
+                            count++;
+                            if (details.size() < 4) {
+                                details.add("(" + x + "," + y + "," + z + ") 期望 "
+                                        + BuiltInRegistries.BLOCK.getKey(expected).getPath()
+                                        + "，实际 "
+                                        + BuiltInRegistries.BLOCK.getKey(actual.getBlock()).getPath());
+                            }
+                        }
+                    }
+                }
+            }
+            if (count < bestCount) {
+                bestCount = count;
+                bestRotation = rotation;
+                bestDetails = details;
+            }
+        }
+        if (bestCount == 0) {
+            return "结构匹配，但成型被其他条件阻止";
+        }
+        StringBuilder message = new StringBuilder("结构未匹配：错误 ")
+                .append(bestCount).append(" 处，检测朝向 ").append(facingFor(bestRotation));
+        for (String detail : bestDetails) {
+            message.append("；").append(detail);
+        }
+        return message.toString();
+    }
+
+    private static BlockPos nearbyGlass(Level level, BlockPos clicked) {
+        for (int dx = -5; dx <= 5; dx++) {
+            for (int dy = -4; dy <= 4; dy++) {
+                for (int dz = -5; dz <= 5; dz++) {
+                    BlockPos candidate = clicked.offset(dx, dy, dz);
+                    if (level.getBlockState(candidate).is(TCBlocks.WARDED_GLASS.get())) {
+                        return candidate;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    private static Block expectedAt(int x, int y, int z) {
+        if (y == 0) {
+            return LAYER_0[z][x];
+        }
+        if (y == 1) {
+            return LAYER_1[z][x];
+        }
+        if (y == 2) {
+            return LAYER_2[z][x];
+        }
+        if (y <= 4 && x <= 2 && z <= 2) {
+            return TCBlocks.THAUMIUM_BLOCK.get();
+        }
+        return null;
+    }
+
     /** 依次尝试四个朝向，返回第一个匹配的结构。 */
     public static Match findMatch(Level level, BlockPos glassPos) {
         if (!level.getBlockState(glassPos).is(TCBlocks.WARDED_GLASS.get())) {
@@ -66,33 +173,38 @@ public final class InfernalBoilerStructure {
     }
 
     private static boolean matchesAll(Level level, BlockPos origin, int rotation) {
-        return matchesLayer(level, origin, rotation, 0, new Block[][]{
-                {Blocks.NETHER_BRICKS, Blocks.OBSIDIAN, Blocks.OBSIDIAN, Blocks.NETHER_BRICKS},
-                {Blocks.OBSIDIAN, Blocks.OBSIDIAN, Blocks.OBSIDIAN, Blocks.OBSIDIAN},
-                {Blocks.OBSIDIAN, Blocks.OBSIDIAN, Blocks.OBSIDIAN, Blocks.OBSIDIAN},
-                {Blocks.NETHER_BRICKS, Blocks.OBSIDIAN, Blocks.OBSIDIAN, Blocks.NETHER_BRICKS}
-        }) && matchesLayer(level, origin, rotation, 1, new Block[][]{
-                {Blocks.NETHER_BRICKS, Blocks.OBSIDIAN, Blocks.OBSIDIAN, Blocks.NETHER_BRICKS},
-                {Blocks.OBSIDIAN, Blocks.LAVA, TCBlocks.ALCHEMICAL_CONSTRUCT.get(), Blocks.OBSIDIAN},
-                {Blocks.OBSIDIAN, Blocks.LAVA, TCBlocks.ARCANE_FURNACE.get(), Blocks.OBSIDIAN},
-                {Blocks.NETHER_BRICKS, TCBlocks.WARDED_GLASS.get(), Blocks.OBSIDIAN, Blocks.NETHER_BRICKS}
-        }) && matchesLayer(level, origin, rotation, 2, new Block[][]{
-                {TCBlocks.THAUMIUM_BLOCK.get(), TCBlocks.THAUMIUM_BLOCK.get(), TCBlocks.THAUMIUM_BLOCK.get(), Blocks.NETHER_BRICKS},
-                {TCBlocks.THAUMIUM_BLOCK.get(), TCBlocks.THAUMIUM_BLOCK.get(), TCBlocks.THAUMIUM_BLOCK.get(), Blocks.OBSIDIAN},
-                {TCBlocks.THAUMIUM_BLOCK.get(), TCBlocks.THAUMIUM_BLOCK.get(), TCBlocks.THAUMIUM_BLOCK.get(), Blocks.OBSIDIAN},
-                {Blocks.NETHER_BRICKS, Blocks.OBSIDIAN, Blocks.OBSIDIAN, Blocks.NETHER_BRICKS}
-        }) && matchesBody(level, origin, rotation);
+        return matchesLayer(level, origin, rotation, 0, LAYER_0)
+                && matchesLayer(level, origin, rotation, 1, LAYER_1)
+                && matchesLayer(level, origin, rotation, 2, LAYER_2)
+                && matchesBody(level, origin, rotation);
     }
 
     private static boolean matchesLayer(Level level, BlockPos origin, int rotation, int y, Block[][] pattern) {
         for (int x = 0; x < 4; x++) {
             for (int z = 0; z < 4; z++) {
-                if (!level.getBlockState(world(origin, x, y, z, rotation)).is(pattern[z][x])) {
-                    return false;
+                Block expected = pattern[z][x];
+                BlockState actual = level.getBlockState(world(origin, x, y, z, rotation));
+                if (accepted(expected, actual)) {
+                    continue;
                 }
+                return false;
             }
         }
         return true;
+    }
+
+    private static boolean accepted(Block expected, BlockState actual) {
+        if (actual.is(expected)) {
+            return true;
+        }
+        // 炼金炉在成型后可能是核心块，也可能是炼金炉外壳/出口。
+        if (expected == TCBlocks.ARCANE_FURNACE.get()
+                && actual.is(TCBlocks.ARCANE_FURNACE_CASING.get())) {
+            return true;
+        }
+        // 允许使用高级炼金构材。
+        return expected == TCBlocks.ALCHEMICAL_CONSTRUCT.get()
+                && actual.is(TCBlocks.ADVANCED_ALCHEMICAL_CONSTRUCT.get());
     }
 
     private static boolean matchesBody(Level level, BlockPos origin, int rotation) {

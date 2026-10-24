@@ -29,12 +29,12 @@ public final class InfernalBoilerTrigger implements IWandTriggerManager {
         BlockPos glass = InfernalBoilerStructure.findGlass(level, pos);
         if (glass == null) {
             player.displayClientMessage(
-                    Component.translatable("mystery_dynamics.infernal_boiler.no_structure"), false);
+                    Component.literal(InfernalBoilerStructure.describeMismatch(level, pos)), false);
             return false;
         }
         if (!InfernalBoilerStructure.matches(level, glass)) {
             player.displayClientMessage(
-                    Component.translatable("mystery_dynamics.infernal_boiler.no_structure"), false);
+                    Component.literal(InfernalBoilerStructure.describeMismatch(level, pos)), false);
             return false;
         }
         if (!TCResearchManager.has(player, "INFERNAL_BOILER")) {
