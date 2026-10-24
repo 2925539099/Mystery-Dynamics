@@ -16,7 +16,7 @@
   "text_pages": [
     "mystery_dynamics.research.infernalfurnace_link.text"
   ],
-  "item": "thaumcraft:alchemical_furnace",
+  "icon": "thaumcraft:textures/misc/r_infernalfurnace.png",
   "aspects": [],
   "pages": [
     {

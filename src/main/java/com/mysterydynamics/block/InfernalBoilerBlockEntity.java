@@ -100,7 +100,7 @@ public class InfernalBoilerBlockEntity extends FluidTankBlockEntity implements I
 
         updateFaceState();
         updateShellState();
-        if (level.getGameTime() % 2L == 0L) {
+        if (level.getGameTime() % 5L == 0L) {
             linkNearbySteamEngines();
         }
         if (changed) {
