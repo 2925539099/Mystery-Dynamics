@@ -294,6 +294,19 @@ public final class InfernalBoilerStructure {
             }
         }
 
+        // 每个主体方块都保存 origin/rotation。这样即使先拆掉 controller，
+        // 其他主体方块仍能触发整栋 restore，不会退化成多个独立锅炉。
+        for (int y = 2; y <= 4; y++) {
+            for (int x = 0; x <= 2; x++) {
+                for (int z = 0; z <= 2; z++) {
+                    if (level.getBlockEntity(world(origin, x, y, z, rotation))
+                            instanceof InfernalBoilerBlockEntity part) {
+                        part.setFormation(origin, face, match.facing(), rotation);
+                    }
+                }
+            }
+        }
+
         BlockState centerState = level.getBlockState(center);
         FluidTankBlock.updateBoilerState(centerState, level, center);
         level.updateNeighborsAt(face, MysteryDynamics.INFERNAL_BOILER_FACE.get());
@@ -360,7 +373,6 @@ public final class InfernalBoilerStructure {
                 for (int dz = -3; dz <= 4; dz++) {
                     if (level.getBlockEntity(around.offset(dx, dy, dz))
                             instanceof InfernalBoilerBlockEntity boiler
-                            && boiler.isController()
                             && !boiler.boilerOrigin().equals(BlockPos.ZERO)) {
                         return boiler;
                     }

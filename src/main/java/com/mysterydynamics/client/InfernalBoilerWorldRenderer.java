@@ -52,7 +52,7 @@ public final class InfernalBoilerWorldRenderer {
                 }
                 for (Map.Entry<BlockPos, ?> entry : chunk.getBlockEntities().entrySet()) {
                     if (!(entry.getValue() instanceof InfernalBoilerBlockEntity boiler)
-                            || !boiler.isController()) {
+                            || !boiler.isFormedMultiBlock()) {
                         continue;
                     }
                     // 正常情况下由 BER 绘制（保留之前的正确外观）；

@@ -19,6 +19,7 @@ import net.neoforged.fml.ModList;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectContainer;
+import thaumcraft.common.registry.TCBlocks;
 
 /**
  * 炼狱锅炉主体方块实体。
@@ -59,6 +60,20 @@ public class InfernalBoilerBlockEntity extends FluidTankBlockEntity implements I
         return 288;
     }
 
+    /**
+     * 只有真正成型、且 origin 处还有 shell 锚点的 controller 才渲染整栋模型。
+     * 单独放置/拆除后残留的锅炉方块不会各自渲染完整多方块。
+     */
+    public boolean isFormedMultiBlock() {
+        if (!isController() || boilerOrigin.equals(BlockPos.ZERO) || level == null) {
+            return false;
+        }
+        BlockPos center = com.mysterydynamics.compat.InfernalBoilerStructure.world(
+                boilerOrigin, 1, 3, 1, rotation);
+        return worldPosition.equals(center)
+                && level.getBlockState(boilerOrigin).is(MysteryDynamics.INFERNAL_BOILER_SHELL.get());
+    }
+
     @Override
     public AABB getRenderBoundingBox() {
         BlockPos origin = boilerOrigin.equals(BlockPos.ZERO)
@@ -75,6 +90,15 @@ public class InfernalBoilerBlockEntity extends FluidTankBlockEntity implements I
     public void tick() {
         super.tick();
         if (level == null || level.isClientSide || !isController()) {
+            return;
+        }
+
+        if (boilerOrigin.equals(BlockPos.ZERO)
+                && getBlockState().getValue(InfernalBoilerBlock.FORMED)) {
+            // 拆除中断/旧存档残留的孤立锅炉：没有 origin 就无法组装成整栋模型。
+            if (level.getGameTime() % 20L == 0L) {
+                level.setBlock(worldPosition, TCBlocks.THAUMIUM_BLOCK.get().defaultBlockState(), 3);
+            }
             return;
         }
 

@@ -59,7 +59,7 @@ public final class InfernalBoilerRenderer implements BlockEntityRenderer<Inferna
     @Override
     public void render(InfernalBoilerBlockEntity boiler, float partialTick, PoseStack pose,
                        MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
-        if (!boiler.isController()) {
+        if (!boiler.isFormedMultiBlock()) {
             return;
         }
         RENDERED_THIS_FRAME.add(boiler.getBlockPos());
@@ -79,7 +79,7 @@ public final class InfernalBoilerRenderer implements BlockEntityRenderer<Inferna
 
     public static void renderAt(InfernalBoilerBlockEntity boiler, PoseStack pose, Vec3 camera,
                                 MultiBufferSource bufferSource, int packedLight) {
-        if (!boiler.isController()) {
+        if (!boiler.isFormedMultiBlock()) {
             return;
         }
         BlockPos origin = boiler.boilerOrigin();
