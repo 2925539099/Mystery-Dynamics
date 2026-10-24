@@ -14,6 +14,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
@@ -26,12 +28,16 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 
 /** 用 bbmodel 数据绘制整栋 4×4×5 锅炉模型。 */
-public final class InfernalBoilerRenderer {
+public final class InfernalBoilerRenderer implements BlockEntityRenderer<InfernalBoilerBlockEntity> {
+
+    private static final Set<BlockPos> RENDERED_THIS_FRAME = new HashSet<>();
 
     private record Vertex(float x, float y, float z, float u, float v) {
     }
@@ -46,6 +52,28 @@ public final class InfernalBoilerRenderer {
     private static ModelData normal;
     private static ModelData overclock;
     private static final Map<ResourceLocation, TextureAtlasSprite> SPRITES = new HashMap<>();
+
+    public InfernalBoilerRenderer(BlockEntityRendererProvider.Context context) {
+    }
+
+    @Override
+    public void render(InfernalBoilerBlockEntity boiler, float partialTick, PoseStack pose,
+                       MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
+        if (!boiler.isController()) {
+            return;
+        }
+        RENDERED_THIS_FRAME.add(boiler.getBlockPos());
+        Vec3 camera = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
+        renderAt(boiler, pose, camera, bufferSource, packedLight);
+    }
+
+    public static boolean wasRenderedThisFrame(BlockPos controllerPos) {
+        return RENDERED_THIS_FRAME.contains(controllerPos);
+    }
+
+    public static void clearFrameCache() {
+        RENDERED_THIS_FRAME.clear();
+    }
 
     public static void renderAt(InfernalBoilerBlockEntity boiler, PoseStack pose, Vec3 camera,
                                 MultiBufferSource bufferSource, int packedLight) {

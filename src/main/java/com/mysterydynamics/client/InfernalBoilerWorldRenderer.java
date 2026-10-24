@@ -55,6 +55,11 @@ public final class InfernalBoilerWorldRenderer {
                             || !boiler.isController()) {
                         continue;
                     }
+                    // 正常情况下由 BER 绘制（保留之前的正确外观）；
+                    // 只有 controller 所在 section 被裁剪、BER 没跑时才全局补画。
+                    if (InfernalBoilerRenderer.wasRenderedThisFrame(boiler.getBlockPos())) {
+                        continue;
+                    }
                     BlockPos origin = boiler.boilerOrigin();
                     if (origin.equals(BlockPos.ZERO)) {
                         origin = boiler.getBlockPos().offset(-1, -3, -1);
@@ -73,5 +78,6 @@ public final class InfernalBoilerWorldRenderer {
 
         bufferSource.endBatch(RenderType.cutout());
         bufferSource.endBatch(RenderType.translucent());
+        InfernalBoilerRenderer.clearFrameCache();
     }
 }
