@@ -18,8 +18,8 @@ import net.minecraft.world.level.block.state.BlockState;
 /**
  * 成型后的底座填充块。
  *
- * <p>继承 FluidTankBlock 是为了让蒸汽引擎把底座也视为锅炉的一部分；
- * 实际流体/热量仍由邻近的 controller 提供。</p>
+ * <p>保留 FluidTankBlock 外壳只是为了沿用已有方块状态和储罐代理；
+ * 底座不参与蒸汽引擎动力，只有 3×3×3 主体能带动引擎。</p>
  */
 public class InfernalBoilerCasingBlock extends FluidTankBlock {
 

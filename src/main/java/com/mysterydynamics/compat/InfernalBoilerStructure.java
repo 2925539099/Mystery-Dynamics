@@ -355,25 +355,40 @@ public final class InfernalBoilerStructure {
         if (level.isClientSide || isRestoring() || level.getServer() == null) {
             return;
         }
-        InfernalBoilerBlockEntity controller = findController(level, around);
-        if (controller == null) {
+        InfernalBoilerBlockEntity formed = findFormedPart(level, around);
+        if (formed == null) {
             return;
         }
-        BlockPos origin = controller.boilerOrigin();
-        int rotation = controller.rotation();
+        BlockPos origin = formed.boilerOrigin();
+        int rotation = formed.rotation();
         if (origin.equals(BlockPos.ZERO)) {
             return;
         }
         level.getServer().execute(() -> dismantle(level, origin, rotation));
     }
 
-    private static InfernalBoilerBlockEntity findController(Level level, BlockPos around) {
-        for (int dx = -3; dx <= 4; dx++) {
+    /** 查找附近已成型锅炉的 controller。 */
+    public static InfernalBoilerBlockEntity findController(Level level, BlockPos around) {
+        return findBoiler(level, around, true);
+    }
+
+    /** 查找附近任意一个仍有 origin 的成型部件，controller 被拆掉时也能恢复整栋。 */
+    private static InfernalBoilerBlockEntity findFormedPart(Level level, BlockPos around) {
+        return findBoiler(level, around, false);
+    }
+
+    private static InfernalBoilerBlockEntity findBoiler(Level level, BlockPos around,
+                                                        boolean requireController) {
+        for (int dx = -4; dx <= 4; dx++) {
             for (int dy = 0; dy <= 5; dy++) {
-                for (int dz = -3; dz <= 4; dz++) {
-                    if (level.getBlockEntity(around.offset(dx, dy, dz))
-                            instanceof InfernalBoilerBlockEntity boiler
-                            && !boiler.boilerOrigin().equals(BlockPos.ZERO)) {
+                for (int dz = -4; dz <= 4; dz++) {
+                    if (!(level.getBlockEntity(around.offset(dx, dy, dz))
+                            instanceof InfernalBoilerBlockEntity boiler)) {
+                        continue;
+                    }
+                    if (requireController
+                            ? boiler.isController()
+                            : !boiler.boilerOrigin().equals(BlockPos.ZERO)) {
                         return boiler;
                     }
                 }

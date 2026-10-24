@@ -12,6 +12,7 @@ import com.mysterydynamics.block.InfernalBoilerShellBlock;
 import com.mysterydynamics.block.RedstoneEngineBlock;
 import com.mysterydynamics.block.RedstoneEngineBlockEntity;
 import com.mysterydynamics.compat.InfernalBoilerConstruct;
+import com.mysterydynamics.compat.InfernalBoilerStructure;
 import com.simibubi.create.api.stress.BlockStressValues;
 import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
 
@@ -251,22 +252,8 @@ public class MysteryDynamics {
     }
 
     private static IFluidHandler findBoilerTank(Level level, BlockPos pos) {
-        for (int dx = -4; dx <= 4; dx++) {
-            for (int dy = 0; dy <= 5; dy++) {
-                for (int dz = -4; dz <= 4; dz++) {
-                    if (level.getBlockEntity(pos.offset(dx, dy, dz))
-                            instanceof InfernalBoilerBlockEntity boiler) {
-                        FluidTankBlockEntity controller = boiler.isController()
-                                ? boiler
-                                : boiler.getControllerBE();
-                        if (controller != null) {
-                            return controller.boiler.createHandler();
-                        }
-                    }
-                }
-            }
-        }
-        return null;
+        InfernalBoilerBlockEntity controller = InfernalBoilerStructure.findController(level, pos);
+        return controller == null ? null : controller.boiler.createHandler();
     }
 
     private static void registerCapabilities(RegisterCapabilitiesEvent event) {

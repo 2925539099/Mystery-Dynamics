@@ -30,7 +30,6 @@ public class InfernalBoilerData extends BoilerData {
     public static final float OVERCLOCK_TOTAL_STRESS = VANILLA_MAX_BOILER_STRESS * 2.0F;
 
     private InfernalBoilerBlockEntity controller;
-    private int heatLevel;
 
     @Override
     public void tick(FluidTankBlockEntity tank) {
@@ -72,8 +71,7 @@ public class InfernalBoilerData extends BoilerData {
                 heat += 9;
             }
         }
-        this.heatLevel = Math.min(18, heat);
-        this.activeHeat = heatLevel;
+        this.activeHeat = Math.min(18, heat);
         this.passiveHeat = false;
         this.needsHeatLevelUpdate = false;
     }
@@ -117,7 +115,7 @@ public class InfernalBoilerData extends BoilerData {
 
     @Override
     public int getTheoreticalHeatLevel() {
-        return heatLevel;
+        return activeHeat;
     }
 
     @Override
@@ -132,12 +130,9 @@ public class InfernalBoilerData extends BoilerData {
         if (!hasWater(controller)) {
             return 0.0F;
         }
-        float deviceMax = ENGINE_STRESS * attachedEngines;
         double configuredCapacity = BlockStressValues.getCapacity(AllBlocks.STEAM_ENGINE.get());
-        if (configuredCapacity > 0.0D) {
-            deviceMax = (float) configuredCapacity * attachedEngines;
-        }
         float capacity = configuredCapacity > 0.0D ? (float) configuredCapacity : ENGINE_STRESS;
+        float deviceMax = capacity * attachedEngines;
         float target = BASE_TOTAL_STRESS * Math.min(2.0F, heat / 3.0F);
         if (controller.isOverclock()) {
             // 超频硬上限 589824：引擎多于满级18台时自动降低单台效率，

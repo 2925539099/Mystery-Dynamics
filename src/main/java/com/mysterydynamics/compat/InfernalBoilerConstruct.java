@@ -11,7 +11,7 @@ import thaumcraft.common.registry.TCBlocks;
 import java.util.ArrayList;
 import java.util.List;
 
-/** Thaumonomicon 澶氭柟鍧楃粨鏋勯〉锛氱偧鐙遍攨鐐?4脳4脳5銆?*/
+/** Thaumonomicon 多方块结构页：炼狱锅炉 4×4×5。 */
 public final class InfernalBoilerConstruct {
 
     private InfernalBoilerConstruct() {

@@ -26,6 +26,8 @@ import thaumcraft.common.vis.TCVisHelper;
 /** 只在安装神秘时代时加载的兼容层。 */
 public final class InfernalBoilerCompat {
 
+    private static final int[][] BELLOW_POSITIONS = {{4, 0, 1}, {4, 0, 2}, {2, 0, -1}};
+
     private InfernalBoilerCompat() {
     }
 
@@ -82,28 +84,14 @@ public final class InfernalBoilerCompat {
                         : new InfernalBoilerEssentiaHandler(be.boilerController(), side, be.getBlockPos()));
         event.registerBlock(EssentiaCapabilities.TRANSPORT,
                 (level, pos, state, blockEntity, side) -> {
-                    InfernalBoilerBlockEntity controller = findController(level, pos);
+                    InfernalBoilerBlockEntity controller =
+                            InfernalBoilerStructure.findController(level, pos);
                     return controller == null ? null
                             : new InfernalBoilerEssentiaHandler(controller, side, pos);
                 },
                 MysteryDynamics.INFERNAL_BOILER_CASING.get(),
                 MysteryDynamics.INFERNAL_BOILER_SHELL.get(),
                 MysteryDynamics.INFERNAL_BOILER_FACE.get());
-    }
-
-    private static InfernalBoilerBlockEntity findController(Level level, net.minecraft.core.BlockPos around) {
-        for (int dx = -4; dx <= 4; dx++) {
-            for (int dy = 0; dy <= 5; dy++) {
-                for (int dz = -4; dz <= 4; dz++) {
-                    if (level.getBlockEntity(around.offset(dx, dy, dz))
-                            instanceof InfernalBoilerBlockEntity boiler
-                            && boiler.isController()) {
-                        return boiler;
-                    }
-                }
-            }
-        }
-        return null;
     }
 
     /**
@@ -177,26 +165,12 @@ public final class InfernalBoilerCompat {
         }
         int rotation = boiler.rotation();
         int count = 0;
-        int[][] positions = {{4, 0, 1}, {4, 0, 2}, {2, 0, -1}};
-        for (int[] p : positions) {
+        for (int[] p : BELLOW_POSITIONS) {
             var pos = InfernalBoilerStructure.world(origin, p[0], p[1], p[2], rotation);
             if (level.getBlockState(pos).getBlock() instanceof BellowsBlock) {
                 count++;
             }
         }
         return count * 2;
-    }
-
-    private static boolean touchesBoiler(Level level, net.minecraft.core.BlockPos pos) {
-        for (Direction direction : Direction.values()) {
-            BlockState state = level.getBlockState(pos.relative(direction));
-            if (state.is(MysteryDynamics.INFERNAL_BOILER.get())
-                    || state.is(MysteryDynamics.INFERNAL_BOILER_CASING.get())
-                    || state.is(MysteryDynamics.INFERNAL_BOILER_SHELL.get())
-                    || state.is(MysteryDynamics.INFERNAL_BOILER_FACE.get())) {
-                return true;
-            }
-        }
-        return false;
     }
 }

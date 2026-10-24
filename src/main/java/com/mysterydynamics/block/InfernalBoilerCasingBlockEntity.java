@@ -1,5 +1,6 @@
 package com.mysterydynamics.block;
 
+import com.mysterydynamics.compat.InfernalBoilerStructure;
 import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
 
 import net.minecraft.core.BlockPos;
@@ -13,8 +14,10 @@ import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectContainer;
 
 /**
- * 底座填充块同时也是 FluidTankBlockEntity，这样贴在底座上的蒸汽引擎
- * 能像识别原版锅炉一样识别到锅炉 controller。
+ * 底座填充块的储罐代理。
+ *
+ * <p>保留 FluidTankBlockEntity 外壳以兼容管道和旧存档；
+ * 实际流体、热量和源质全部委托给锅炉 controller。</p>
  */
 public class InfernalBoilerCasingBlockEntity extends FluidTankBlockEntity
         implements IFluidHandler, IAspectContainer {
@@ -48,19 +51,8 @@ public class InfernalBoilerCasingBlockEntity extends FluidTankBlockEntity
             return cached;
         }
         cachedController = null;
-        for (int dx = -4; dx <= 4; dx++) {
-            for (int dy = 0; dy <= 5; dy++) {
-                for (int dz = -4; dz <= 4; dz++) {
-                    if (level.getBlockEntity(worldPosition.offset(dx, dy, dz))
-                            instanceof InfernalBoilerBlockEntity boiler
-                            && boiler.isController()) {
-                        cachedController = boiler;
-                        return boiler;
-                    }
-                }
-            }
-        }
-        return null;
+        cachedController = InfernalBoilerStructure.findController(level, worldPosition);
+        return cachedController;
     }
 
     public InfernalBoilerBlockEntity boilerController() {

@@ -2,6 +2,7 @@ package com.mysterydynamics.block;
 
 import com.mysterydynamics.MysteryDynamics;
 import com.mysterydynamics.compat.InfernalBoilerCompat;
+import com.mysterydynamics.compat.InfernalBoilerStructure;
 import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
 import com.simibubi.create.content.kinetics.steamEngine.SteamEngineBlock;
 import com.simibubi.create.content.kinetics.steamEngine.SteamEngineBlockEntity;
@@ -32,6 +33,8 @@ public class InfernalBoilerBlockEntity extends FluidTankBlockEntity implements I
     public static final int MAX_FIRE_ESSENTIA = 256;
     /** 与 Create 满级 3×3×32 储罐相同的容量：288 × 8000 mB。 */
     public static final int MAX_WATER_CAPACITY = 2_304_000;
+
+    private static final Direction[] DIRECTIONS = Direction.values();
 
     private BlockPos boilerOrigin = BlockPos.ZERO;
     private BlockPos facePos = BlockPos.ZERO;
@@ -76,7 +79,7 @@ public class InfernalBoilerBlockEntity extends FluidTankBlockEntity implements I
         for (int y = 2; y <= 4; y++) {
             for (int x = 0; x <= 2; x++) {
                 for (int z = 0; z <= 2; z++) {
-                    BlockPos pos = com.mysterydynamics.compat.InfernalBoilerStructure.world(
+                    BlockPos pos = InfernalBoilerStructure.world(
                             boilerOrigin, x, y, z, rotation);
                     if (pos.equals(worldPosition)) {
                         continue;
@@ -170,7 +173,7 @@ public class InfernalBoilerBlockEntity extends FluidTankBlockEntity implements I
         for (int y = 0; y <= 2; y++) {
             for (int x = 0; x <= 3; x++) {
                 for (int z = 0; z <= 3; z++) {
-                    BlockPos pos = com.mysterydynamics.compat.InfernalBoilerStructure.world(
+                    BlockPos pos = InfernalBoilerStructure.world(
                             boilerOrigin, x, y, z, rotation);
                     BlockState state = level.getBlockState(pos);
                     var blockEntity = level.getBlockEntity(pos);
@@ -189,9 +192,8 @@ public class InfernalBoilerBlockEntity extends FluidTankBlockEntity implements I
     }
 
     /**
-     * Create 的 SteamEngineBlockEntity 只会从“背后的方块”重新找 tank。
-     * 我们的引擎常贴在 casing/外壳上，若该位置没有可识别 BE，引擎就会一直空闲。
-     * 这里把整栋结构附近的蒸汽引擎直接挂到真正的锅炉 controller 上。
+     * 只有 3×3×3 主体能带动蒸汽引擎；底座、外壳、正面都不参与动力。
+     * 引擎背面必须正对主体，避免把旁边朝向错误或贴在底座上的引擎算进去。
      */
     private void linkNearbySteamEngines() {
         if (boilerOrigin.equals(BlockPos.ZERO) || level == null) {
@@ -202,9 +204,9 @@ public class InfernalBoilerBlockEntity extends FluidTankBlockEntity implements I
         for (int y = 2; y <= 4; y++) {
             for (int x = 0; x <= 2; x++) {
                 for (int z = 0; z <= 2; z++) {
-                    BlockPos bodyPos = com.mysterydynamics.compat.InfernalBoilerStructure.world(
+                    BlockPos bodyPos = InfernalBoilerStructure.world(
                             boilerOrigin, x, y, z, rotation);
-                    for (Direction direction : Direction.values()) {
+                    for (Direction direction : DIRECTIONS) {
                         BlockPos enginePos = bodyPos.relative(direction);
                         if (!level.isLoaded(enginePos)) {
                             continue;
@@ -277,10 +279,6 @@ public class InfernalBoilerBlockEntity extends FluidTankBlockEntity implements I
 
     public BlockPos boilerOrigin() {
         return boilerOrigin;
-    }
-
-    public BlockPos facePos() {
-        return facePos;
     }
 
     public Direction frontDirection() {

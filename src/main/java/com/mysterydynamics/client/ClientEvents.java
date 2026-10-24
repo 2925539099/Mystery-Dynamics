@@ -20,7 +20,7 @@ public final class ClientEvents {
         // 尽早注册别名，确保研究书构建页面时已经生效。
         ResearchBookApi.addPageAlias(key -> switch (key) {
             case "ESSENTIADISTILLATION_LINK" -> "DISTILESSENTIA";
-            case "INFERNALFURNACE_LINK", "INFERNAL_BOILER_LINK" -> "INFERNALFURNACE";
+            case "INFERNALFURNACE_LINK" -> "INFERNALFURNACE";
             default -> key;
         });
     }

@@ -15,8 +15,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
  * Create 的 SteamEngineBlockEntity.isValid() 只认 AllBlocks.FLUID_TANK 这个精确方块。
- * 我们的锅炉主体/底座/外壳不是 Create 的 FLUID_TANK，所以引擎永远判定无效。
- * 这里把炼狱锅炉的结构方块也视为合法热源/储罐后方块。
+ * 炼狱锅炉的 3×3×3 主体不是 Create 的 FLUID_TANK，所以需要单独放行。
+ * 底座、外壳和正面不在这里放行，避免底座也能带动引擎。
  */
 @Mixin(value = SteamEngineBlockEntity.class, remap = false)
 public abstract class SteamEngineBlockEntityMixin {
