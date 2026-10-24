@@ -6,6 +6,9 @@
   "mixins": [
     "SteamEngineBlockEntityMixin"
   ],
+  "client": [
+    "ThaumonomiconPagePlanMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   }

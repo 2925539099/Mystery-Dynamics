@@ -11,6 +11,7 @@ import com.mysterydynamics.block.InfernalBoilerFaceBlock;
 import com.mysterydynamics.block.InfernalBoilerShellBlock;
 import com.mysterydynamics.block.RedstoneEngineBlock;
 import com.mysterydynamics.block.RedstoneEngineBlockEntity;
+import com.mysterydynamics.compat.InfernalBoilerConstruct;
 import com.simibubi.create.api.stress.BlockStressValues;
 import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
 
@@ -37,6 +38,7 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import thaumcraft.api.research.ResearchBookApi;
 
 import java.util.List;
 
@@ -49,6 +51,14 @@ import java.util.List;
 public class MysteryDynamics {
 
     public static final String MODID = "mystery_dynamics";
+
+    static {
+        // 结构页必须双端可见，否则服务端加载研究会丢弃 CONSTRUCT 页面。
+        ResearchBookApi.addConstructSource(key ->
+                "InfernalBoiler".equals(key)
+                        ? java.util.List.of(InfernalBoilerConstruct.create())
+                        : java.util.List.of());
+    }
 
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(MODID);
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MODID);
