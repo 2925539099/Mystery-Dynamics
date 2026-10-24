@@ -197,27 +197,34 @@ public class InfernalBoilerBlockEntity extends FluidTankBlockEntity implements I
         if (boilerOrigin.equals(BlockPos.ZERO) || level == null) {
             return;
         }
-        int engines = 0;
-        for (int x = -1; x <= 4; x++) {
-            for (int y = -1; y <= 5; y++) {
-                for (int z = -1; z <= 4; z++) {
-                    BlockPos pos = boilerOrigin.offset(x, y, z);
-                    if (!(level.getBlockState(pos).getBlock() instanceof SteamEngineBlock)) {
-                        continue;
-                    }
-                    engines++;
-                    if (level.getBlockEntity(pos) instanceof SteamEngineBlockEntity engine) {
-                        engine.source = new WeakReference<>(this);
+        // 只有 3×3×3 主体能带动蒸汽引擎；底座 casing 不参与动力。
+        java.util.Set<BlockPos> engines = new java.util.HashSet<>();
+        for (int y = 2; y <= 4; y++) {
+            for (int x = 0; x <= 2; x++) {
+                for (int z = 0; z <= 2; z++) {
+                    BlockPos bodyPos = com.mysterydynamics.compat.InfernalBoilerStructure.world(
+                            boilerOrigin, x, y, z, rotation);
+                    for (Direction direction : Direction.values()) {
+                        BlockPos enginePos = bodyPos.relative(direction);
+                        if (!level.isLoaded(enginePos)
+                                || !(level.getBlockState(enginePos).getBlock() instanceof SteamEngineBlock)
+                                || !engines.add(enginePos)) {
+                            continue;
+                        }
+                        if (level.getBlockEntity(enginePos) instanceof SteamEngineBlockEntity engine) {
+                            engine.source = new WeakReference<>(this);
+                        }
                     }
                 }
             }
         }
-        if (boiler != null && boiler.attachedEngines != engines) {
-            boiler.attachedEngines = engines;
+        int count = engines.size();
+        if (boiler != null && boiler.attachedEngines != count) {
+            boiler.attachedEngines = count;
             // 让客户端护目镜拿到同一个引擎数，避免显示值来回闪。
             notifyUpdate();
         }
-        this.linkedEngineCount = engines;
+        this.linkedEngineCount = count;
     }
 
     public int linkedEngineCount() {

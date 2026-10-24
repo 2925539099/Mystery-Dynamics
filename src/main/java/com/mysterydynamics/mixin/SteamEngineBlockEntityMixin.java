@@ -29,10 +29,7 @@ public abstract class SteamEngineBlockEntityMixin {
         }
         Direction back = SteamEngineBlock.getConnectedDirection(engine.getBlockState()).getOpposite();
         BlockState behind = engine.getLevel().getBlockState(engine.getBlockPos().relative(back));
-        if (behind.is(MysteryDynamics.INFERNAL_BOILER.get())
-                || behind.is(MysteryDynamics.INFERNAL_BOILER_CASING.get())
-                || behind.is(MysteryDynamics.INFERNAL_BOILER_SHELL.get())
-                || behind.is(MysteryDynamics.INFERNAL_BOILER_FACE.get())) {
+        if (behind.is(MysteryDynamics.INFERNAL_BOILER.get())) {
             cir.setReturnValue(true);
         }
     }
