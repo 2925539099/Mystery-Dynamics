@@ -135,14 +135,18 @@ public class InfernalBoilerData extends BoilerData {
         if (configuredCapacity > 0.0D) {
             deviceMax = (float) configuredCapacity * attachedEngines;
         }
+        float capacity = configuredCapacity > 0.0D ? (float) configuredCapacity : ENGINE_STRESS;
         float target = BASE_TOTAL_STRESS * Math.min(2.0F, heat / 3.0F);
         if (controller.isOverclock()) {
-            // 超频：原版满级锅炉最大应力（18×1024）的两倍。
-            target = OVERCLOCK_TOTAL_STRESS;
+            // 超频硬上限 589824：引擎多于满级18台时自动降低单台效率，
+            // 保证护目镜公式 eff * 16 * max(heat, engines) * capacity 不超过两倍原版满级。
+            int effectiveCount = Math.max(heat, attachedEngines);
+            float maxEfficiency = OVERCLOCK_TOTAL_STRESS
+                    / (16.0F * effectiveCount * capacity);
+            return Math.min(2.0F, maxEfficiency);
         }
         // 上限是“链接的应力输出设备”的最大总输出，而不是固定值。
         target = Math.min(target, deviceMax);
-        // 超频允许到 2.0；蒸汽引擎自己的 clamp 由 Mixin 放宽到 2。
-        return Math.min(2.0F, target / deviceMax);
+        return Math.min(1.0F, target / deviceMax);
     }
 }
