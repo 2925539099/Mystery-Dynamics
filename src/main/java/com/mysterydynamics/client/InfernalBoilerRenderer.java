@@ -22,17 +22,22 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.world.phys.Vec3;
 
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 
 /** 用 bbmodel 数据绘制整栋 4×4×5 锅炉模型。 */
-public class InfernalBoilerRenderer implements BlockEntityRenderer<InfernalBoilerBlockEntity> {
+public final class InfernalBoilerRenderer implements BlockEntityRenderer<InfernalBoilerBlockEntity> {
+
+    private static final Set<BlockPos> RENDERED_THIS_FRAME = new HashSet<>();
 
     private record Vertex(float x, float y, float z, float u, float v) {
     }
@@ -57,6 +62,24 @@ public class InfernalBoilerRenderer implements BlockEntityRenderer<InfernalBoile
         if (!boiler.isController()) {
             return;
         }
+        RENDERED_THIS_FRAME.add(boiler.getBlockPos());
+        Vec3 camera = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
+        renderAt(boiler, pose, camera, bufferSource, packedLight);
+    }
+
+    public static boolean wasRenderedThisFrame(BlockPos controllerPos) {
+        return RENDERED_THIS_FRAME.contains(controllerPos);
+    }
+
+    public static void clearFrameCache() {
+        RENDERED_THIS_FRAME.clear();
+    }
+
+    public static void renderAt(InfernalBoilerBlockEntity boiler, PoseStack pose, Vec3 camera,
+                                MultiBufferSource bufferSource, int packedLight) {
+        if (!boiler.isController()) {
+            return;
+        }
         BlockPos origin = boiler.boilerOrigin();
         if (origin.equals(BlockPos.ZERO)) {
             // 兼容旧存档/成型瞬间 controller 尚未写入 origin 的情况。
@@ -67,10 +90,9 @@ public class InfernalBoilerRenderer implements BlockEntityRenderer<InfernalBoile
             return;
         }
 
-        BlockPos pos = boiler.getBlockPos();
         pose.pushPose();
-        pose.translate(origin.getX() - pos.getX(), origin.getY() - pos.getY(),
-                origin.getZ() - pos.getZ());
+        pose.translate(origin.getX() - camera.x, origin.getY() - camera.y,
+                origin.getZ() - camera.z);
         // 模型数据已平移为从 (0,0,0) 开始；绕 4×4 底座中心旋转。
         pose.translate(2.0D, 0.0D, 2.0D);
         pose.mulPose(Axis.YP.rotationDegrees(boiler.rotation() * 90.0F));
