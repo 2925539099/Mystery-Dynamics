@@ -68,10 +68,38 @@ public class InfernalBoilerBlockEntity extends FluidTankBlockEntity implements I
         if (!isController() || boilerOrigin.equals(BlockPos.ZERO) || level == null) {
             return false;
         }
-        BlockPos center = com.mysterydynamics.compat.InfernalBoilerStructure.world(
-                boilerOrigin, 1, 3, 1, rotation);
-        return worldPosition.equals(center)
-                && level.getBlockState(boilerOrigin).is(MysteryDynamics.INFERNAL_BOILER_SHELL.get());
+        if (!level.getBlockState(boilerOrigin).is(MysteryDynamics.INFERNAL_BOILER_SHELL.get())) {
+            return false;
+        }
+        // Create 的 controller 不一定在正中心。只要同一 origin 下有多个 controller，
+        // 选位置最小的那个作为唯一渲染者，避免每个 controller 都画一遍整栋模型。
+        for (int y = 2; y <= 4; y++) {
+            for (int x = 0; x <= 2; x++) {
+                for (int z = 0; z <= 2; z++) {
+                    BlockPos pos = com.mysterydynamics.compat.InfernalBoilerStructure.world(
+                            boilerOrigin, x, y, z, rotation);
+                    if (pos.equals(worldPosition)) {
+                        continue;
+                    }
+                    if (level.getBlockEntity(pos) instanceof InfernalBoilerBlockEntity other
+                            && other.isController()
+                            && boilerOrigin.equals(other.boilerOrigin())
+                            && comparePos(pos, worldPosition) < 0) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    private static int comparePos(BlockPos a, BlockPos b) {
+        int byY = Integer.compare(a.getY(), b.getY());
+        if (byY != 0) {
+            return byY;
+        }
+        int byX = Integer.compare(a.getX(), b.getX());
+        return byX != 0 ? byX : Integer.compare(a.getZ(), b.getZ());
     }
 
     @Override
