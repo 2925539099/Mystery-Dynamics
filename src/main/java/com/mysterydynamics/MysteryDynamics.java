@@ -250,7 +250,7 @@ public class MysteryDynamics {
                                 ? boiler
                                 : boiler.getControllerBE();
                         if (controller != null) {
-                            return controller.getTankInventory();
+                            return controller.boiler.createHandler();
                         }
                     }
                 }
@@ -263,7 +263,7 @@ public class MysteryDynamics {
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, INFERNAL_BOILER_BE.get(),
                 (be, side) -> {
                     FluidTankBlockEntity controller = be.isController() ? be : be.getControllerBE();
-                    return controller == null ? null : controller.getTankInventory();
+                    return controller == null ? null : controller.boiler.createHandler();
                 });
         // 底座/正面/shell 本身没有 BE，但管道应能把水送进整栋锅炉的储罐。
         event.registerBlock(Capabilities.FluidHandler.BLOCK,

@@ -77,38 +77,50 @@ public class InfernalBoilerCasingBlockEntity extends FluidTankBlockEntity implem
         return controller == null ? 0 : controller.getTotalTankSize();
     }
 
+    private IFluidHandler handler() {
+        InfernalBoilerBlockEntity controller = controller();
+        return controller == null ? getTankInventory() : controller.boiler.createHandler();
+    }
+
     @Override
     public int getTanks() {
-        return getTankInventory() == null ? 0 : 1;
+        IFluidHandler handler = handler();
+        return handler == null ? 0 : handler.getTanks();
     }
 
     @Override
     public FluidStack getFluidInTank(int tank) {
-        return getTankInventory().getFluidInTank(tank);
+        IFluidHandler handler = handler();
+        return handler == null ? FluidStack.EMPTY : handler.getFluidInTank(tank);
     }
 
     @Override
     public int getTankCapacity(int tank) {
-        return getTankInventory().getTankCapacity(tank);
+        IFluidHandler handler = handler();
+        return handler == null ? 0 : handler.getTankCapacity(tank);
     }
 
     @Override
     public boolean isFluidValid(int tank, FluidStack stack) {
-        return getTankInventory().isFluidValid(tank, stack);
+        IFluidHandler handler = handler();
+        return handler != null && handler.isFluidValid(tank, stack);
     }
 
     @Override
     public int fill(FluidStack resource, FluidAction action) {
-        return getTankInventory().fill(resource, action);
+        IFluidHandler handler = handler();
+        return handler == null ? 0 : handler.fill(resource, action);
     }
 
     @Override
     public FluidStack drain(FluidStack resource, FluidAction action) {
-        return getTankInventory().drain(resource, action);
+        IFluidHandler handler = handler();
+        return handler == null ? FluidStack.EMPTY : handler.drain(resource, action);
     }
 
     @Override
     public FluidStack drain(int maxDrain, FluidAction action) {
-        return getTankInventory().drain(maxDrain, action);
+        IFluidHandler handler = handler();
+        return handler == null ? FluidStack.EMPTY : handler.drain(maxDrain, action);
     }
 }
