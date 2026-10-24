@@ -106,6 +106,38 @@ public final class InfernalBoilerCompat {
         return null;
     }
 
+    /**
+     * 从 pasted7 端口相邻的源质管道主动抽取 1 点火源质。
+     * 这是对 Create/Thaumcraft 吸力判定的兼容：锅炉本身相当于一个带吸力的容器。
+     */
+    public static void pullFireEssentiaFromPort(InfernalBoilerBlockEntity boiler) {
+        if (boiler.fireEssentia() >= InfernalBoilerBlockEntity.MAX_FIRE_ESSENTIA) {
+            return;
+        }
+        Level level = boiler.getLevel();
+        if (level == null || level.isClientSide) {
+            return;
+        }
+        var origin = boiler.boilerOrigin();
+        if (origin.equals(net.minecraft.core.BlockPos.ZERO)) {
+            return;
+        }
+        var port = InfernalBoilerStructure.world(origin, 2, 1, 3, boiler.rotation());
+        Direction front = boiler.frontDirection();
+        for (Direction side : new Direction[]{front, front.getOpposite()}) {
+            var neighbor = port.relative(side);
+            var transport = EssentiaCapabilities.find(level, neighbor, side.getOpposite());
+            if (transport == null) {
+                continue;
+            }
+            int taken = transport.takeEssentia(Aspect.FIRE, 1, side.getOpposite());
+            if (taken > 0) {
+                boiler.addFireEssentia(taken);
+                return;
+            }
+        }
+    }
+
     /** 尝试从附近节点/中继器抽取 1 点 Ignis，给锅炉 200 tick 的 +9 热等级。 */
     public static void tickVis(InfernalBoilerBlockEntity boiler) {
         Level level = boiler.getLevel();

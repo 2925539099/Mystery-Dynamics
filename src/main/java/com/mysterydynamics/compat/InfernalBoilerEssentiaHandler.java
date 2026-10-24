@@ -50,7 +50,17 @@ public final class InfernalBoilerEssentiaHandler implements IEssentiaTransport {
     }
 
     private boolean isInputSide(Direction direction) {
-        return direction != null && direction == target().frontDirection() && isInputPort();
+        if (direction == null || !isInputPort()) {
+            return false;
+        }
+        // 管道查询吸力时用“方块→管道”方向，实际 addEssentia 可能用反方向；
+        // 端口只在 pasted7 这个位置，所以两面都接受。
+        Direction front = target().frontDirection();
+        return direction == front || direction == front.getOpposite();
+    }
+
+    private boolean hasRoom() {
+        return target().fireEssentia() < InfernalBoilerBlockEntity.MAX_FIRE_ESSENTIA;
     }
 
     @Override
@@ -74,12 +84,12 @@ public final class InfernalBoilerEssentiaHandler implements IEssentiaTransport {
 
     @Override
     public Aspect getSuctionType(Direction direction) {
-        return isInputSide(direction) ? Aspect.FIRE : null;
+        return isInputSide(direction) && hasRoom() ? Aspect.FIRE : null;
     }
 
     @Override
     public int getSuctionAmount(Direction direction) {
-        return isInputSide(direction) ? 64 : 0;
+        return isInputSide(direction) && hasRoom() ? 64 : 0;
     }
 
     @Override

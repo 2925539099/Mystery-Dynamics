@@ -87,6 +87,9 @@ public class InfernalBoilerBlockEntity extends FluidTankBlockEntity implements I
 
         if (ModList.get().isLoaded("thaumcraft")) {
             InfernalBoilerCompat.tickVis(this);
+            if (level.getGameTime() % 20L == 0L) {
+                InfernalBoilerCompat.pullFireEssentiaFromPort(this);
+            }
         }
         if (fireVisTicks > 0) {
             fireVisTicks--;
