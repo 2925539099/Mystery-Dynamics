@@ -8,16 +8,11 @@ import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
 import com.simibubi.create.content.kinetics.steamEngine.SteamEngineBlock;
 import com.simibubi.create.foundation.utility.CreateLang;
 
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.CommonComponents;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.fml.ModList;
-
-import java.util.List;
 
 /**
  * 炼狱锅炉的锅炉数据。
@@ -86,13 +81,19 @@ public class InfernalBoilerData extends BoilerData {
     }
 
     private void updateCustomHeat(InfernalBoilerBlockEntity boiler) {
-        // 按设计默认就是三级热量；水不再作为进入三级的前提。
-        int heat = 3;
-        if (ModList.get().isLoaded("thaumcraft")) {
-            heat += InfernalBoilerCompat.countBellows(boiler);
-        }
-        if (boiler.fireVisTicks() > 0) {
-            heat += 9;
+        int heat;
+        if (boiler.isOverclock()) {
+            // 超频按原版满级锅炉的 18 热计算，才能显示/输出两倍最大应力。
+            heat = 18;
+        } else {
+            // 按设计默认就是三级热量；水不再作为进入三级的前提。
+            heat = 3;
+            if (ModList.get().isLoaded("thaumcraft")) {
+                heat += InfernalBoilerCompat.countBellows(boiler);
+            }
+            if (boiler.fireVisTicks() > 0) {
+                heat += 9;
+            }
         }
         this.heatLevel = Math.min(18, heat);
         this.activeHeat = heatLevel;
@@ -164,29 +165,7 @@ public class InfernalBoilerData extends BoilerData {
         }
         // 上限是“链接的应力输出设备”的最大总输出，而不是固定值。
         target = Math.min(target, deviceMax);
-        return Math.min(1.0F, target / deviceMax);
-    }
-
-    @Override
-    public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking,
-                                      int totalTankSize) {
-        boolean added = super.addToGoggleTooltip(tooltip, isPlayerSneaking, totalTankSize);
-        if (added && controller != null && controller.isOverclock() && attachedEngines > 0
-                && tooltip.size() >= 2) {
-            // 原版护目镜的应力行按 18 热封顶；超频要显示两倍满级锅炉最大应力。
-            tooltip.remove(tooltip.size() - 1);
-            tooltip.remove(tooltip.size() - 1);
-            tooltip.add(CommonComponents.EMPTY);
-            CreateLang.translate("tooltip.capacityProvided")
-                    .style(ChatFormatting.GRAY).forGoggles(tooltip);
-            CreateLang.number(OVERCLOCK_TOTAL_STRESS)
-                    .translate("generic.unit.stress")
-                    .style(ChatFormatting.AQUA)
-                    .space()
-                    .add(CreateLang.translate("boiler.via_engines", attachedEngines)
-                            .style(ChatFormatting.DARK_GRAY))
-                    .forGoggles(tooltip);
-        }
-        return added;
+        // 超频允许到 2.0；蒸汽引擎自己的 clamp 由 Mixin 放宽到 2。
+        return Math.min(2.0F, target / deviceMax);
     }
 }
