@@ -1,6 +1,12 @@
 {
   "variants": {
-    "overclock=false": { "model": "mystery_dynamics:block/infernal_boiler_face" },
-    "overclock=true": { "model": "mystery_dynamics:block/infernal_boiler_face_overclock" }
+    "facing=south,overclock=false": { "model": "mystery_dynamics:block/infernal_boiler_face", "y": 0 },
+    "facing=west,overclock=false": { "model": "mystery_dynamics:block/infernal_boiler_face", "y": 90 },
+    "facing=north,overclock=false": { "model": "mystery_dynamics:block/infernal_boiler_face", "y": 180 },
+    "facing=east,overclock=false": { "model": "mystery_dynamics:block/infernal_boiler_face", "y": 270 },
+    "facing=south,overclock=true": { "model": "mystery_dynamics:block/infernal_boiler_face_overclock", "y": 0 },
+    "facing=west,overclock=true": { "model": "mystery_dynamics:block/infernal_boiler_face_overclock", "y": 90 },
+    "facing=north,overclock=true": { "model": "mystery_dynamics:block/infernal_boiler_face_overclock", "y": 180 },
+    "facing=east,overclock=true": { "model": "mystery_dynamics:block/infernal_boiler_face_overclock", "y": 270 }
   }
 }

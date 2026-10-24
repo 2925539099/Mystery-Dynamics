@@ -28,13 +28,18 @@ public final class InfernalBoilerTrigger implements IWandTriggerManager {
         }
         BlockPos glass = InfernalBoilerStructure.findGlass(level, pos);
         if (glass == null) {
+            player.displayClientMessage(
+                    Component.translatable("mystery_dynamics.infernal_boiler.no_structure"), false);
             return false;
         }
         if (!InfernalBoilerStructure.matches(level, glass)) {
+            player.displayClientMessage(
+                    Component.translatable("mystery_dynamics.infernal_boiler.no_structure"), false);
             return false;
         }
         if (!TCResearchManager.has(player, "INFERNAL_BOILER")) {
-            player.displayClientMessage(Component.translatable("mystery_dynamics.infernal_boiler.locked"), true);
+            player.displayClientMessage(
+                    Component.translatable("mystery_dynamics.infernal_boiler.locked"), false);
             return false;
         }
 
@@ -46,7 +51,8 @@ public final class InfernalBoilerTrigger implements IWandTriggerManager {
                 .add(Aspect.WATER, 30)
                 .add(Aspect.ORDER, 30);
         if (!wand.consumeVisCost(stack, player, cost, true)) {
-            player.displayClientMessage(Component.translatable("mystery_dynamics.infernal_boiler.no_vis"), true);
+            player.displayClientMessage(
+                    Component.translatable("mystery_dynamics.infernal_boiler.no_vis"), false);
             return false;
         }
         if (!InfernalBoilerStructure.form(level, glass)) {

@@ -6,7 +6,7 @@ import net.minecraft.core.Direction;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.IEssentiaTransport;
 
-/** 炼狱锅炉的源质接口：只允许南面输入火源质。 */
+/** 炼狱锅炉的源质接口：只允许正面输入火源质。 */
 public final class InfernalBoilerEssentiaHandler implements IEssentiaTransport {
 
     private final InfernalBoilerBlockEntity boiler;
@@ -18,7 +18,7 @@ public final class InfernalBoilerEssentiaHandler implements IEssentiaTransport {
     }
 
     private boolean isInputSide(Direction direction) {
-        return direction == Direction.SOUTH;
+        return direction != null && direction == target().frontDirection();
     }
 
     private InfernalBoilerBlockEntity target() {

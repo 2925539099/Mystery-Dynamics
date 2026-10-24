@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.bus.api.EventPriority;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.EssentiaCapabilities;
 import thaumcraft.api.aspects.IEssentiaTransport;
@@ -30,16 +31,21 @@ public final class InfernalBoilerCompat {
     public static void register() {
         // 不只在玻璃上：点击任意结构方块都能触发成型。
         WandTriggerRegistry.registerWandBlockTrigger(new InfernalBoilerTrigger(), 0,
-                state -> state.is(Blocks.OBSIDIAN)
-                        || state.is(Blocks.NETHER_BRICKS)
-                        || state.is(TCBlocks.THAUMIUM_BLOCK.get())
-                        || state.is(TCBlocks.ALCHEMICAL_CONSTRUCT.get())
-                        || state.is(TCBlocks.ARCANE_FURNACE.get())
-                        || state.is(TCBlocks.WARDED_GLASS.get()),
+                InfernalBoilerCompat::isStructureBlock,
                 "infernal_boiler_structure");
 
-        // 守卫者玻璃的 useItemOn 会拦截法杖，所以额外在交互事件里处理玻璃点击。
-        NeoForge.EVENT_BUS.addListener(InfernalBoilerCompat::onRightClickBlock);
+        // 守卫者玻璃的 useItemOn 会拦截法杖，所以额外在交互事件里处理所有结构方块。
+        NeoForge.EVENT_BUS.addListener(EventPriority.HIGHEST, true,
+                InfernalBoilerCompat::onRightClickBlock);
+    }
+
+    private static boolean isStructureBlock(BlockState state) {
+        return state.is(Blocks.OBSIDIAN)
+                || state.is(Blocks.NETHER_BRICKS)
+                || state.is(TCBlocks.THAUMIUM_BLOCK.get())
+                || state.is(TCBlocks.ALCHEMICAL_CONSTRUCT.get())
+                || state.is(TCBlocks.ARCANE_FURNACE.get())
+                || state.is(TCBlocks.WARDED_GLASS.get());
     }
 
     private static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
@@ -50,7 +56,7 @@ public final class InfernalBoilerCompat {
         if (!(stack.getItem() instanceof TCFunctionalItems.WandCastingItem)) {
             return;
         }
-        if (!event.getLevel().getBlockState(event.getPos()).is(TCBlocks.WARDED_GLASS.get())) {
+        if (!isStructureBlock(event.getLevel().getBlockState(event.getPos()))) {
             return;
         }
         Direction face = event.getFace();
@@ -86,19 +92,23 @@ public final class InfernalBoilerCompat {
         }
     }
 
-    /** 东侧三格内朝西的未通红石风箱，每个 +2 热等级，最多 3 个。 */
+    /** 锅炉模型东侧、朝锅炉、未通红石的风箱，每个 +2 热等级，最多 3 个。 */
     public static int countBellows(InfernalBoilerBlockEntity boiler) {
         Level level = boiler.getLevel();
         if (level == null || boiler.boilerOrigin().equals(net.minecraft.core.BlockPos.ZERO)) {
             return 0;
         }
+        Direction front = boiler.frontDirection();
+        Direction side = front.getCounterClockWise();
         int count = 0;
         for (int y = 2; y <= 4 && count < 3; y++) {
             for (int z = 0; z <= 2 && count < 3; z++) {
-                var pos = boiler.boilerOrigin().offset(3, y, z);
+                var bodyPos = InfernalBoilerStructure.world(
+                        boiler.boilerOrigin(), 2, y, z, boiler.rotation());
+                var pos = bodyPos.offset(side.getStepX(), 0, side.getStepZ());
                 BlockState state = level.getBlockState(pos);
                 if (state.getBlock() instanceof BellowsBlock
-                        && state.getValue(BellowsBlock.FACING) == Direction.WEST
+                        && state.getValue(BellowsBlock.FACING) == side.getOpposite()
                         && !level.hasNeighborSignal(pos)) {
                     count++;
                 }

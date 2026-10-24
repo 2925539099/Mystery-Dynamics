@@ -5,6 +5,7 @@ import com.mysterydynamics.compat.InfernalBoilerCompat;
 import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -25,6 +26,8 @@ public class InfernalBoilerBlockEntity extends FluidTankBlockEntity {
 
     private BlockPos boilerOrigin = BlockPos.ZERO;
     private BlockPos facePos = BlockPos.ZERO;
+    private Direction frontDirection = Direction.SOUTH;
+    private int rotation;
     private int fireEssentia;
     private int fireVisTicks;
 
@@ -88,9 +91,11 @@ public class InfernalBoilerBlockEntity extends FluidTankBlockEntity {
         }
     }
 
-    public void setFormation(BlockPos origin, BlockPos face) {
+    public void setFormation(BlockPos origin, BlockPos face, Direction front, int rotation) {
         this.boilerOrigin = origin;
         this.facePos = face;
+        this.frontDirection = front;
+        this.rotation = rotation;
         setChanged();
     }
 
@@ -100,6 +105,14 @@ public class InfernalBoilerBlockEntity extends FluidTankBlockEntity {
 
     public BlockPos facePos() {
         return facePos;
+    }
+
+    public Direction frontDirection() {
+        return frontDirection;
+    }
+
+    public int rotation() {
+        return rotation;
     }
 
     public int fireEssentia() {
@@ -136,6 +149,8 @@ public class InfernalBoilerBlockEntity extends FluidTankBlockEntity {
         super.write(tag, registries, clientPacket);
         tag.putLong("BoilerOrigin", boilerOrigin.asLong());
         tag.putLong("FacePos", facePos.asLong());
+        tag.putString("Front", frontDirection.getSerializedName());
+        tag.putInt("Rotation", rotation);
         tag.putInt("FireEssentia", fireEssentia);
         tag.putInt("FireVisTicks", fireVisTicks);
     }
@@ -145,6 +160,10 @@ public class InfernalBoilerBlockEntity extends FluidTankBlockEntity {
         super.read(tag, registries, clientPacket);
         boilerOrigin = BlockPos.of(tag.getLong("BoilerOrigin"));
         facePos = BlockPos.of(tag.getLong("FacePos"));
+        Direction loadedFront = Direction.byName(tag.getString("Front"));
+        frontDirection = loadedFront == null || loadedFront.getAxis().isVertical()
+                ? Direction.SOUTH : loadedFront;
+        rotation = Math.max(0, Math.min(3, tag.getInt("Rotation")));
         fireEssentia = tag.getInt("FireEssentia");
         fireVisTicks = tag.getInt("FireVisTicks");
     }

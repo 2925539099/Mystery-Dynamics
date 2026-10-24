@@ -56,5 +56,6 @@
   "mystery_dynamics.infernal_boiler.locked": "尚未解锁炼狱锅炉研究。",
   "tc.research_name.INFERNALFURNACE_LINK": "炼狱熔炉",
   "tc.research_text.INFERNALFURNACE_LINK": "炼狱熔炉",
-  "mystery_dynamics.research.infernalfurnace_link.text": "占位内容：炼狱熔炉引用节点。"
+  "mystery_dynamics.research.infernalfurnace_link.text": "占位内容：炼狱熔炉引用节点。",
+  "mystery_dynamics.infernal_boiler.no_structure": "结构未匹配：请检查五层方块、朝向与守卫者玻璃位置。"
 }
