@@ -75,7 +75,35 @@ public final class InfernalBoilerCompat {
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(EssentiaCapabilities.TRANSPORT,
                 MysteryDynamics.INFERNAL_BOILER_BE.get(),
-                (be, side) -> new InfernalBoilerEssentiaHandler(be, side));
+                (be, side) -> new InfernalBoilerEssentiaHandler(be, side, be.getBlockPos()));
+        event.registerBlockEntity(EssentiaCapabilities.TRANSPORT,
+                MysteryDynamics.INFERNAL_BOILER_CASING_BE.get(),
+                (be, side) -> be.boilerController() == null ? null
+                        : new InfernalBoilerEssentiaHandler(be.boilerController(), side, be.getBlockPos()));
+        event.registerBlock(EssentiaCapabilities.TRANSPORT,
+                (level, pos, state, blockEntity, side) -> {
+                    InfernalBoilerBlockEntity controller = findController(level, pos);
+                    return controller == null ? null
+                            : new InfernalBoilerEssentiaHandler(controller, side, pos);
+                },
+                MysteryDynamics.INFERNAL_BOILER_CASING.get(),
+                MysteryDynamics.INFERNAL_BOILER_SHELL.get(),
+                MysteryDynamics.INFERNAL_BOILER_FACE.get());
+    }
+
+    private static InfernalBoilerBlockEntity findController(Level level, net.minecraft.core.BlockPos around) {
+        for (int dx = -4; dx <= 4; dx++) {
+            for (int dy = 0; dy <= 5; dy++) {
+                for (int dz = -4; dz <= 4; dz++) {
+                    if (level.getBlockEntity(around.offset(dx, dy, dz))
+                            instanceof InfernalBoilerBlockEntity boiler
+                            && boiler.isController()) {
+                        return boiler;
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     /** 尝试从附近节点/中继器抽取 1 点 Ignis，给锅炉 200 tick 的 +9 热等级。 */

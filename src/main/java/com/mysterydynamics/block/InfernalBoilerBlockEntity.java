@@ -16,6 +16,9 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.fml.ModList;
+import thaumcraft.api.aspects.Aspect;
+import thaumcraft.api.aspects.AspectList;
+import thaumcraft.api.aspects.IAspectContainer;
 
 /**
  * 炼狱锅炉主体方块实体。
@@ -23,7 +26,7 @@ import net.neoforged.fml.ModList;
  * <p>储罐的成型、容量、流体能力继承 Create 的 {@link FluidTankBlockEntity}；
  * 锅炉温度、超频和应力由 {@link InfernalBoilerData} 接管。</p>
  */
-public class InfernalBoilerBlockEntity extends FluidTankBlockEntity {
+public class InfernalBoilerBlockEntity extends FluidTankBlockEntity implements IAspectContainer {
 
     public static final int MAX_FIRE_ESSENTIA = 256;
     /** 与 Create 满级 3×3×32 储罐相同的容量：288 × 8000 mB。 */
@@ -75,9 +78,11 @@ public class InfernalBoilerBlockEntity extends FluidTankBlockEntity {
         }
 
         boolean changed = false;
-        if (fireEssentia > 0 && level.getGameTime() % 20L == 0L) {
+        boolean essentiaChanged = false;
+        if (fireEssentia > 0 && isWorking() && level.getGameTime() % 20L == 0L) {
             fireEssentia--;
             changed = true;
+            essentiaChanged = true;
         }
 
         if (ModList.get().isLoaded("thaumcraft")) {
@@ -95,6 +100,9 @@ public class InfernalBoilerBlockEntity extends FluidTankBlockEntity {
         }
         if (changed) {
             setChanged();
+        }
+        if (essentiaChanged) {
+            notifyUpdate();
         }
     }
 
@@ -187,12 +195,66 @@ public class InfernalBoilerBlockEntity extends FluidTankBlockEntity {
         if (accepted > 0) {
             fireEssentia += accepted;
             setChanged();
+            notifyUpdate();
         }
         return accepted;
     }
 
     public boolean isOverclock() {
         return fireEssentia > 0;
+    }
+
+    /** 有蒸汽引擎且在产热时才算工作，空闲不消耗火源质。 */
+    public boolean isWorking() {
+        return boiler != null && boiler.attachedEngines > 0 && boiler.activeHeat > 0;
+    }
+
+    @Override
+    public AspectList getAspects() {
+        AspectList list = new AspectList();
+        if (fireEssentia > 0) {
+            list.add(Aspect.FIRE, fireEssentia);
+        }
+        return list;
+    }
+
+    @Override
+    public void setAspects(AspectList aspects) {
+        fireEssentia = aspects == null ? 0
+                : Math.max(0, Math.min(MAX_FIRE_ESSENTIA, aspects.getAmount(Aspect.FIRE)));
+        setChanged();
+        notifyUpdate();
+    }
+
+    @Override
+    public boolean doesContainerAccept(Aspect aspect) {
+        return aspect == Aspect.FIRE && fireEssentia < MAX_FIRE_ESSENTIA;
+    }
+
+    @Override
+    public int addToContainer(Aspect aspect, int amount) {
+        return aspect == Aspect.FIRE ? addFireEssentia(amount) : 0;
+    }
+
+    @Override
+    public boolean takeFromContainer(Aspect aspect, int amount) {
+        if (aspect != Aspect.FIRE || fireEssentia < amount) {
+            return false;
+        }
+        fireEssentia -= amount;
+        setChanged();
+        notifyUpdate();
+        return true;
+    }
+
+    @Override
+    public boolean doesContainerContainAmount(Aspect aspect, int amount) {
+        return aspect == Aspect.FIRE && fireEssentia >= amount;
+    }
+
+    @Override
+    public int containerContains(Aspect aspect) {
+        return aspect == Aspect.FIRE ? fireEssentia : 0;
     }
 
     public int fireVisTicks() {
