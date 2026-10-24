@@ -5,10 +5,8 @@ import com.simibubi.create.AllBlocks;
 import com.simibubi.create.api.stress.BlockStressValues;
 import com.simibubi.create.content.fluids.tank.BoilerData;
 import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
-import com.simibubi.create.content.kinetics.steamEngine.SteamEngineBlock;
 import com.simibubi.create.foundation.utility.CreateLang;
 
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.MutableComponent;
 
 import net.neoforged.fml.ModList;
@@ -42,31 +40,9 @@ public class InfernalBoilerData extends BoilerData {
         }
         this.controller = boiler;
         updateCustomHeat(boiler);
-        // Create 原版只统计贴在 3×3×3 主体 side 上的引擎；
-        // 我们的蒸汽引擎通常贴在底座 casing 上，所以这里按整栋包围盒重新统计。
-        this.attachedEngines = countAttachedEngines(boiler);
-    }
-
-    private int countAttachedEngines(InfernalBoilerBlockEntity boiler) {
-        if (boiler.getLevel() == null) {
-            return 0;
-        }
-        BlockPos origin = boiler.boilerOrigin();
-        if (origin.equals(BlockPos.ZERO)) {
-            origin = boiler.getBlockPos().offset(-1, -3, -1);
-        }
-        int count = 0;
-        for (int x = -1; x <= 4; x++) {
-            for (int y = -1; y <= 5; y++) {
-                for (int z = -1; z <= 4; z++) {
-                    BlockPos pos = origin.offset(x, y, z);
-                    if (boiler.getLevel().getBlockState(pos).getBlock() instanceof SteamEngineBlock) {
-                        count++;
-                    }
-                }
-            }
-        }
-        return count;
+        // 使用 controller 缓存的引擎数，避免每 tick 重扫 6×6×6；
+        // controller 每 2 tick 更新一次缓存，足够快且不会让引擎数抖动。
+        this.attachedEngines = boiler.linkedEngineCount();
     }
 
     @Override

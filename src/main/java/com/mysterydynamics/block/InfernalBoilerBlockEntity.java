@@ -38,6 +38,7 @@ public class InfernalBoilerBlockEntity extends FluidTankBlockEntity implements I
     private int rotation;
     private int fireEssentia;
     private int fireVisTicks;
+    private int linkedEngineCount;
 
     public InfernalBoilerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -99,7 +100,7 @@ public class InfernalBoilerBlockEntity extends FluidTankBlockEntity implements I
 
         updateFaceState();
         updateShellState();
-        if (level.getGameTime() % 10L == 0L) {
+        if (level.getGameTime() % 2L == 0L) {
             linkNearbySteamEngines();
         }
         if (changed) {
@@ -144,6 +145,7 @@ public class InfernalBoilerBlockEntity extends FluidTankBlockEntity implements I
         if (boilerOrigin.equals(BlockPos.ZERO) || level == null) {
             return;
         }
+        int engines = 0;
         for (int x = -1; x <= 4; x++) {
             for (int y = -1; y <= 5; y++) {
                 for (int z = -1; z <= 4; z++) {
@@ -151,12 +153,21 @@ public class InfernalBoilerBlockEntity extends FluidTankBlockEntity implements I
                     if (!(level.getBlockState(pos).getBlock() instanceof SteamEngineBlock)) {
                         continue;
                     }
+                    engines++;
                     if (level.getBlockEntity(pos) instanceof SteamEngineBlockEntity engine) {
                         engine.source = new WeakReference<>(this);
                     }
                 }
             }
         }
+        if (boiler != null) {
+            boiler.attachedEngines = engines;
+        }
+        this.linkedEngineCount = engines;
+    }
+
+    public int linkedEngineCount() {
+        return linkedEngineCount;
     }
 
     private void updateShellState() {

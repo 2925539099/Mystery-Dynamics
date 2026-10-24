@@ -23,6 +23,8 @@ public class InfernalBoilerCasingBlockEntity extends FluidTankBlockEntity
         super(type, pos, state);
     }
 
+    private InfernalBoilerBlockEntity cachedController;
+
     @Override
     public void write(net.minecraft.nbt.CompoundTag tag,
                       net.minecraft.core.HolderLookup.Provider registries, boolean clientPacket) {
@@ -40,12 +42,19 @@ public class InfernalBoilerCasingBlockEntity extends FluidTankBlockEntity
         if (level == null) {
             return null;
         }
+        InfernalBoilerBlockEntity cached = cachedController;
+        if (cached != null && cached.getLevel() == level
+                && !cached.isRemoved() && cached.isController()) {
+            return cached;
+        }
+        cachedController = null;
         for (int dx = -4; dx <= 4; dx++) {
             for (int dy = 0; dy <= 5; dy++) {
                 for (int dz = -4; dz <= 4; dz++) {
                     if (level.getBlockEntity(worldPosition.offset(dx, dy, dz))
                             instanceof InfernalBoilerBlockEntity boiler
                             && boiler.isController()) {
+                        cachedController = boiler;
                         return boiler;
                     }
                 }
