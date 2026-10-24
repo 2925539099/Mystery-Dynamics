@@ -18,11 +18,22 @@ public final class InfernalBoilerConstruct {
     }
 
     public static ResearchBookApi.Construct create() {
-        List<ItemStack> blocks = new ArrayList<>(4 * 5 * 4);
-        // 灞曠ず灞傞『搴忎笌 Thaumonomicon 鐨?ConstructDisplay 涓€鑷达細y -> z(鍊掑簭) -> x(鍊掑簭)
-        for (int y = 0; y <= 4; y++) {
-            for (int z = 3; z >= 0; z--) {
-                for (int x = 3; x >= 0; x--) {
+        // 4×4×5 在 3×3 的展示格子里会挤在一起。这里改用 7×5×7 的展示网格：
+        // 真实方块放在偶数格，中间留空，间隔翻倍；展示顺序与 ConstructDisplay 一致。
+        int width = 7;
+        int height = 5;
+        int depth = 7;
+        List<ItemStack> blocks = new ArrayList<>(width * height * depth);
+        for (int y = 0; y < height; y++) {
+            for (int dz = depth - 1; dz >= 0; dz--) {
+                for (int dx = width - 1; dx >= 0; dx--) {
+                    if ((dx & 1) != 0 || (dz & 1) != 0) {
+                        blocks.add(null);
+                        continue;
+                    }
+                    int x = dx / 2;
+                    // 页面当前是前后反的，翻转 z；x 保持。
+                    int z = 3 - dz / 2;
                     blocks.add(stackAt(x, y, z));
                 }
             }
@@ -35,7 +46,7 @@ public final class InfernalBoilerConstruct {
                 .add(Aspect.ENTROPY, 30)
                 .add(Aspect.WATER, 30)
                 .add(Aspect.ORDER, 30);
-        return new ResearchBookApi.Construct(cost, List.copyOf(blocks), 4, 5, 4);
+        return new ResearchBookApi.Construct(cost, blocks, width, height, depth);
     }
 
     private static ItemStack stackAt(int x, int y, int z) {
