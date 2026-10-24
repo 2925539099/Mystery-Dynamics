@@ -54,8 +54,13 @@ public class InfernalBoilerRenderer implements BlockEntityRenderer<InfernalBoile
     @Override
     public void render(InfernalBoilerBlockEntity boiler, float partialTick, PoseStack pose,
                        MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
-        if (!boiler.isController() || boiler.boilerOrigin().equals(BlockPos.ZERO)) {
+        if (!boiler.isController()) {
             return;
+        }
+        BlockPos origin = boiler.boilerOrigin();
+        if (origin.equals(BlockPos.ZERO)) {
+            // 兼容旧存档/成型瞬间 controller 尚未写入 origin 的情况。
+            origin = boiler.getBlockPos().offset(-1, -3, -1);
         }
         ModelData data = boiler.isOverclock() ? overclock() : normal();
         if (data == null || data.quads().isEmpty()) {
@@ -63,7 +68,6 @@ public class InfernalBoilerRenderer implements BlockEntityRenderer<InfernalBoile
         }
 
         BlockPos pos = boiler.getBlockPos();
-        BlockPos origin = boiler.boilerOrigin();
         pose.pushPose();
         pose.translate(origin.getX() - pos.getX(), origin.getY() - pos.getY(),
                 origin.getZ() - pos.getZ());
@@ -107,7 +111,8 @@ public class InfernalBoilerRenderer implements BlockEntityRenderer<InfernalBoile
     }
 
     private static ModelData load(String path) {
-        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(MysteryDynamics.MODID, path);
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(MysteryDynamics.MODID,
+                path + ".json");
         try (var stream = Minecraft.getInstance().getResourceManager().open(id)) {
             JsonObject root = JsonParser.parseReader(
                     new InputStreamReader(stream, StandardCharsets.UTF_8)).getAsJsonObject();
@@ -142,6 +147,8 @@ public class InfernalBoilerRenderer implements BlockEntityRenderer<InfernalBoile
             }
             return new ModelData(List.copyOf(quads));
         } catch (Exception exception) {
+            System.err.println("[mystery_dynamics] Failed to load boiler model " + path + ": "
+                    + exception);
             return new ModelData(List.of());
         }
     }

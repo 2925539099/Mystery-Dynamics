@@ -1,20 +1,148 @@
 {
   "variants": {
-    "bottom=false,formed=false,shape=plain,top=false": { "model": "mystery_dynamics:block/infernal_boiler" },
-    "bottom=false,formed=false,shape=plain,top=true": { "model": "mystery_dynamics:block/infernal_boiler" },
-    "bottom=true,formed=false,shape=plain,top=false": { "model": "mystery_dynamics:block/infernal_boiler" },
-    "bottom=true,formed=false,shape=plain,top=true": { "model": "mystery_dynamics:block/infernal_boiler" },
-    "bottom=false,formed=false,shape=window,top=false": { "model": "mystery_dynamics:block/infernal_boiler" },
-    "bottom=false,formed=false,shape=window,top=true": { "model": "mystery_dynamics:block/infernal_boiler" },
-    "bottom=true,formed=false,shape=window,top=false": { "model": "mystery_dynamics:block/infernal_boiler" },
-    "bottom=true,formed=false,shape=window,top=true": { "model": "mystery_dynamics:block/infernal_boiler" },
-    "bottom=false,formed=true,shape=plain,top=false": { "model": "mystery_dynamics:block/infernal_boiler" },
-    "bottom=false,formed=true,shape=plain,top=true": { "model": "mystery_dynamics:block/infernal_boiler" },
-    "bottom=true,formed=true,shape=plain,top=false": { "model": "mystery_dynamics:block/infernal_boiler" },
-    "bottom=true,formed=true,shape=plain,top=true": { "model": "mystery_dynamics:block/infernal_boiler" },
-    "bottom=false,formed=true,shape=window,top=false": { "model": "mystery_dynamics:block/infernal_boiler" },
-    "bottom=false,formed=true,shape=window,top=true": { "model": "mystery_dynamics:block/infernal_boiler" },
-    "bottom=true,formed=true,shape=window,top=false": { "model": "mystery_dynamics:block/infernal_boiler" },
-    "bottom=true,formed=true,shape=window,top=true": { "model": "mystery_dynamics:block/infernal_boiler" }
+    "bottom=false,formed=false,shape=plain,top=false": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=false,formed=false,shape=window,top=false": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=false,formed=false,shape=window_nw,top=false": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=false,formed=false,shape=window_sw,top=false": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=false,formed=false,shape=window_ne,top=false": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=false,formed=false,shape=window_se,top=false": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=true,formed=false,shape=plain,top=false": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=true,formed=false,shape=window,top=false": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=true,formed=false,shape=window_nw,top=false": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=true,formed=false,shape=window_sw,top=false": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=true,formed=false,shape=window_ne,top=false": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=true,formed=false,shape=window_se,top=false": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=false,formed=false,shape=plain,top=true": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=false,formed=false,shape=window,top=true": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=false,formed=false,shape=window_nw,top=true": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=false,formed=false,shape=window_sw,top=true": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=false,formed=false,shape=window_ne,top=true": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=false,formed=false,shape=window_se,top=true": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=true,formed=false,shape=plain,top=true": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=true,formed=false,shape=window,top=true": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=true,formed=false,shape=window_nw,top=true": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=true,formed=false,shape=window_sw,top=true": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=true,formed=false,shape=window_ne,top=true": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=true,formed=false,shape=window_se,top=true": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=false,formed=true,shape=plain,top=false": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=false,formed=true,shape=window,top=false": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=false,formed=true,shape=window_nw,top=false": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=false,formed=true,shape=window_sw,top=false": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=false,formed=true,shape=window_ne,top=false": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=false,formed=true,shape=window_se,top=false": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=true,formed=true,shape=plain,top=false": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=true,formed=true,shape=window,top=false": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=true,formed=true,shape=window_nw,top=false": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=true,formed=true,shape=window_sw,top=false": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=true,formed=true,shape=window_ne,top=false": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=true,formed=true,shape=window_se,top=false": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=false,formed=true,shape=plain,top=true": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=false,formed=true,shape=window,top=true": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=false,formed=true,shape=window_nw,top=true": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=false,formed=true,shape=window_sw,top=true": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=false,formed=true,shape=window_ne,top=true": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=false,formed=true,shape=window_se,top=true": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=true,formed=true,shape=plain,top=true": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=true,formed=true,shape=window,top=true": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=true,formed=true,shape=window_nw,top=true": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=true,formed=true,shape=window_sw,top=true": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=true,formed=true,shape=window_ne,top=true": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    },
+    "bottom=true,formed=true,shape=window_se,top=true": {
+      "model": "mystery_dynamics:block/infernal_boiler"
+    }
   }
 }
