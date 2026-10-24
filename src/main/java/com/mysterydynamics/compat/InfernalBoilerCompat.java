@@ -2,6 +2,7 @@ package com.mysterydynamics.compat;
 
 import com.mysterydynamics.MysteryDynamics;
 import com.mysterydynamics.block.InfernalBoilerBlockEntity;
+
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -96,28 +97,43 @@ public final class InfernalBoilerCompat {
         }
     }
 
-    /** 锅炉模型东侧、朝锅炉、未通红石的风箱，每个 +2 热等级，最多 3 个。 */
+    /** 贴在锅炉任意一侧的风箱，每个 +2 热等级，最多 3 个。 */
     public static int countBellows(InfernalBoilerBlockEntity boiler) {
         Level level = boiler.getLevel();
-        if (level == null || boiler.boilerOrigin().equals(net.minecraft.core.BlockPos.ZERO)) {
+        if (level == null) {
             return 0;
         }
-        Direction front = boiler.frontDirection();
-        Direction side = front.getCounterClockWise();
         int count = 0;
-        for (int y = 2; y <= 4 && count < 3; y++) {
-            for (int z = 0; z <= 2 && count < 3; z++) {
-                var bodyPos = InfernalBoilerStructure.world(
-                        boiler.boilerOrigin(), 2, y, z, boiler.rotation());
-                var pos = bodyPos.offset(side.getStepX(), 0, side.getStepZ());
-                BlockState state = level.getBlockState(pos);
-                if (state.getBlock() instanceof BellowsBlock
-                        && state.getValue(BellowsBlock.FACING) == side.getOpposite()
-                        && !level.hasNeighborSignal(pos)) {
-                    count++;
+        var origin = boiler.boilerOrigin();
+        if (origin.equals(net.minecraft.core.BlockPos.ZERO)) {
+            origin = boiler.getBlockPos().offset(-1, -3, -1);
+        }
+        for (int dx = -1; dx <= 4 && count < 3; dx++) {
+            for (int dy = 0; dy <= 5 && count < 3; dy++) {
+                for (int dz = -1; dz <= 4 && count < 3; dz++) {
+                    var pos = origin.offset(dx, dy, dz);
+                    if (!(level.getBlockState(pos).getBlock() instanceof BellowsBlock)) {
+                        continue;
+                    }
+                    if (touchesBoiler(level, pos)) {
+                        count++;
+                    }
                 }
             }
         }
         return count * 2;
+    }
+
+    private static boolean touchesBoiler(Level level, net.minecraft.core.BlockPos pos) {
+        for (Direction direction : Direction.values()) {
+            BlockState state = level.getBlockState(pos.relative(direction));
+            if (state.is(MysteryDynamics.INFERNAL_BOILER.get())
+                    || state.is(MysteryDynamics.INFERNAL_BOILER_CASING.get())
+                    || state.is(MysteryDynamics.INFERNAL_BOILER_SHELL.get())
+                    || state.is(MysteryDynamics.INFERNAL_BOILER_FACE.get())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

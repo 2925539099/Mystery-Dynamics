@@ -38,7 +38,7 @@ public class InfernalBoilerRenderer implements BlockEntityRenderer<InfernalBoile
     }
 
     private record Quad(Vertex[] vertices, ResourceLocation texture, float nx, float ny, float nz,
-                        boolean bright) {
+                        boolean bright, boolean translucent) {
     }
 
     private record ModelData(List<Quad> quads) {
@@ -76,12 +76,14 @@ public class InfernalBoilerRenderer implements BlockEntityRenderer<InfernalBoile
         pose.mulPose(Axis.YP.rotationDegrees(boiler.rotation() * 90.0F));
         pose.translate(-2.0D, 0.0D, -2.0D);
 
-        VertexConsumer consumer = bufferSource.getBuffer(RenderType.cutout());
+        VertexConsumer solidBuffer = bufferSource.getBuffer(RenderType.cutout());
+        VertexConsumer translucentBuffer = bufferSource.getBuffer(RenderType.translucent());
         Function<ResourceLocation, TextureAtlasSprite> atlas =
                 Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS);
         for (Quad quad : data.quads()) {
             TextureAtlasSprite sprite = SPRITES.computeIfAbsent(quad.texture(), atlas);
             int light = quad.bright() ? LightTexture.FULL_BRIGHT : packedLight;
+            VertexConsumer consumer = quad.translucent() ? translucentBuffer : solidBuffer;
             for (Vertex vertex : quad.vertices()) {
                 consumer.addVertex(pose.last(), vertex.x() / 16.0F, vertex.y() / 16.0F,
                                 vertex.z() / 16.0F)
@@ -142,7 +144,8 @@ public class InfernalBoilerRenderer implements BlockEntityRenderer<InfernalBoile
                     quads.add(createQuad(Direction.byName(faceEntry.getKey()), from, to, uv,
                             rotation, texture, texture.getPath().contains("fire")
                                     || texture.getPath().contains("lava")
-                                    || texture.getPath().contains("soul")));
+                                    || texture.getPath().contains("soul"),
+                            texture.getPath().contains("warded_glass")));
                 }
             }
             return new ModelData(List.copyOf(quads));
@@ -162,7 +165,8 @@ public class InfernalBoilerRenderer implements BlockEntityRenderer<InfernalBoile
     }
 
     private static Quad createQuad(Direction direction, float[] from, float[] to, float[] uv,
-                                   int rotation, ResourceLocation texture, boolean bright) {
+                                   int rotation, ResourceLocation texture, boolean bright,
+                                   boolean translucent) {
         float x1 = from[0], y1 = from[1], z1 = from[2];
         float x2 = to[0], y2 = to[1], z2 = to[2];
         float[][] corners = switch (direction) {
@@ -199,6 +203,6 @@ public class InfernalBoilerRenderer implements BlockEntityRenderer<InfernalBoile
         float nx = direction.getStepX();
         float ny = direction.getStepY();
         float nz = direction.getStepZ();
-        return new Quad(vertices, texture, nx, ny, nz, bright);
+        return new Quad(vertices, texture, nx, ny, nz, bright, translucent);
     }
 }
