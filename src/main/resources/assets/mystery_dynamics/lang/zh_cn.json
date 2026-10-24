@@ -50,7 +50,7 @@
   "block.mystery_dynamics.infernal_boiler_face": "炼狱锅炉观察窗",
   "tc.research_name.INFERNAL_BOILER": "炼狱锅炉",
   "tc.research_text.INFERNAL_BOILER": "升温加压",
-  "mystery_dynamics.research.infernal_boiler.text": "在部署了一些设备之后，你发觉家里面的动力已经不太够用了。\n\n于是乎，你盯上了家里面那个不断工作着的炼狱熔炉。\n\n以熔炉无需燃料之类的原理为基础，你设计出了这个锅炉，它自带三档温度，完全不需要任何燃料，还可以和炼狱熔炉一般用魔力和风箱来进一步提升温度。\n\n值得一提的是，通入火源质则会使得它如同燃烧室一般的进入超频状态，使得输出效率翻倍。",
+  "mystery_dynamics.research.infernal_boiler.text": "在部署了一些设备之后，你发觉家里面的动力已经不太够用了。\n\n于是乎，你盯上了家里面那个不断工作着的炼狱熔炉。\n\n以炼狱熔炉无需燃料之类的原理为基础，你设计出了这个锅炉，它自带三档的温度，而且完全不需要任何燃料，还可以和炼狱熔炉一般用魔力和风箱来进一步提升温度。\n\n值得一提的是，通入火源质则会使得它如同燃烧室一般的进入超频状态，使得输出效率翻倍。",
   "mystery_dynamics.infernal_boiler.no_vis": "魔力不足，无法成型。",
   "mystery_dynamics.infernal_boiler.formed": "炼狱锅炉已成型。",
   "mystery_dynamics.infernal_boiler.locked": "尚未解锁炼狱锅炉研究。",

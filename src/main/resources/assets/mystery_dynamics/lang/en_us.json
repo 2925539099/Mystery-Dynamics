@@ -50,7 +50,7 @@
   "block.mystery_dynamics.infernal_boiler_face": "Infernal Boiler Window",
   "tc.research_name.INFERNAL_BOILER": "Infernal Boiler",
   "tc.research_text.INFERNAL_BOILER": "Heat and Pressure",
-  "mystery_dynamics.research.infernal_boiler.text": "After deploying more machines, you find that the power at home is no longer enough.\n\nSo you turn your eyes to the Infernal Furnace that never stops working.\n\nUsing its fuel-free principle as a foundation, you design this boiler. It has three heat levels by default, needs no fuel at all, and can be heated further with vis and bellows just like the Infernal Furnace.\n\nNotably, feeding it Fire essentia sends it into an overclocked state like a combustion chamber, doubling its output.",
+  "mystery_dynamics.research.infernal_boiler.text": "After deploying more machines, you find that the power at home is no longer enough.\n\nSo you turn your eyes to the Infernal Furnace that never stops working.\n\nUsing the Infernal Furnace's fuel-free principle as a foundation, you design this boiler. It provides three heat levels by default, needs no fuel at all, and can be heated further with vis and bellows just like the Infernal Furnace.\n\nNotably, feeding it Fire essentia sends it into an overclocked state like a combustion chamber, doubling its output.",
   "mystery_dynamics.infernal_boiler.no_vis": "Not enough vis to form the boiler.",
   "mystery_dynamics.infernal_boiler.formed": "The infernal boiler has formed.",
   "mystery_dynamics.infernal_boiler.locked": "You have not unlocked the Infernal Boiler research.",
