@@ -210,8 +210,14 @@ public final class InfernalBoilerStructure {
             return true;
         }
         // 允许使用高级炼金构材。
-        return expected == TCBlocks.ALCHEMICAL_CONSTRUCT.get()
-                && actual.is(TCBlocks.ADVANCED_ALCHEMICAL_CONSTRUCT.get());
+        if (expected == TCBlocks.ALCHEMICAL_CONSTRUCT.get()
+                && actual.is(TCBlocks.ADVANCED_ALCHEMICAL_CONSTRUCT.get())) {
+            return true;
+        }
+        // 拆除中途/旧版本可能残留成型锅炉方块；允许它作为“神秘方块”重新成型。
+        return expected == TCBlocks.THAUMIUM_BLOCK.get()
+                && actual.is(MysteryDynamics.INFERNAL_BOILER.get())
+                && actual.getValue(InfernalBoilerBlock.FORMED);
     }
 
     private static boolean matchesBody(Level level, BlockPos origin, int rotation) {
