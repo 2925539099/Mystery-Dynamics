@@ -16,7 +16,6 @@
   "text_pages": [
     "mystery_dynamics.research.infernal_boiler.text"
   ],
-  "item": "mystery_dynamics:infernal_boiler",
   "aspects": [
     {
       "aspect": "ignis",
@@ -53,5 +52,6 @@
       "text": "mystery_dynamics.research.infernal_boiler.text",
       "source": "mystery_dynamics.research.infernal_boiler.text"
     }
-  ]
+  ],
+  "icon": "mystery_dynamics:textures/misc/r_infernal_boiler.png"
 }
